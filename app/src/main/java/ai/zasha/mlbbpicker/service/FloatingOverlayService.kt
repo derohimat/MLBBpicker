@@ -76,13 +76,14 @@ class FloatingOverlayService : Service() {
                     if (autoDetect) {
                         val foregroundApp = getForegroundPackageName()
                         Log.d(tag, "Current foreground app: $foregroundApp")
-                        val isMlbb = foregroundApp == "com.mobile.legends"
-
-                        if (isMlbb) {
-                            overlayViewManager.showOverlay()
-                        } else {
-                            if (autoHide) {
-                                overlayViewManager.hideOverlay()
+                        if (foregroundApp != null) {
+                            val isMlbb = foregroundApp == "com.mobile.legends"
+                            if (isMlbb) {
+                                overlayViewManager.showOverlay()
+                            } else {
+                                if (autoHide) {
+                                    overlayViewManager.hideOverlay()
+                                }
                             }
                         }
                     }
@@ -97,8 +98,8 @@ class FloatingOverlayService : Service() {
     private fun getForegroundPackageName(): String? {
         val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val time = System.currentTimeMillis()
-        // Query last 10 seconds of usage events
-        val events = usageStatsManager.queryEvents(time - 1000 * 10, time)
+        // Query last 5 minutes of usage events to be more robust
+        val events = usageStatsManager.queryEvents(time - 1000 * 60 * 5, time)
         val event = UsageEvents.Event()
         var lastForegroundApp: String? = null
         while (events.hasNextEvent()) {
