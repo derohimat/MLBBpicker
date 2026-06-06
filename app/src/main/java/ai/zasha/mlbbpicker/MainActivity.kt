@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ai.zasha.mlbbpicker.data.HeroRepository
+import ai.zasha.mlbbpicker.data.MetaStatsRepository
 import ai.zasha.mlbbpicker.service.FloatingOverlayService
 import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
 import ai.zasha.mlbbpicker.ui.main.MainScreen
@@ -27,11 +28,12 @@ import ai.zasha.mlbbpicker.ui.main.MainScreenViewModel
 class MainActivity : ComponentActivity() {
 
     private lateinit var repository: HeroRepository
+    private lateinit var metaStatsRepository: MetaStatsRepository
     private val viewModel: MainScreenViewModel by viewModels {
         object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MainScreenViewModel(repository) as T
+                return MainScreenViewModel(repository, metaStatsRepository) as T
             }
         }
     }
@@ -39,6 +41,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repository = HeroRepository(applicationContext)
+        metaStatsRepository = MetaStatsRepository(applicationContext)
 
         enableEdgeToEdge()
         setContent {

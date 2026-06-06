@@ -36,7 +36,14 @@ import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import ai.zasha.mlbbpicker.data.Hero
 import ai.zasha.mlbbpicker.data.HeroRepository
+import ai.zasha.mlbbpicker.data.BuildRepository
+import ai.zasha.mlbbpicker.data.HeroBuild
+import ai.zasha.mlbbpicker.data.HeroMetaStats
 import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 
 @Composable
 fun MainScreen(
@@ -52,7 +59,7 @@ fun MainScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var searchQuery by remember { mutableStateOf("") }
     var selectedHeroDetails by remember { mutableStateOf<Hero?>(null) }
-    var activeTab by remember { mutableStateOf(0) } // 0 = Dashboard, 1 = Hero Wiki
+    var activeTab by remember { mutableStateOf(0) } // 0 = Dashboard, 1 = Hero Wiki, 2 = Meta
 
     val filteredHeroes = remember(searchQuery, state.heroes) {
         if (searchQuery.isBlank()) {
@@ -94,6 +101,19 @@ fun MainScreen(
                         indicatorColor = Color(0xFF334155)
                     )
                 )
+                NavigationBarItem(
+                    selected = activeTab == 2,
+                    onClick = { activeTab = 2 },
+                    icon = { Icon(Icons.Default.CheckCircle, contentDescription = "Meta Stats") },
+                    label = { Text("Meta") },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color(0xFFD4AF37),
+                        selectedTextColor = Color(0xFFD4AF37),
+                        unselectedIconColor = Color(0xFF94A3B8),
+                        unselectedTextColor = Color(0xFF94A3B8),
+                        indicatorColor = Color(0xFF334155)
+                    )
+                )
             }
         },
         containerColor = Color(0xFF0F172A) // Sleek Dark theme
@@ -127,217 +147,248 @@ fun MainScreen(
                 }
             }
 
-            if (activeTab == 0) {
-                // Settings & Dashboard
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    // Service Control Card
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
-                        border = BorderStroke(1.dp, Color(0xFF334155)),
-                        shape = RoundedCornerShape(12.dp)
+            when (activeTab) {
+                0 -> {
+                    // Settings & Dashboard
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Column {
-                                    Text(
-                                        text = "Floating Assistant Service",
-                                        color = Color.White,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp
-                                    )
-                                    Spacer(modifier = Modifier.height(2.dp))
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Box(
-                                            modifier = Modifier
-                                                .size(8.dp)
-                                                .clip(CircleShape)
-                                                .background(if (state.isServiceRunning) Color(0xFF10B981) else Color(0xFF64748B))
-                                        )
-                                        Spacer(modifier = Modifier.width(6.dp))
+                        // Service Control Card
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                            border = BorderStroke(1.dp, Color(0xFF334155)),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column {
                                         Text(
-                                            text = if (state.isServiceRunning) "Status: Running" else "Status: Stopped",
-                                            color = if (state.isServiceRunning) Color(0xFF10B981) else Color(0xFF94A3B8),
-                                            fontSize = 12.sp,
-                                            fontWeight = FontWeight.Bold
+                                            text = "Floating Assistant Service",
+                                            color = Color.White,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 16.sp
                                         )
+                                        Spacer(modifier = Modifier.height(2.dp))
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(8.dp)
+                                                    .clip(CircleShape)
+                                                    .background(if (state.isServiceRunning) Color(0xFF10B981) else Color(0xFF64748B))
+                                            )
+                                            Spacer(modifier = Modifier.width(6.dp))
+                                            Text(
+                                                text = if (state.isServiceRunning) "Status: Running" else "Status: Stopped",
+                                                color = if (state.isServiceRunning) Color(0xFF10B981) else Color(0xFF94A3B8),
+                                                fontSize = 12.sp,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
+                                    }
+                                    Button(
+                                        onClick = onToggleService,
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = if (state.isServiceRunning) Color(0xFFEF4444) else Color(0xFFD4AF37),
+                                            contentColor = Color.White
+                                        )
+                                    ) {
+                                        Text(if (state.isServiceRunning) "Stop" else "Start")
                                     }
                                 }
-                                Button(
-                                    onClick = onToggleService,
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = if (state.isServiceRunning) Color(0xFFEF4444) else Color(0xFFD4AF37),
-                                        contentColor = Color.White
-                                    )
+
+                                Spacer(modifier = Modifier.height(16.dp))
+                                HorizontalDivider(color = Color(0xFF334155))
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                // Settings switches
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Text(if (state.isServiceRunning) "Stop" else "Start")
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-                            HorizontalDivider(color = Color(0xFF334155))
-                            Spacer(modifier = Modifier.height(12.dp))
-
-                            // Settings switches
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text("Auto-Detect MLBB Game", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("Automatically show bubble when game starts", color = Color(0xFF94A3B8), fontSize = 11.sp)
-                                }
-                                Switch(
-                                    checked = state.autoDetectEnabled,
-                                    onCheckedChange = onToggleAutoDetect,
-                                    colors = SwitchDefaults.colors(
-                                        checkedThumbColor = Color(0xFFD4AF37),
-                                        checkedTrackColor = Color(0xFF475569)
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text("Auto-Detect MLBB Game", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                                        Text("Automatically show bubble when game starts", color = Color(0xFF94A3B8), fontSize = 11.sp)
+                                    }
+                                    Switch(
+                                        checked = state.autoDetectEnabled,
+                                        onCheckedChange = onToggleAutoDetect,
+                                        colors = SwitchDefaults.colors(
+                                            checkedThumbColor = Color(0xFFD4AF37),
+                                            checkedTrackColor = Color(0xFF475569)
+                                        )
                                     )
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(12.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text("Auto-Hide when Game Minimizes", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-                                    Text("Hides bubble if game is in background", color = Color(0xFF94A3B8), fontSize = 11.sp)
                                 }
-                                Switch(
-                                    checked = state.autoHideEnabled,
-                                    onCheckedChange = onToggleAutoHide,
-                                    colors = SwitchDefaults.colors(
-                                        checkedThumbColor = Color(0xFFD4AF37),
-                                        checkedTrackColor = Color(0xFF475569)
+
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text("Auto-Hide when Game Minimizes", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                                        Text("Hides bubble if game is in background", color = Color(0xFF94A3B8), fontSize = 11.sp)
+                                    }
+                                    Switch(
+                                        checked = state.autoHideEnabled,
+                                        onCheckedChange = onToggleAutoHide,
+                                        colors = SwitchDefaults.colors(
+                                            checkedThumbColor = Color(0xFFD4AF37),
+                                            checkedTrackColor = Color(0xFF475569)
+                                        )
                                     )
-                                )
+                                }
                             }
                         }
-                    }
 
-                    // Permissions Card
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
-                        border = BorderStroke(1.dp, Color(0xFF334155)),
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = "System Permissions Required",
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "These are required for automatic foreground detection and overlay rendering over the game.",
-                                color = Color(0xFF94A3B8),
-                                fontSize = 11.sp
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            // Permission 1: Overlay
-                            PermissionRow(
-                                title = "Draw Over Other Apps",
-                                isGranted = state.isDrawOverlayGranted,
-                                onActionClick = onRequestOverlayPermission
-                            )
-
-                            Spacer(modifier = Modifier.height(12.dp))
-                            HorizontalDivider(color = Color(0xFF334155))
-                            Spacer(modifier = Modifier.height(12.dp))
-
-                            // Permission 2: Usage Stats
-                            PermissionRow(
-                                title = "Usage Stats Access",
-                                isGranted = state.isUsageStatsGranted,
-                                onActionClick = onRequestUsagePermission
-                            )
-                        }
-                    }
-                }
-            } else {
-                // Hero Database / Wiki Tab
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    TextField(
-                        value = searchQuery,
-                        onValueChange = { searchQuery = it },
-                        placeholder = { Text("Search hero...", color = Color(0xFF94A3B8)) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(52.dp),
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color(0xFF94A3B8)) },
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = Color(0xFF1E293B),
-                            unfocusedContainerColor = Color(0xFF1E293B),
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
-                        ),
-                        singleLine = true,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(4),
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(filteredHeroes) { hero ->
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable { selectedHeroDetails = hero }
-                                    .padding(4.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                AsyncImage(
-                                    model = hero.img_src,
-                                    contentDescription = hero.hero_name,
-                                    modifier = Modifier
-                                        .size(56.dp)
-                                        .clip(CircleShape)
-                                        .border(1.dp, Color(0xFF334155), CircleShape)
-                                        .background(Color(0xFF1E293B)),
-                                    contentScale = ContentScale.Crop
+                        // Permissions Card
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                            border = BorderStroke(1.dp, Color(0xFF334155)),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = "System Permissions Required",
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
-                                    text = hero.hero_name,
-                                    color = Color.White,
-                                    fontSize = 10.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    textAlign = TextAlign.Center
+                                    text = "These are required for automatic foreground detection and overlay rendering over the game.",
+                                    color = Color(0xFF94A3B8),
+                                    fontSize = 11.sp
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                // Permission 1: Overlay
+                                PermissionRow(
+                                    title = "Draw Over Other Apps",
+                                    isGranted = state.isDrawOverlayGranted,
+                                    onActionClick = onRequestOverlayPermission
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+                                HorizontalDivider(color = Color(0xFF334155))
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                // Permission 2: Usage Stats
+                                PermissionRow(
+                                    title = "Usage Stats Access",
+                                    isGranted = state.isUsageStatsGranted,
+                                    onActionClick = onRequestUsagePermission
                                 )
                             }
                         }
                     }
+                }
+                1 -> {
+                    // Hero Database / Wiki Tab
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp)
+                    ) {
+                        TextField(
+                            value = searchQuery,
+                            onValueChange = { searchQuery = it },
+                            placeholder = { Text("Search hero...", color = Color(0xFF94A3B8)) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp),
+                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color(0xFF94A3B8)) },
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = Color(0xFF1E293B),
+                                unfocusedContainerColor = Color(0xFF1E293B),
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            ),
+                            singleLine = true,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(4),
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(filteredHeroes) { hero ->
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable { selectedHeroDetails = hero }
+                                        .padding(4.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    val winStats = state.metaStats.find { it.heroId == hero.id }
+                                    Box(modifier = Modifier.size(56.dp)) {
+                                        AsyncImage(
+                                            model = hero.img_src,
+                                            contentDescription = hero.hero_name,
+                                            modifier = Modifier
+                                                .size(56.dp)
+                                                .clip(CircleShape)
+                                                .border(1.dp, Color(0xFF334155), CircleShape)
+                                                .background(Color(0xFF1E293B)),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                        if (winStats != null) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .align(Alignment.BottomCenter)
+                                                    .background(
+                                                        if (winStats.winRate >= 52) Color(0xFF10B981) else if (winStats.winRate >= 50) Color(0xFF3B82F6) else Color(0xFFEF4444),
+                                                        RoundedCornerShape(4.dp)
+                                                    )
+                                                    .padding(horizontal = 3.dp, vertical = 0.5.dp)
+                                            ) {
+                                                Text(
+                                                    text = "${String.format("%.0f", winStats.winRate)}%",
+                                                    color = Color.White,
+                                                    fontSize = 8.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            }
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        text = hero.hero_name,
+                                        color = Color.White,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                2 -> {
+                    MetaStatsTabContent(
+                        metaStats = state.metaStats,
+                        onHeroClick = { selectedHeroDetails = it },
+                        heroes = state.heroes
+                    )
                 }
             }
         }
@@ -348,10 +399,13 @@ fun MainScreen(
         val hero = selectedHeroDetails!!
         val context = LocalContext.current
         val repository = remember { HeroRepository(context) }
+        val buildRepository = remember { BuildRepository(context) }
         var countersList by remember { mutableStateOf<List<ai.zasha.mlbbpicker.data.CounterSuggestion>>(emptyList()) }
+        var buildsList by remember { mutableStateOf<List<HeroBuild>>(emptyList()) }
 
         LaunchedEffect(hero) {
             countersList = repository.getCounterSuggestions(listOf(hero.id)).take(5)
+            buildsList = buildRepository.getBuildsForHero(hero.id)
         }
 
         AlertDialog(
@@ -375,7 +429,10 @@ fun MainScreen(
                 }
             },
             text = {
-                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                ) {
                     Row(modifier = Modifier.fillMaxWidth()) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text("Main Lane", color = Color(0xFF94A3B8), fontSize = 10.sp)
@@ -431,6 +488,102 @@ fun MainScreen(
                                             fontSize = 9.sp,
                                             fontWeight = FontWeight.Bold
                                         )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    HorizontalDivider(color = Color(0xFF334155))
+
+                    Text("Recommended Builds", color = Color(0xFFD4AF37), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+
+                    if (buildsList.isEmpty()) {
+                        Text("No builds available", color = Color(0xFF64748B), fontSize = 11.sp)
+                    } else {
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            buildsList.take(2).forEach { build ->
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(Color(0xFF1E293B), RoundedCornerShape(6.dp))
+                                        .border(0.5.dp, Color(0xFF334155), RoundedCornerShape(6.dp))
+                                        .padding(8.dp)
+                                ) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            text = build.title.ifEmpty { "Build" },
+                                            color = Color.White,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 11.sp,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                        if (build.likes > 0) {
+                                            Text(
+                                                text = "❤ ${build.likes}",
+                                                color = Color(0xFFEF4444),
+                                                fontSize = 9.sp
+                                            )
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                        if (build.spell.isNotEmpty()) {
+                                            Text(
+                                                text = "⚡ ${build.spell}",
+                                                color = Color(0xFF8B5CF6),
+                                                fontSize = 8.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                modifier = Modifier
+                                                    .background(Color(0xFF8B5CF6).copy(alpha = 0.15f), RoundedCornerShape(4.dp))
+                                                    .padding(horizontal = 4.dp, vertical = 1.dp)
+                                            )
+                                        }
+                                        if (build.emblem.isNotEmpty()) {
+                                            Text(
+                                                text = "🏅 ${build.emblem}",
+                                                color = Color(0xFFF59E0B),
+                                                fontSize = 8.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                modifier = Modifier
+                                                    .background(Color(0xFFF59E0B).copy(alpha = 0.15f), RoundedCornerShape(4.dp))
+                                                    .padding(horizontal = 4.dp, vertical = 1.dp)
+                                            )
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.height(6.dp))
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                    ) {
+                                        build.items.forEachIndexed { idx, item ->
+                                            if (idx < 6) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .weight(1f)
+                                                        .background(Color(0xFF0F172A), RoundedCornerShape(4.dp))
+                                                        .border(0.5.dp, Color(0xFF475569), RoundedCornerShape(4.dp))
+                                                        .padding(horizontal = 2.dp, vertical = 4.dp),
+                                                    contentAlignment = Alignment.Center
+                                                ) {
+                                                    Text(
+                                                        text = item,
+                                                        color = Color.White,
+                                                        fontSize = 7.sp,
+                                                        textAlign = TextAlign.Center,
+                                                        maxLines = 2,
+                                                        overflow = TextOverflow.Ellipsis,
+                                                        lineHeight = 8.sp
+                                                    )
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -503,4 +656,244 @@ fun PermissionRow(
 @Composable
 fun <T> StateFlow<T>.collectAsStateWithLifecycle(): State<T> {
     return collectAsState()
+}
+
+// ─── Meta Stats Tab Components ───────────────────────────────────────────────
+
+@Composable
+fun MetaStatsTabContent(
+    metaStats: List<HeroMetaStats>,
+    onHeroClick: (Hero) -> Unit,
+    heroes: List<Hero>
+) {
+    var searchQuery by remember { mutableStateOf("") }
+    var sortBy by remember { mutableStateOf("winRate") } // "winRate", "pickRate", "banRate"
+
+    val sortedStats = remember(metaStats, searchQuery, sortBy) {
+        val filtered = if (searchQuery.isBlank()) {
+            metaStats
+        } else {
+            metaStats.filter { it.heroName.contains(searchQuery, ignoreCase = true) }
+        }
+        when (sortBy) {
+            "winRate" -> filtered.sortedByDescending { it.winRate }
+            "pickRate" -> filtered.sortedByDescending { it.pickRate }
+            "banRate" -> filtered.sortedByDescending { it.banRate }
+            else -> filtered
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp)
+    ) {
+        // Search & Filter
+        TextField(
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            placeholder = { Text("Search meta...", color = Color(0xFF94A3B8)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp),
+            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color(0xFF94A3B8)) },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color(0xFF1E293B),
+                unfocusedContainerColor = Color(0xFF1E293B),
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
+            singleLine = true,
+            shape = RoundedCornerShape(10.dp)
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        // Sort Selector Button row
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            SortTabButton(
+                label = "Win Rate",
+                isActive = sortBy == "winRate",
+                onClick = { sortBy = "winRate" },
+                activeColor = Color(0xFF10B981),
+                modifier = Modifier.weight(1f)
+            )
+            SortTabButton(
+                label = "Pick Rate",
+                isActive = sortBy == "pickRate",
+                onClick = { sortBy = "pickRate" },
+                activeColor = Color(0xFF3B82F6),
+                modifier = Modifier.weight(1f)
+            )
+            SortTabButton(
+                label = "Ban Rate",
+                isActive = sortBy == "banRate",
+                onClick = { sortBy = "banRate" },
+                activeColor = Color(0xFFEF4444),
+                modifier = Modifier.weight(1f)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Meta List
+        if (sortedStats.isEmpty()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("No data available", color = Color(0xFF64748B))
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
+                contentPadding = PaddingValues(bottom = 16.dp)
+            ) {
+                itemsIndexed(sortedStats) { index, stat ->
+                    val matchedHero = heroes.find { it.id == stat.heroId }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+                            .border(
+                                width = if (index < 3 && searchQuery.isEmpty()) 1.dp else 0.5.dp,
+                                color = if (index < 3 && searchQuery.isEmpty()) {
+                                    when (index) {
+                                        0 -> Color(0xFFD4AF37) // Gold
+                                        1 -> Color(0xFFC0C0C0) // Silver
+                                        else -> Color(0xFFCD7F32) // Bronze
+                                    }
+                                } else Color(0xFF334155),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .clickable { matchedHero?.let { onHeroClick(it) } }
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Rank Index Number
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .background(
+                                    if (index < 3 && searchQuery.isEmpty()) {
+                                        when (index) {
+                                            0 -> Color(0xFFD4AF37).copy(alpha = 0.2f)
+                                            1 -> Color(0xFFC0C0C0).copy(alpha = 0.2f)
+                                            else -> Color(0xFFCD7F32).copy(alpha = 0.2f)
+                                        }
+                                    } else Color.Transparent,
+                                    CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "${index + 1}",
+                                color = if (index < 3 && searchQuery.isEmpty()) {
+                                    when (index) {
+                                        0 -> Color(0xFFD4AF37)
+                                        1 -> Color(0xFFC0C0C0)
+                                        else -> Color(0xFFCD7F32)
+                                    }
+                                } else Color(0xFF94A3B8),
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        // Hero Avatar
+                        AsyncImage(
+                            model = stat.imgSrc,
+                            contentDescription = stat.heroName,
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .border(1.dp, Color(0xFF334155), CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        // Name + Role
+                        Column(modifier = Modifier.weight(1.2f)) {
+                            Text(
+                                text = stat.heroName,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 13.sp,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = stat.role.joinToString(", "),
+                                color = Color(0xFFD4AF37),
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+
+                        // Stats Column: WR, PR, BR
+                        Row(
+                            modifier = Modifier.weight(2f),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            StatBox(label = "WR", value = "${String.format("%.1f", stat.winRate)}%", color = if (stat.winRate >= 50) Color(0xFF10B981) else Color(0xFFEF4444))
+                            StatBox(label = "PR", value = "${String.format("%.1f", stat.pickRate)}%", color = Color(0xFF3B82F6))
+                            StatBox(label = "BR", value = "${String.format("%.1f", stat.banRate)}%", color = Color(0xFFEF4444))
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SortTabButton(
+    label: String,
+    isActive: Boolean,
+    onClick: () -> Unit,
+    activeColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .background(
+                if (isActive) activeColor.copy(alpha = 0.15f) else Color(0xFF1E293B),
+                RoundedCornerShape(6.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = if (isActive) activeColor else Color(0xFF334155),
+                shape = RoundedCornerShape(6.dp)
+            )
+            .clickable { onClick() }
+            .padding(vertical = 6.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            color = if (isActive) activeColor else Color(0xFF94A3B8),
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+private fun StatBox(label: String, value: String, color: Color) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.width(48.dp)
+    ) {
+        Text(text = label, color = Color(0xFF94A3B8), fontSize = 8.sp)
+        Text(text = value, color = color, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+    }
 }
