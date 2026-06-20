@@ -78,7 +78,8 @@ class FloatingOverlayService : Service() {
                         Log.d(tag, "Current foreground app: $foregroundApp")
                         if (foregroundApp != null) {
                             val isMlbb = foregroundApp == "com.mobile.legends"
-                            if (isMlbb) {
+                            val isOwnApp = foregroundApp == packageName
+                            if (isMlbb || isOwnApp) {
                                 overlayViewManager.showOverlay()
                             } else {
                                 if (autoHide) {
@@ -98,17 +99,42 @@ class FloatingOverlayService : Service() {
     private fun getForegroundPackageName(): String? {
         val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val time = System.currentTimeMillis()
-        // Query last 5 minutes of usage events to be more robust
-        val events = usageStatsManager.queryEvents(time - 1000 * 60 * 5, time)
-        val event = UsageEvents.Event()
+        
+        // Method 1: Query events (more precise for real-time changes)
         var lastForegroundApp: String? = null
-        while (events.hasNextEvent()) {
-            events.getNextEvent(event)
-            if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
-                lastForegroundApp = event.packageName
+        try {
+            val events = usageStatsManager.queryEvents(time - 1000 * 60 * 2, time) // last 2 minutes
+            val event = UsageEvents.Event()
+            while (events.hasNextEvent()) {
+                events.getNextEvent(event)
+                if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
+                    lastForegroundApp = event.packageName
+                }
             }
+        } catch (e: Exception) {
+            Log.e(tag, "Failed to query events", e)
         }
-        return lastForegroundApp
+        
+        if (lastForegroundApp != null) {
+            return lastForegroundApp
+        }
+        
+        // Method 2: Fallback to queryUsageStats (more robust for static/long-running states)
+        try {
+            val stats = usageStatsManager.queryUsageStats(
+                UsageStatsManager.INTERVAL_DAILY,
+                time - 1000 * 60 * 10, // last 10 minutes
+                time
+            )
+            if (!stats.isNullOrEmpty()) {
+                val sorted = stats.sortedByDescending { it.lastTimeUsed }
+                return sorted.firstOrNull()?.packageName
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Failed to query usage stats", e)
+        }
+        
+        return null
     }
 
     private fun createNotificationChannel() {

@@ -67,6 +67,19 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         updateViewModelStatus()
+        
+        // Auto-start service if auto-detect is enabled and draw overlay permission is granted
+        val prefs = getSharedPreferences("mlbb_picker_prefs", Context.MODE_PRIVATE)
+        val autoDetect = prefs.getBoolean("pref_auto_detect", true)
+        if (autoDetect && !FloatingOverlayService.isRunning && checkOverlayPermission()) {
+            val intent = Intent(this, FloatingOverlayService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent)
+            } else {
+                startService(intent)
+            }
+            updateViewModelStatus()
+        }
     }
 
     private fun updateViewModelStatus() {

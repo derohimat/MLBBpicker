@@ -67,6 +67,20 @@ async function main() {
     fs.writeFileSync(outputPath, JSON.stringify(heroes, null, 2));
     console.log(`✅ Saved ${heroes.length} heroes to ${outputPath}`);
 
+    // Generate and save heroes.json in sync with meta stats
+    const heroesList = json.data.heroes.map(h => ({
+      id: h.hero_id,
+      hero_name: h.hero_name,
+      role: Array.isArray(h.role) ? h.role.join(', ') : h.role,
+      lane: Array.isArray(h.lane) ? h.lane.join(', ') : h.lane,
+      speciality: Array.isArray(h.speciality) ? h.speciality.join(', ') : h.speciality,
+      img_src: h.img_src
+    })).sort((a, b) => a.hero_name.localeCompare(b.hero_name));
+
+    const heroesPath = path.join(__dirname, '..', 'app', 'src', 'main', 'assets', 'heroes.json');
+    fs.writeFileSync(heroesPath, JSON.stringify(heroesList, null, 2));
+    console.log(`✅ Saved ${heroesList.length} heroes to ${heroesPath}`);
+
     // Print top 10 by win rate
     const sorted = [...heroes].sort((a, b) => b.win_rate - a.win_rate);
     console.log('\nTop 10 Win Rate (Mythic):');

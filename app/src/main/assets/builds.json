@@ -1,26 +1,6 @@
 {
   "1": [
     {
-      "title": "This is build is good to catch kills for the weak enemies ;)",
-      "author": "PERFURADORCELESTIAL",
-      "spell": "Inspire",
-      "emblem": "Marksman",
-      "emblem_talents": [
-        "Fatal",
-        "Bargain Hunter",
-        "Quantum Charge"
-      ],
-      "items": [
-        "Sky Piercer",
-        "Swift Boots",
-        "Windtalker",
-        "Haas' Claws",
-        "Berserker's Fury",
-        "Malefic Gun"
-      ],
-      "likes": 13
-    },
-    {
       "title": "Crit x speed delete mm, tank, kill fighter jungler tank with ease, troll tank by massive crit and speed. ",
       "author": "Gigachad001119",
       "spell": "Inspire",
@@ -38,25 +18,45 @@
         "Sea Halberd",
         "Blade of Despair"
       ],
-      "likes": 8
+      "likes": 14
     },
     {
-      "title": "Best for dominating mid  to late game with good positioning ",
-      "author": "blue_rangerk",
+      "title": "Absolute Tank Killer And For Fast Pushing easy delete",
+      "author": "Y-AxisGuide",
       "spell": "Inspire",
       "emblem": "Marksman",
       "emblem_talents": [
         "Agility",
         "Weapon Master",
-        "Weakness Finder"
+        "War Cry"
+      ],
+      "items": [
+        "Windtalker",
+        "Corrosion Scythe",
+        "Demon Hunter Sword",
+        "Golden Staff",
+        "Malefic Gun",
+        "Blade of Despair"
+      ],
+      "likes": 5
+    },
+    {
+      "title": "best build for safe game",
+      "author": "Djboy",
+      "spell": "Inspire",
+      "emblem": "Marksman",
+      "emblem_talents": [
+        "Fatal",
+        "Bargain Hunter",
+        "Quantum Charge"
       ],
       "items": [
         "Swift Boots",
         "Haas' Claws",
+        "Windtalker",
+        "Malefic Gun",
         "Berserker's Fury",
-        "Demon Hunter Sword",
-        "Sky Piercer",
-        "Malefic Roar"
+        "Sea Halberd"
       ],
       "likes": 4
     }
@@ -80,69 +80,69 @@
         "Radiant Armor",
         "Immortality"
       ],
-      "likes": 4
+      "likes": 5
     },
     {
-      "title": "Defensive Balmond, focus on healing with passive",
-      "author": "Keroronom",
-      "spell": "Vengeance",
+      "title": "Cannibal balmond\n\n2 main features:\n\nUlt has improved execution\n\nKilling grants a great amount of health back, you can sustain yourself by endless slaughter ",
+      "author": "BuildSmith",
+      "spell": "Ice Retribution",
       "emblem": "Fighter",
       "emblem_talents": [
-        "Agility",
+        "Killing Spree",
         "Festival of Blood",
-        "Brave Smite"
+        "Thrill"
       ],
       "items": [
         "Tough Boots",
         "War Axe",
-        "Dominance Ice",
-        "Oracle",
+        "Sky Piercer",
         "Queen's Wings",
-        "Brute Force Breastplate"
+        "Blade of Despair",
+        "Oracle"
       ],
       "likes": 2
     },
     {
-      "title": "This build completely leans into his sustain and ability to execute enemies, Oracle for his passive HP regen (one kill cna practically reset your health bar with this item), sky piercer adding an execute threshold to your ult, war axe providing spell vamp during cyclone sweep as well as cursed helmet for that annoying continuous burning aura for your skill 2 and objective securing as standing directly on the lord or turtle while spinning, that extra tick damage is guaranteed to get you your objective. Balmond doesn't have mana so BFB provides stacking defense and movement speed as you spam your skills constantly providing permanent and consistent tankiness and finally Hunter provides a massive physical penetration to your skill one's armor shred because why not and hitting an enemy 5 times (skill 2 handles this) provides a huge speed boost to keep up with fleeing targets. Flicker for that ULT-FLICKER Combo, ifykyk (tap the ult then immediately flicker towards low HP enemies to catch them by surprise), you don't know how satisfying hitting this combo feels. And the fighter emblem for spell vamp and physical attack",
-      "author": "1shot",
+      "title": "Emblem Balmond Old,Sustain Untuk Battle 1 vs 5",
+      "author": "Trouble_Catcher",
       "spell": "Flicker",
       "emblem": "Fighter",
       "emblem_talents": [
-        "Firmness",
+        "Rupture",
         "Festival of Blood",
-        "Brave Smite"
+        "Killing Spree"
       ],
       "items": [
-        "Oracle",
-        "Sky Piercer",
+        "Warrior Boots",
         "War Axe",
-        "Cursed Helmet",
-        "Brute Force Breastplate",
-        "Hunter Strike"
+        "Sky Piercer",
+        "Queen's Wings",
+        "Dominance Ice",
+        "Rose Gold Meteor"
       ],
       "likes": 1
     }
   ],
   "3": [
     {
-      "title": "With this build, you are not a frontline fighter but a ghost. Use your MS from hunter and heptaseas to rotate between bushes and achieve a surprising amount of ambush kills. Your only goal is to wait for your enemy marksman and mage to step slightly out of position and the microsecond they do, delete them and dash away before their tank or support can blink. I suggest petrify over execute and flicker since your ult knocks up enemies and petrify can be used just as they land preventing them from using WoN, Winter crown or any dash skills to escape your follow up endless battle enhanced basic attack. And the assassin emblem is non negotiable for its high adaptive pen and MS. If the game goes very late and the enemy builds antique cuirass you could sell blade of heptaseas for either a sea halberd or a second BoD to overpower their defense",
-      "author": "1shot",
-      "spell": "Petrify",
+      "title": "1st - build boots don't go straight for magic shoes\n2nd - build fury hammer again don't go straight for hunter strike\n3rd - if there is a high sustain hero go sea halberd as your first item\n4th - go either endless battle or complete hunter striken depending on opponents lineup (go endless when opponents lineup is tanky or sustain rely), (go hunter strike when opponent is squishy and has a lot of moblity)\n5th - go malefic roar (you can also change malefic roar with battle axe for sustain. battle axe for burst type heroes on enemy side)\n6th - blade of despair, on late game you can switch it with (rose gold meteor, immortality, winter crown) for survivability",
+      "author": "KokoIZ",
+      "spell": "Ice Retribution",
       "emblem": "Assassin",
       "emblem_talents": [
-        "Rupture",
-        "Master Assassin",
-        "Lethal Ignition"
+        "Seasoned Hunter",
+        "Lethal Ignition",
+        "Thrill"
       ],
       "items": [
-        "Malefic Roar",
+        "Magic Shoes",
         "Hunter Strike",
-        "Sky Piercer",
+        "Sea Halberd",
         "Endless Battle",
-        "Blade of Despair",
-        "Blade of the Heptaseas"
+        "Malefic Roar",
+        "Blade of Despair"
       ],
-      "likes": 6
+      "likes": 2
     },
     {
       "title": "\"Onimaru is unpredictable.\" No one expects an Inspire Saber. Swap the Piercer for Malefic Roar or Sea Halberd if your teammates are vegetables, or do it late game by selling your boots instead. Prioritize squishies, of course, and turret pushing. You need Bargain Hunter for expensive items and Weakness Finder to ensure they won't escape you (unless they have multiple blinks or dashes, so use this strategically). If the squishies are close to each other and you think you won't be stunned, you can use S1 + Inspire to, as Saber puts it, \"KILL ALL AT ONCE.\" Or just use S1 + Inspire to rush turrets.",
@@ -165,47 +165,27 @@
       "likes": 2
     },
     {
-      "title": "1st - build boots don't go straight for magic shoes\n2nd - build fury hammer again don't go straight for hunter strike\n3rd - if there is a high sustain hero go sea halberd as your first item\n4th - go either endless battle or complete hunter striken depending on opponents lineup (go endless when opponents lineup is tanky or sustain rely), (go hunter strike when opponent is squishy and has a lot of moblity)\n5th - go malefic roar (you can also change malefic roar with battle axe for sustain. battle axe for burst type heroes on enemy side)\n6th - blade of despair, on late game you can switch it with (rose gold meteor, immortality, winter crown) for survivability",
-      "author": "KokoIZ",
-      "spell": "Ice Retribution",
+      "title": "For roam\n",
+      "author": "winsense",
+      "spell": "Execute",
       "emblem": "Assassin",
       "emblem_talents": [
-        "Seasoned Hunter",
-        "Lethal Ignition",
-        "Thrill"
+        "Rupture",
+        "Master Assassin",
+        "Lethal Ignition"
       ],
       "items": [
-        "Magic Shoes",
+        "Sky Piercer",
+        "Blade of the Heptaseas",
         "Hunter Strike",
-        "Sea Halberd",
-        "Endless Battle",
         "Malefic Roar",
-        "Blade of Despair"
+        "Blade of Despair",
+        "Fleeting Time"
       ],
-      "likes": 2
+      "likes": 1
     }
   ],
   "4": [
-    {
-      "title": "Alice Build Top Global",
-      "author": "Thamuz_Z",
-      "spell": "",
-      "emblem": "Common",
-      "emblem_talents": [
-        "Vitality",
-        "Tenacity",
-        "Impure Rage"
-      ],
-      "items": [
-        "Tough Boots",
-        "Oracle",
-        "Queen's Wings",
-        "Brute Force Breastplate",
-        "Guardian Helmet",
-        "Clock of Destiny"
-      ],
-      "likes": 15
-    },
     {
       "title": "Alice build",
       "author": "Kuya.DOKK",
@@ -245,6 +225,26 @@
         "Dominance Ice"
       ],
       "likes": 3
+    },
+    {
+      "title": "Gacor build sanford 2026",
+      "author": "syahdan",
+      "spell": "Flicker",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Agility",
+        "Festival of Blood",
+        "Brave Smite"
+      ],
+      "items": [
+        "Tough Boots",
+        "Oracle",
+        "Cursed Helmet",
+        "Brute Force Breastplate",
+        "Chastise Pauldron",
+        "Queen's Wings"
+      ],
+      "likes": 2
     }
   ],
   "5": [
@@ -269,6 +269,26 @@
       "likes": 5
     },
     {
+      "title": "CDR / Burst",
+      "author": "Duskkeeper",
+      "spell": "Flameshot",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Rupture",
+        "Pull Yourself Together",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Enchanted Talisman",
+        "Genius Wand",
+        "Lightning Truncheon",
+        "Holy Crystal",
+        "Winter Crown"
+      ],
+      "likes": 2
+    },
+    {
       "title": "Burst Damage. You can change Inspire Emblem to Rupture if you want more Damage.",
       "author": "ronaldoyusuf",
       "spell": "Flicker",
@@ -287,69 +307,9 @@
         "Blood Wings"
       ],
       "likes": 1
-    },
-    {
-      "title": "CDR / Burst",
-      "author": "Duskkeeper",
-      "spell": "Flameshot",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Rupture",
-        "Pull Yourself Together",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Enchanted Talisman",
-        "Genius Wand",
-        "Lightning Truncheon",
-        "Holy Crystal",
-        "Winter Crown"
-      ],
-      "likes": 1
     }
   ],
   "6": [
-    {
-      "title": "The regular build for Tigreal and used by top global",
-      "author": "Alekk",
-      "spell": "Flicker",
-      "emblem": "Tank",
-      "emblem_talents": [
-        "Firmness",
-        "Wilderness Blessing",
-        "Concussive Blast"
-      ],
-      "items": [
-        "Tough Boots",
-        "Dominance Ice",
-        "Fleeting Time",
-        "Chastise Pauldron",
-        "Athena's Shield",
-        "Immortality"
-      ],
-      "likes": 6
-    },
-    {
-      "title": "Hybrid defense",
-      "author": "Aj67",
-      "spell": "Revitalize",
-      "emblem": "Common",
-      "emblem_talents": [
-        "Firmness",
-        "Tenacity",
-        "Focusing Mark"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Antique Cuirass",
-        "Athena's Shield",
-        "Guardian Helmet",
-        "Black Ice Shield",
-        "Thunder Belt"
-      ],
-      "likes": 6
-    },
     {
       "title": "One shot tigreal ",
       "author": "Tsuyoi",
@@ -368,30 +328,50 @@
         "Sea Halberd",
         "Blade of Despair"
       ],
-      "likes": 5
+      "likes": 7
+    },
+    {
+      "title": "For Team fights \nEnemy lifesteal core*\nEnemy MM is Skill Caster*\nEnemy Physical damage*",
+      "author": "EDLOX",
+      "spell": "Flicker",
+      "emblem": "Tank",
+      "emblem_talents": [
+        "Wilderness Blessing",
+        "Agility",
+        "Concussive Blast"
+      ],
+      "items": [
+        "Tough Boots",
+        "Antique Cuirass",
+        "Dominance Ice",
+        "Fleeting Time",
+        "Guardian Helmet",
+        "Chastise Pauldron"
+      ],
+      "likes": 1
+    },
+    {
+      "title": "athena can be replaced by radiant, immortality can be replaced by blade armor/guardian helmet/chastise pouldron. vitality can be changed to firmness or agilty , focusing mark can be replaced with concussive blast. fleeting time is optional, if the respawn time is more than 50 seconds you can replace the fleeting time for blade armor or guardian helmet or chastise pouldron.  Good Luck :D",
+      "author": "NeoMT",
+      "spell": "Flicker",
+      "emblem": "Tank",
+      "emblem_talents": [
+        "Vitality",
+        "Pull Yourself Together",
+        "Focusing Mark"
+      ],
+      "items": [
+        "Tough Boots",
+        "Dominance Ice",
+        "Fleeting Time",
+        "Antique Cuirass",
+        "Athena's Shield",
+        "Immortality"
+      ],
+      "likes": 1
     }
   ],
   "7": [
-    {
-      "title": "Use it yeah",
-      "author": "愛|•KEN",
-      "spell": "Vengeance",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Festival of Blood",
-        "Temporal Reign"
-      ],
-      "items": [
-        "Hunter Strike",
-        "War Axe",
-        "Blade of Despair",
-        "Endless Battle",
-        "Malefic Roar",
-        "Sea Halberd"
-      ],
-      "likes": 7
-    },
     {
       "title": "I'm back ok this build is use for when you know you are losing so that all",
       "author": "Fake_Gojo",
@@ -410,7 +390,7 @@
         "Blade of Despair",
         "Queen's Wings"
       ],
-      "likes": 4
+      "likes": 5
     },
     {
       "title": "for exp",
@@ -430,30 +410,30 @@
         "Queen's Wings",
         "Blade of Despair"
       ],
-      "likes": 4
+      "likes": 5
+    },
+    {
+      "title": "Kinda fun using this one",
+      "author": "GhostKid",
+      "spell": "Bloody Retribution",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Thrill",
+        "Weapon Master",
+        "Temporal Reign"
+      ],
+      "items": [
+        "Warrior Boots",
+        "Hunter Strike",
+        "Blade of the Heptaseas",
+        "Endless Battle",
+        "Blade of Despair",
+        "Rose Gold Meteor"
+      ],
+      "likes": 3
     }
   ],
   "8": [
-    {
-      "title": "Sustain Karina (Works most of the time if you succesfully snowball\n",
-      "author": "serena",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Festival of Blood",
-        "Inspire",
-        "Killing Spree"
-      ],
-      "items": [
-        "Tough Boots",
-        "Clock of Destiny",
-        "Brute Force Breastplate",
-        "Chastise Pauldron",
-        "Queen's Wings",
-        "Oracle"
-      ],
-      "likes": 6
-    },
     {
       "title": "karina con Bull Híbrida sin Daño Físico, Echa por loRKOol en el 2024, la bull es aprovechada por su reducción de enfriamiento como de su primera y segunda avilidad, tiene Regeneración excesiva aprovechando la pasiva de su primera avilidad, los emblemas consisten en regeneración por acumulaciones, Solo el  racha de asesinatos, fuera de ahí toda la bull esta echa para reducción y aumentar la regeneración y defensa, Dato el oráculo puede intercambiarse por cualquier otro ítem NECESARIO ",
       "author": "loRKOol",
@@ -493,6 +473,26 @@
         "Winter Crown"
       ],
       "likes": 1
+    },
+    {
+      "title": "Good for squishy pick ups, don't use if the enemy has too much cc (crowd control), good pair with any healers/supports",
+      "author": "neojeje",
+      "spell": "Retribution",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Rupture",
+        "Festival of Blood",
+        "Killing Spree"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Sky Piercer",
+        "Lightning Truncheon",
+        "Holy Crystal",
+        "Blood Wings",
+        "Divine Glaive"
+      ],
+      "likes": 0
     }
   ],
   "9": [
@@ -514,27 +514,7 @@
         "Immortality",
         "Guardian Helmet"
       ],
-      "likes": 3
-    },
-    {
-      "title": "Tank build /w flicker you can change this into petrify (encourage or conceal)",
-      "author": "Dhirk07",
-      "spell": "",
-      "emblem": "Tank",
-      "emblem_talents": [
-        "Thrill",
-        "Wilderness Blessing",
-        "Concussive Blast"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Thunder Belt",
-        "Dominance Ice",
-        "Antique Cuirass",
-        "Guardian Helmet",
-        "Immortality"
-      ],
-      "likes": 2
+      "likes": 4
     },
     {
       "title": "Yang penting yakin ",
@@ -553,6 +533,26 @@
         "Blade Armor",
         "Chastise Pauldron",
         "Fleeting Time"
+      ],
+      "likes": 2
+    },
+    {
+      "title": "Tank build /w flicker you can change this into petrify (encourage or conceal)",
+      "author": "Dhirk07",
+      "spell": "",
+      "emblem": "Tank",
+      "emblem_talents": [
+        "Thrill",
+        "Wilderness Blessing",
+        "Concussive Blast"
+      ],
+      "items": [
+        "Rapid Boots",
+        "Thunder Belt",
+        "Dominance Ice",
+        "Antique Cuirass",
+        "Guardian Helmet",
+        "Immortality"
       ],
       "likes": 2
     }
@@ -638,27 +638,7 @@
         "Lightning Truncheon",
         "Divine Glaive"
       ],
-      "likes": 6
-    },
-    {
-      "title": "True dmg spamming ",
-      "author": "Debt",
-      "spell": "Vengeance",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Agility",
-        "Festival of Blood",
-        "Temporal Reign"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Starlium Scythe",
-        "Blood Wings",
-        "Endless Battle",
-        "Malefic Roar",
-        "Dominance Ice"
-      ],
-      "likes": 2
+      "likes": 8
     },
     {
       "title": "exp jungle mid roam*(Don't do it)",
@@ -678,30 +658,30 @@
         "Divine Glaive",
         "Holy Crystal"
       ],
-      "likes": 1
+      "likes": 2
+    },
+    {
+      "title": "This build focuses only on skill 1 and passive it deals great damage on turret if you get the two attack item",
+      "author": "Anti-Hero",
+      "spell": "Bloody Retribution",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Rupture",
+        "Festival of Blood",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Demon Shoes",
+        "Blade of the Heptaseas",
+        "Endless Battle",
+        "Blade of Despair",
+        "Malefic Roar",
+        "Haas' Claws"
+      ],
+      "likes": 2
     }
   ],
   "12": [
-    {
-      "title": "messi messi messi, gold lane, flicker",
-      "author": "senseirice",
-      "spell": "",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Fatal",
-        "Pull Yourself Together",
-        "Quantum Charge"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Berserker's Fury",
-        "Haas' Claws",
-        "Malefic Gun",
-        "Windtalker",
-        "Wind of Nature"
-      ],
-      "likes": 5
-    },
     {
       "title": "Haas Claws - Lifesteal\nDemon Boots - Mana Regen\nBerseker Fury - Crit Damage\nMalefic Gun - Attack Range\nWindtalker - Attack Speed\nWind of Nature - Immunity\n\nTips:\n• Always buy Haas Claws first to have lifesteal in early game.\n• In late game, replace the Demon Boots for Warrior/Tough Boots for physical attack and movement speed.\n• When choosing battle spells: Aegis, for protection against tanks and enemy attacks, if you know how to use Bruno properly when it comes to dashing and escaping, use this spell, but it gets useless in late game because the enemies now have full items in late game, the shield breaks easily so be careful when using Aegis. Flicker, this is a suitable battle spell for Bruno and beginners should always start on Flicker as their main battle spell, to escape against enemies. Purify, to cleanse debuffs and makes you immune to crowd control for 1.2s and gives you movement speed.\n• When choosing battle emblems: Fatal (1st Tier), gains 4% of critical damage against enemies. Tenacity (2nd Tier), it increases your damage reduction when your HP is low. Quantum Charge (3rd Tier), it provides HP regeneration and a burst of movement speed whenever you deal damage with a basic attack.",
       "author": "SimXn",
@@ -720,7 +700,7 @@
         "Windtalker",
         "Wind of Nature"
       ],
-      "likes": 1
+      "likes": 2
     },
     {
       "title": "CRIT + high pATK",
@@ -741,6 +721,26 @@
         "Sea Halberd"
       ],
       "likes": 1
+    },
+    {
+      "title": "onic kelra bruno build\n",
+      "author": "AFZZAT",
+      "spell": "Flicker",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Fatal",
+        "Master Assassin",
+        "Quantum Charge"
+      ],
+      "items": [
+        "Haas' Claws",
+        "Tough Boots",
+        "Berserker's Fury",
+        "Malefic Gun",
+        "Windtalker",
+        "Wind of Nature"
+      ],
+      "likes": 0
     }
   ],
   "13": [
@@ -762,7 +762,7 @@
         "Blade of Despair",
         "Great Dragon Spear"
       ],
-      "likes": 10
+      "likes": 14
     },
     {
       "title": "full crit damage, just farm till the full build and make boots according to the enemy.",
@@ -785,22 +785,22 @@
       "likes": 5
     },
     {
-      "title": "CLint ",
-      "author": "minsik",
+      "title": "absurd damage",
+      "author": "KxxxxxS",
       "spell": "Flicker",
       "emblem": "Fighter",
       "emblem_talents": [
         "Thrill",
         "Weapon Master",
-        "Quantum Charge"
+        "Impure Rage"
       ],
       "items": [
-        "Tough Boots",
+        "Blade of the Heptaseas",
         "Endless Battle",
-        "Malefic Gun",
-        "Queen's Wings",
-        "Blade of Despair",
-        "Rose Gold Meteor"
+        "Malefic Roar",
+        "Rose Gold Meteor",
+        "Sky Piercer",
+        "Blade of Despair"
       ],
       "likes": 2
     }
@@ -869,24 +869,44 @@
   ],
   "15": [
     {
-      "title": "Hybrid CD and Ambush",
-      "author": "sunfish",
+      "title": "Penetration, Finisher",
+      "author": "kurirMLBB",
       "spell": "Flicker",
       "emblem": "Assassin",
       "emblem_talents": [
-        "Agility",
-        "Bargain Hunter",
-        "Impure Rage"
+        "Lethal Ignition",
+        "Weapon Master",
+        "Rupture"
       ],
       "items": [
-        "Rapid Boots",
-        "Enchanted Talisman",
-        "Glowing Wand",
-        "Lightning Truncheon",
-        "Wishing Lantern",
-        "Starlium Scythe"
+        "Arcane Boots",
+        "Genius Wand",
+        "Sky Piercer",
+        "Blood Wings",
+        "Divine Glaive",
+        "Glowing Wand"
       ],
-      "likes": 7
+      "likes": 3
+    },
+    {
+      "title": "Sustained Damage / Burst Damage / Sustain",
+      "author": "Duskkeeper",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Inspire",
+        "Weapon Master",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Enchanted Talisman",
+        "Genius Wand",
+        "Lightning Truncheon",
+        "Holy Crystal",
+        "Blood Wings"
+      ],
+      "likes": 1
     },
     {
       "title": "ONE SHOT ONE KILL",
@@ -907,49 +927,9 @@
         "Blood Wings"
       ],
       "likes": 1
-    },
-    {
-      "title": "Sustained Damage / Burst Damage / Sustain",
-      "author": "Duskkeeper",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Inspire",
-        "Weapon Master",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Enchanted Talisman",
-        "Genius Wand",
-        "Lightning Truncheon",
-        "Holy Crystal",
-        "Blood Wings"
-      ],
-      "likes": 0
     }
   ],
   "16": [
-    {
-      "title": "sakit banget split pus juga bisa",
-      "author": "sukarno",
-      "spell": "Inspire",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Master Assassin",
-        "Lethal Ignition",
-        "Thrill"
-      ],
-      "items": [
-        "Windtalker",
-        "Sky Piercer",
-        "Haas' Claws",
-        "Sea Halberd",
-        "Rose Gold Meteor",
-        "Great Dragon Spear"
-      ],
-      "likes": 16
-    },
     {
       "title": "Blablablableblebleblublublu",
       "author": "zilongzilong",
@@ -989,29 +969,29 @@
         "Sea Halberd"
       ],
       "likes": 2
+    },
+    {
+      "title": "Remove repairt boost after late game ",
+      "author": "Chokun310755",
+      "spell": "Inspire",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Fatal",
+        "Master Assassin",
+        "War Cry"
+      ],
+      "items": [
+        "Windtalker",
+        "Haas' Claws",
+        "Malefic Roar",
+        "Berserker's Fury",
+        "Blade of Despair",
+        "Oracle"
+      ],
+      "likes": 1
     }
   ],
   "17": [
-    {
-      "title": "Build designed for snowball and high early pressure. Sustain on par with fighter emblem and war axe builds thanks to high damage and killing spree talent. Blade of despair can be swapped for hunters strike or malefic roar depending on what enemy is building. Buy dagger for attack speed to farm faster. Immortality can be swapped for situational defensive item. ",
-      "author": "Kacpur",
-      "spell": "Bloody Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Festival of Blood",
-        "Killing Spree"
-      ],
-      "items": [
-        "Tough Boots",
-        "Blade of the Heptaseas",
-        "Blade of Despair",
-        "Queen's Wings",
-        "Malefic Roar",
-        "Immortality"
-      ],
-      "likes": 7
-    },
     {
       "title": "The most cohesive item",
       "author": "ᴋᴀᴢᴜᴋɪ™",
@@ -1030,24 +1010,44 @@
         "Sea Halberd",
         "Endless Battle"
       ],
-      "likes": 4
+      "likes": 5
     },
     {
-      "title": "Kekebalan tubuh ",
-      "author": "Ankaa",
+      "title": "Early invade to more than 4mins  and First rotation exp then mid Not priority gold lane",
+      "author": "Fanny09",
       "spell": "Bloody Retribution",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Lethal Ignition",
+        "Festival of Blood",
+        "Rupture"
+      ],
+      "items": [
+        "Sky Piercer",
+        "Blade of the Heptaseas",
+        "Sea Halberd",
+        "Rose Gold Meteor",
+        "Malefic Roar",
+        "Queen's Wings"
+      ],
+      "likes": 3
+    },
+    {
+      "title": ":v",
+      "author": "Kuze_Indonesia",
+      "spell": "Retribution",
       "emblem": "Fighter",
       "emblem_talents": [
         "Rupture",
         "Festival of Blood",
-        "Impure Rage"
+        "Killing Spree"
       ],
       "items": [
-        "War Axe",
         "Tough Boots",
-        "Brute Force Breastplate",
+        "War Axe",
+        "Sky Piercer",
         "Malefic Roar",
-        "Endless Battle",
+        "Brute Force Breastplate",
         "Queen's Wings"
       ],
       "likes": 3
@@ -1075,26 +1075,6 @@
       "likes": 5
     },
     {
-      "title": "Layla build gw",
-      "author": "Moontonkekbahlil",
-      "spell": "Flicker",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Fatal",
-        "Master Assassin",
-        "Weakness Finder"
-      ],
-      "items": [
-        "Warrior Boots",
-        "Windtalker",
-        "Haas' Claws",
-        "Berserker's Fury",
-        "Malefic Gun",
-        "Sea Halberd"
-      ],
-      "likes": 3
-    },
-    {
       "title": "damage build bisa bunuh orang di base nya sendiri",
       "author": "ERORR404",
       "spell": "Flicker",
@@ -1110,6 +1090,26 @@
         "Windtalker",
         "Haas' Claws",
         "Rose Gold Meteor",
+        "Blade of Despair"
+      ],
+      "likes": 1
+    },
+    {
+      "title": "Sustained Damage / Burst",
+      "author": "Duskkeeper",
+      "spell": "Flicker",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Fatal",
+        "Weapon Master",
+        "Quantum Charge"
+      ],
+      "items": [
+        "Rapid Boots",
+        "Berserker's Fury",
+        "Haas' Claws",
+        "Malefic Gun",
+        "Windtalker",
         "Blade of Despair"
       ],
       "likes": 1
@@ -1196,7 +1196,7 @@
         "Blood Wings",
         "Immortality"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
       "title": "Utility setup, for the purpose for debuffing the enemy comps and a better sustain for the team.\n\nLolita's role is to ruin enemies' momentum and create one for the team",
@@ -1241,26 +1241,6 @@
   ],
   "21": [
     {
-      "title": "selamat menggunakan rancangan saya",
-      "author": "tiangaring",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Swift",
-        "Seasoned Hunter",
-        "War Cry"
-      ],
-      "items": [
-        "Hunter Strike",
-        "Magic Shoes",
-        "Sky Piercer",
-        "Blade of Despair",
-        "Endless Battle",
-        "Rose Gold Meteor"
-      ],
-      "likes": 7
-    },
-    {
       "title": "Lumayan udh jago coba bagus cc 30%",
       "author": "Naufa",
       "spell": "Bloody Retribution",
@@ -1299,29 +1279,29 @@
         "Malefic Roar"
       ],
       "likes": 2
-    }
-  ],
-  "22": [
+    },
     {
-      "title": "Freya Jungle\n\nPastikan kalian punya Roam/Exp TB untuk menggunakan Build ini dikarenakan kalian bukan tipe sustain tetapi sebagai damage dealer tim. Sepatu bisa ganti sesuai kondisi musuh yg dilawan seperti apa dan untuk item terakhir itu situasional ya jadi bisa ganti ke winter/immortal/won.",
-      "author": "lamenty",
-      "spell": "Ice Retribution",
+      "title": "Flexible for escape due to high cooldown reduction and adjusting to the current nerf, high damage potential, sea halbert can be replaced to sky piercer or depending to the situation",
+      "author": "lemur",
+      "spell": "Retribution",
       "emblem": "Assassin",
       "emblem_talents": [
-        "Fatal",
+        "Thrill",
         "Seasoned Hunter",
         "War Cry"
       ],
       "items": [
-        "Rapid Boots",
-        "Windtalker",
-        "Haas' Claws",
-        "Berserker's Fury",
-        "Malefic Gun",
-        "Immortality"
+        "Hunter Strike",
+        "Magic Shoes",
+        "War Axe",
+        "Sea Halberd",
+        "Blade of Despair",
+        "Malefic Roar"
       ],
-      "likes": 10
-    },
+      "likes": 1
+    }
+  ],
+  "22": [
     {
       "title": "For exp lane.Buy tough boots if enemy have magic power ",
       "author": "Moba_nerfharley",
@@ -1341,6 +1321,26 @@
         "Sea Halberd"
       ],
       "likes": 7
+    },
+    {
+      "title": "p",
+      "author": "cro1x",
+      "spell": "Flicker",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Thrill",
+        "Festival of Blood",
+        "War Cry"
+      ],
+      "items": [
+        "Corrosion Scythe",
+        "Endless Battle",
+        "Golden Staff",
+        "War Axe",
+        "Brute Force Breastplate",
+        "Oracle"
+      ],
+      "likes": 5
     },
     {
       "title": "sustain/attackspeed\ni use rapid boots so freya can chase more faster.... you can also use tough if u want to",
@@ -1364,26 +1364,6 @@
     }
   ],
   "23": [
-    {
-      "title": "top hero build",
-      "author": "Drunk",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Rupture",
-        "Bargain Hunter",
-        "Impure Rage"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Enchanted Talisman",
-        "Glowing Wand",
-        "Lightning Truncheon",
-        "Ice Queen Wand",
-        "Fleeting Time"
-      ],
-      "likes": 7
-    },
     {
       "title": "trinity w poke",
       "author": "mmjj",
@@ -1423,6 +1403,26 @@
         "Wishing Lantern"
       ],
       "likes": 1
+    },
+    {
+      "title": "Good against healing, Good for finishing off low health opponents, focus on cool down reduction ensures Gord stays involved providing cover fire more than not.",
+      "author": "g4m3r",
+      "spell": "Flameshot",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Inspire",
+        "Bargain Hunter",
+        "Temporal Reign"
+      ],
+      "items": [
+        "Sky Piercer",
+        "Arcane Boots",
+        "Glowing Wand",
+        "Ice Queen Wand",
+        "Genius Wand",
+        "Fleeting Time"
+      ],
+      "likes": 0
     }
   ],
   "24": [
@@ -1444,7 +1444,7 @@
         "Malefic Roar",
         "Blade of Despair"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
       "title": "my plan",
@@ -1467,8 +1467,8 @@
       "likes": 3
     },
     {
-      "title": "idk",
-      "author": "Gateau",
+      "title": "best for weak heroes(gold lane and micro jungler)",
+      "author": "nyan",
       "spell": "Execute",
       "emblem": "Assassin",
       "emblem_talents": [
@@ -1477,14 +1477,14 @@
         "Lethal Ignition"
       ],
       "items": [
-        "Blade of the Heptaseas",
         "Rapid Boots",
+        "Blade of the Heptaseas",
         "Berserker's Fury",
-        "Endless Battle",
-        "Great Dragon Spear",
-        "Sea Halberd"
+        "Hunter Strike",
+        "Blade of Despair",
+        "Malefic Roar"
       ],
-      "likes": 0
+      "likes": 1
     }
   ],
   "25": [
@@ -1529,46 +1529,46 @@
       "likes": 3
     },
     {
-      "title": "i like this build for snowballing, if im losing i sell sp and buy wishing or divine, i can adjust and echanted talisman is good for mana management",
-      "author": "kaguraballsucker",
-      "spell": "Execute",
-      "emblem": "Assassin",
+      "title": "Good for tank opponents and sustain to withstand high damage",
+      "author": "duxxy",
+      "spell": "Flameshot",
+      "emblem": "Mage",
       "emblem_talents": [
-        "Inspire",
-        "Lethal Ignition",
-        "Wilderness Blessing"
+        "Thrill",
+        "Weapon Master",
+        "War Cry"
       ],
       "items": [
-        "Arcane Boots",
-        "Sky Piercer",
         "Genius Wand",
         "Glowing Wand",
-        "Enchanted Talisman",
-        "Holy Crystal"
+        "Starlium Scythe",
+        "Queen's Wings",
+        "Wishing Lantern",
+        "Blood Wings"
       ],
-      "likes": 3
+      "likes": 2
     }
   ],
   "26": [
     {
-      "title": "damage & main culik",
-      "author": "M0n4rch_",
+      "title": "Chou pro\n",
+      "author": "thuzarwin",
       "spell": "Flicker",
       "emblem": "Assassin",
       "emblem_talents": [
-        "Thrill",
+        "Rupture",
         "Master Assassin",
         "Lethal Ignition"
       ],
       "items": [
-        "Warrior Boots",
+        "Tough Boots",
         "Blade of the Heptaseas",
-        "Hunter Strike",
-        "Malefic Roar",
         "Blade of Despair",
-        "Endless Battle"
+        "Endless Battle",
+        "Malefic Roar",
+        "Hunter Strike"
       ],
-      "likes": 21
+      "likes": 17
     },
     {
       "title": "1v1 build",
@@ -1588,7 +1588,7 @@
         "Sea Halberd",
         "Antique Cuirass"
       ],
-      "likes": 15
+      "likes": 17
     },
     {
       "title": "Main cooldown + tarik ulur \nearly game kalo gak ada ulti jangan banyak gaya ",
@@ -1630,7 +1630,7 @@
         "Endless Battle",
         "Sea Halberd"
       ],
-      "likes": 13
+      "likes": 18
     },
     {
       "title": "Gak boros mana, enak kalo nyulik hero sama ngepush",
@@ -1670,7 +1670,7 @@
         "Blade of Despair",
         "Haas' Claws"
       ],
-      "likes": 6
+      "likes": 7
     }
   ],
   "28": [
@@ -1692,27 +1692,7 @@
         "Blade of Despair",
         "Oracle"
       ],
-      "likes": 42
-    },
-    {
-      "title": "Nah another build version 3.0 this build it's allowed to 1hit ur enemies instantly and tanks can penetrate by true damage this build also have a fast clear this build so optional if you want to 1hit squishy heroes but you may take a lot of risk if you had a mistake on positioning be careful with this build I hope enjoy this build ",
-      "author": "Jomar",
-      "spell": "Ice Retribution",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Thrill",
-        "Seasoned Hunter",
-        "Impure Rage"
-      ],
-      "items": [
-        "Rapid Boots",
-        "War Axe",
-        "Hunter Strike",
-        "Blade of Despair",
-        "Rose Gold Meteor",
-        "Queen's Wings"
-      ],
-      "likes": 14
+      "likes": 50
     },
     {
       "title": "My build 2.0 version this is for core alpha that's need a massive rotation and ganking and need a guarantee kills note: this build is for tempo core snowball you may take a lot of risk if you had a mis-positioning goodluck :))\n",
@@ -1732,29 +1712,49 @@
         "Blade of Despair",
         "Queen's Wings"
       ],
-      "likes": 14
+      "likes": 21
+    },
+    {
+      "title": "Nah another build version 3.0 this build it's allowed to 1hit ur enemies instantly and tanks can penetrate by true damage this build also have a fast clear this build so optional if you want to 1hit squishy heroes but you may take a lot of risk if you had a mistake on positioning be careful with this build I hope enjoy this build ",
+      "author": "Jomar",
+      "spell": "Ice Retribution",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Thrill",
+        "Seasoned Hunter",
+        "Impure Rage"
+      ],
+      "items": [
+        "Rapid Boots",
+        "War Axe",
+        "Hunter Strike",
+        "Blade of Despair",
+        "Rose Gold Meteor",
+        "Queen's Wings"
+      ],
+      "likes": 21
     }
   ],
   "29": [
     {
-      "title": "red as ruby, exp, flicker",
-      "author": "senseirice",
+      "title": "Crazy ass lifesteal",
+      "author": "Masterbaiter",
       "spell": "Flicker",
       "emblem": "Fighter",
       "emblem_talents": [
-        "Thrill",
+        "Vitality",
         "Festival of Blood",
-        "Temporal Reign"
+        "Brave Smite"
       ],
       "items": [
-        "Magic Shoes",
+        "Tough Boots",
         "War Axe",
-        "Blade of Despair",
-        "Endless Battle",
         "Queen's Wings",
-        "Malefic Roar"
+        "Endless Battle",
+        "Sea Halberd",
+        "Oracle"
       ],
-      "likes": 5
+      "likes": 3
     },
     {
       "title": "I was testing out some Ruby builds and came up with this one, which I think is pretty good.\n\nPros: Better sustain, good sustained damage, good against magic and poke, good mobility in fights, and somewhat good in extended fights.\n\nCons: Low burst damage, lacks late-game damage, falls short against anti-heal, seems to have too much sustain and not enough damage.",
@@ -1777,21 +1777,21 @@
       "likes": 3
     },
     {
-      "title": "Crazy ass lifesteal",
-      "author": "Masterbaiter",
+      "title": "Power ruby",
+      "author": "Marvin",
       "spell": "Flicker",
       "emblem": "Fighter",
       "emblem_talents": [
-        "Vitality",
+        "Rupture",
         "Festival of Blood",
         "Brave Smite"
       ],
       "items": [
         "Tough Boots",
         "War Axe",
+        "Dominance Ice",
         "Queen's Wings",
-        "Endless Battle",
-        "Sea Halberd",
+        "Blade of Despair",
         "Oracle"
       ],
       "likes": 2
@@ -1816,7 +1816,7 @@
         "Malefic Roar",
         "Immortality"
       ],
-      "likes": 23
+      "likes": 24
     },
     {
       "title": "Build YSS Karltzy M7\n",
@@ -1861,26 +1861,6 @@
   ],
   "31": [
     {
-      "title": "CRITICAL ATTACK SPEED BUILD . HOPE YOU LIKE IT",
-      "author": "Cark",
-      "spell": "Inspire",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Swift",
-        "Bargain Hunter",
-        "War Cry"
-      ],
-      "items": [
-        "Haas' Claws",
-        "Windtalker",
-        "Malefic Gun",
-        "Berserker's Fury",
-        "Rose Gold Meteor",
-        "Demon Hunter Sword"
-      ],
-      "likes": 20
-    },
-    {
       "title": "This Build and Emblem helps you to Lifesteal, Attack Speed, and Superb Damage\n",
       "author": "D-bay",
       "spell": "Inspire",
@@ -1898,7 +1878,27 @@
         "Malefic Gun",
         "Sea Halberd"
       ],
-      "likes": 4
+      "likes": 5
+    },
+    {
+      "title": "di awal up skil 1, fokus farming jangan terlibat war karena moskov hero yang tipis, main aman di awal game kalau itemnya sudah jadi 3 sudah bisa ikut war tapi jangan terlalu maju, fokus spam skil 1  ",
+      "author": "L_Apple",
+      "spell": "Inspire",
+      "emblem": "Marksman",
+      "emblem_talents": [
+        "Weakness Finder",
+        "Swift",
+        "Bargain Hunter"
+      ],
+      "items": [
+        "Corrosion Scythe",
+        "Haas' Claws",
+        "Windtalker",
+        "Demon Hunter Sword",
+        "Berserker's Fury",
+        "Blade of Despair"
+      ],
+      "likes": 3
     },
     {
       "title": "Crit Hybrid Build",
@@ -1963,22 +1963,22 @@
       "likes": 3
     },
     {
-      "title": "Usable in exp,roam. This build is for sustain and team support ",
-      "author": "Moba_nerfharley",
-      "spell": "Petrify",
-      "emblem": "Tank",
+      "title": "Underrated build to gain insane shield as well as super tanky. you can replace radiant armor with any tank item you want.",
+      "author": "MLBB.PRO.CAT",
+      "spell": "Vengeance",
+      "emblem": "Support",
       "emblem_talents": [
-        "Concussive Blast",
-        "Tenacity",
-        "Vitality"
+        "Vitality",
+        "Pull Yourself Together",
+        "Concussive Blast"
       ],
       "items": [
-        "Warrior Boots",
-        "Dominance Ice",
-        "Holy Crystal",
+        "Tough Boots",
+        "Fleeting Time",
         "Blade Armor",
-        "Genius Wand",
-        "Antique Cuirass"
+        "Dominance Ice",
+        "Radiant Armor",
+        "Queen's Wings"
       ],
       "likes": 2
     }
@@ -2002,7 +2002,7 @@
         "Brute Force Breastplate",
         "Clock of Destiny"
       ],
-      "likes": 10
+      "likes": 13
     },
     {
       "title": "DMG and spell vamp good for 1 vs 3\n",
@@ -2047,26 +2047,6 @@
   ],
   "34": [
     {
-      "title": "Heal ",
-      "author": "Kenyx",
-      "spell": "Revitalize",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Inspire",
-        "Bargain Hunter",
-        "Focusing Mark"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Flask of the Oasis",
-        "Enchanted Talisman",
-        "Fleeting Time",
-        "Holy Crystal",
-        "Oracle"
-      ],
-      "likes": 7
-    },
-    {
       "title": "Movement Speed, Unlimited CD reduction,Mana issue solved, Healing Scales w/Magic,Life Bane,Anti Burst Survivability.\n\nReplace Revitalise for Purify when facing a setter.",
       "author": "LetMeRoam",
       "spell": "Revitalize",
@@ -2087,50 +2067,70 @@
       "likes": 2
     },
     {
-      "title": "silahkan dicoba",
-      "author": "KoonKoon",
-      "spell": "Aegis",
+      "title": "High movement speed to roam the map and enough defense to not be assassinated",
+      "author": "BuildSmith",
+      "spell": "Revitalize",
       "emblem": "Support",
       "emblem_talents": [
+        "Quantum Charge",
         "Inspire",
-        "Wilderness Blessing",
-        "Focusing Mark"
+        "Pull Yourself Together"
       ],
       "items": [
         "Demon Shoes",
+        "Thunder Belt",
         "Flask of the Oasis",
-        "Enchanted Talisman",
-        "Glowing Wand",
-        "Oracle",
+        "Fleeting Time",
+        "Holy Crystal",
         "Blood Wings"
       ],
       "likes": 1
+    },
+    {
+      "title": "RAPID BOOTS DIGUNAKAN AGAR CEPAT ROTASI\nFLASK OF OASIS DIGUNAKAN AGAR MENAMBAH HEAL\nENCHANTED TALISMAN DIGUNAKAN UNTUK MENGATASI MANANYA YANG BOROS\nFLEETING TIME DIGUUNAKAN UNTUK MENGURANGI COOLDOWN ULTIMATE ESTES YANG LAMA\nIMMORTALITY DIGUNAKAN SEBAGAI PERTAHANAN\nORACLE DIGUNAKAN UNTUK MENAMBAH EFEK HEAL\n\nEMBLEM SUPPORT DIGUNAKAN AGAR HEALNYA DERAS TAPI MANANYA BOROS\nDENGAN TALENT INSPIRE UNTUK MENGURANGI COOLDOWN SKILL AKTIF EQUIPMENTNYA\nTALENT PULL YOURSELF TOGATHER UNTUK MENGURANGI COOLDOWN SPELLNYA\nDAN TEMPORAL REIGN UNTUK MENGURANGI COOLDOWN SKILLNYA SAAT MENGGUNAKAN ULTIMATE\n\nREVITALIZE DIPILIH KARENA SANGAT COCOK DENGAN ESTES",
+      "author": "TOLONG,GUE",
+      "spell": "Revitalize",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Inspire",
+        "Pull Yourself Together",
+        "Temporal Reign"
+      ],
+      "items": [
+        "Rapid Boots",
+        "Flask of the Oasis",
+        "Enchanted Talisman",
+        "Fleeting Time",
+        "Immortality",
+        "Oracle"
+      ],
+      "likes": 0
     }
   ],
   "35": [
     {
-      "title": "fnaf foxy, exp, sprint",
-      "author": "senseirice",
-      "spell": "Sprint",
-      "emblem": "Assassin",
+      "title": "Use this build when you play VS Layla, Kerri, Melissa, Miya etc.",
+      "author": "umidabyon",
+      "spell": "Revitalize",
+      "emblem": "Fighter",
       "emblem_talents": [
-        "Rupture",
-        "Temporal Reign",
-        "Wilderness Blessing"
+        "Vitality",
+        "Wilderness Blessing",
+        "Concussive Blast"
       ],
       "items": [
         "Rapid Boots",
+        "Dominance Ice",
         "Blade of the Heptaseas",
-        "Hunter Strike",
-        "Cursed Helmet",
-        "Blade of Despair",
-        "Malefic Roar"
+        "Antique Cuirass",
+        "Guardian Helmet",
+        "Blade Armor"
       ],
-      "likes": 12
+      "likes": 1
     },
     {
-      "title": "hilda ni c1tr0v",
-      "author": "c1tr0v",
+      "title": "great for sustain and last longer at battle\n",
+      "author": "Siam",
       "spell": "Revitalize",
       "emblem": "Fighter",
       "emblem_talents": [
@@ -2140,33 +2140,33 @@
       ],
       "items": [
         "Rapid Boots",
-        "Thunder Belt",
-        "Blade of the Heptaseas",
+        "War Axe",
+        "Guardian Helmet",
         "Oracle",
         "Queen's Wings",
-        "Immortality"
+        "Dominance Ice"
       ],
-      "likes": 6
+      "likes": 1
     },
     {
-      "title": "top build",
-      "author": "Drunk",
+      "title": "roam, use ult on max stacks or when enemy low",
+      "author": "kal",
       "spell": "Revitalize",
-      "emblem": "Common",
+      "emblem": "Support",
       "emblem_talents": [
         "Thrill",
         "Wilderness Blessing",
         "Concussive Blast"
       ],
       "items": [
-        "Rapid Boots",
-        "Thunder Belt",
-        "Antique Cuirass",
+        "Magic Shoes",
         "Dominance Ice",
-        "Guardian Helmet",
+        "Antique Cuirass",
+        "Oracle",
+        "Brute Force Breastplate",
         "Chastise Pauldron"
       ],
-      "likes": 2
+      "likes": 1
     }
   ],
   "36": [
@@ -2208,30 +2208,10 @@
         "Holy Crystal",
         "Blood Wings"
       ],
-      "likes": 0
+      "likes": 1
     }
   ],
   "37": [
-    {
-      "title": "you die you gay, exp, flicker",
-      "author": "senseirice",
-      "spell": "Flicker",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Thrill",
-        "Festival of Blood",
-        "War Cry"
-      ],
-      "items": [
-        "Magic Shoes",
-        "War Axe",
-        "Queen's Wings",
-        "Oracle",
-        "Rose Gold Meteor",
-        "Malefic Roar"
-      ],
-      "likes": 5
-    },
     {
       "title": "Sanford build (tanky build)",
       "author": "LilBoom04",
@@ -2250,12 +2230,12 @@
         "Radiant Armor",
         "Brute Force Breastplate"
       ],
-      "likes": 4
+      "likes": 5
     },
     {
-      "title": "LAPU M7 AURORA",
-      "author": "Cala",
-      "spell": "",
+      "title": "DOain luluus sekolah yahhh btw nama ku hendra gunawan \n",
+      "author": "ERORR404",
+      "spell": "Vengeance",
       "emblem": "Fighter",
       "emblem_talents": [
         "Agility",
@@ -2263,36 +2243,56 @@
         "Brave Smite"
       ],
       "items": [
-        "Warrior Boots",
         "War Axe",
         "Queen's Wings",
         "Oracle",
-        "Brute Force Breastplate",
-        "Athena's Shield"
+        "Dominance Ice",
+        "Immortality",
+        "Brute Force Breastplate"
       ],
-      "likes": 2
+      "likes": 1
+    },
+    {
+      "title": "Use it",
+      "author": "愛|•KEN",
+      "spell": "Flicker",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Thrill",
+        "Festival of Blood",
+        "War Cry"
+      ],
+      "items": [
+        "War Axe",
+        "Endless Battle",
+        "Oracle",
+        "Queen's Wings",
+        "Brute Force Breastplate",
+        "Sea Halberd"
+      ],
+      "likes": 1
     }
   ],
   "38": [
     {
-      "title": "Burst Vexana",
-      "author": "M0n4rch_",
+      "title": "Vexana SANZ auto winnn\n",
+      "author": "syahdan",
       "spell": "Flicker",
       "emblem": "Mage",
       "emblem_talents": [
-        "Rupture",
-        "Weapon Master",
-        "Impure Rage"
+        "Impure Rage",
+        "Wilderness Blessing",
+        "Inspire"
       ],
       "items": [
+        "Tough Boots",
         "Glowing Wand",
-        "Arcane Boots",
+        "Blood Wings",
         "Lightning Truncheon",
-        "Holy Crystal",
         "Divine Glaive",
-        "Blood Wings"
+        "Holy Crystal"
       ],
-      "likes": 6
+      "likes": 4
     },
     {
       "title": "burst and poke",
@@ -2315,24 +2315,24 @@
       "likes": 3
     },
     {
-      "title": "top build",
-      "author": "Drunk",
-      "spell": "Flicker",
+      "title": "For \"Tide Seige\" mode, ignore the emblems and battle spell.",
+      "author": "Unequal",
+      "spell": "Revitalize",
       "emblem": "Mage",
       "emblem_talents": [
-        "Rupture",
-        "Wilderness Blessing",
+        "Inspire",
+        "Bargain Hunter",
         "Lethal Ignition"
       ],
       "items": [
-        "Arcane Boots",
+        "Ice Queen Wand",
         "Glowing Wand",
-        "Blood Wings",
-        "Lightning Truncheon",
-        "Divine Glaive",
-        "Wishing Lantern"
+        "Wishing Lantern",
+        "Enchanted Talisman",
+        "Fleeting Time",
+        "Holy Crystal"
       ],
-      "likes": 3
+      "likes": 2
     }
   ],
   "39": [
@@ -2376,7 +2376,7 @@
         "Malefic Gun",
         "Blade of Despair"
       ],
-      "likes": 7
+      "likes": 8
     },
     {
       "title": "Usahain main aman di early game",
@@ -2441,67 +2441,47 @@
       "likes": 5
     },
     {
-      "title": "Passif regen ",
-      "author": "LAPORTE",
-      "spell": "Revitalize",
-      "emblem": "Common",
+      "title": "anomaly_chicken+SMASH!",
+      "author": "SSR+",
+      "spell": "Purify",
+      "emblem": "Mage",
       "emblem_talents": [
-        "Vitality",
+        "Thrill",
         "Festival of Blood",
-        "Killing Spree"
-      ],
-      "items": [
-        "Glowing Wand",
-        "Concentrated Energy",
-        "Oracle",
-        "Clock of Destiny",
-        "Queen's Wings",
-        "Guardian Helmet"
-      ],
-      "likes": 3
-    },
-    {
-      "title": "EXP focused laning and teamfight\nlast item can be changed according to the match and also vengeance or revitalize accordingly",
-      "author": "creamysenpai",
-      "spell": "Vengeance",
-      "emblem": "Tank",
-      "emblem_talents": [
-        "Vitality",
-        "Pull Yourself Together",
-        "Concussive Blast"
-      ],
-      "items": [
-        "Tough Boots",
-        "Thunder Belt",
-        "Dominance Ice",
-        "Clock of Destiny",
-        "Oracle",
-        "Chastise Pauldron"
-      ],
-      "likes": 3
-    }
-  ],
-  "42": [
-    {
-      "title": "High explosive damage, penetration, and minor vampirism",
-      "author": "skiwi",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Seasoned Hunter",
         "Lethal Ignition"
       ],
       "items": [
-        "Arcane Boots",
-        "Concentrated Energy",
-        "Genius Wand",
+        "Magic Shoes",
         "Lightning Truncheon",
-        "Holy Crystal",
-        "Divine Glaive"
+        "Clock of Destiny",
+        "Blood Wings",
+        "Dominance Ice",
+        "Immortality"
       ],
-      "likes": 50
+      "likes": 3
     },
+    {
+      "title": "Cobain XP sangat sustain",
+      "author": "Vix",
+      "spell": "Revitalize",
+      "emblem": "Tank",
+      "emblem_talents": [
+        "Vitality",
+        "Festival of Blood",
+        "Brave Smite"
+      ],
+      "items": [
+        "Thunder Belt",
+        "Dominance Ice",
+        "Concentrated Energy",
+        "Chastise Pauldron",
+        "Clock of Destiny",
+        "Oracle"
+      ],
+      "likes": 1
+    }
+  ],
+  "42": [
     {
       "title": "early burst, high coldown reduction, late game can burst tank, can one hit squishy hero in one combo:)",
       "author": "jctzyy",
@@ -2520,7 +2500,7 @@
         "Holy Crystal",
         "Blood Wings"
       ],
-      "likes": 11
+      "likes": 13
     },
     {
       "title": "Offers:\n\ncooldown reduction to escape and spam 2nd skill\n\nSpare item: genius wand if you can't stack sky piercer\n\nDamage to instantly assassinate with ult\n\nDefense to survive during assassination process",
@@ -2541,6 +2521,26 @@
         "Divine Glaive"
       ],
       "likes": 4
+    },
+    {
+      "title": "build harley jungler s40\n",
+      "author": "jihaz",
+      "spell": "Bloody Retribution",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Rupture",
+        "Seasoned Hunter",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Genius Wand",
+        "Holy Crystal",
+        "Divine Glaive",
+        "Blood Wings",
+        "Glowing Wand"
+      ],
+      "likes": 3
     }
   ],
   "43": [
@@ -2562,7 +2562,7 @@
         "Malefic Gun",
         "Great Dragon Spear"
       ],
-      "likes": 4
+      "likes": 5
     },
     {
       "title": "Burst",
@@ -2585,47 +2585,27 @@
       "likes": 3
     },
     {
-      "title": "Top1\n",
-      "author": "ahao.",
-      "spell": "Sprint",
+      "title": "Pure marksman role set for Irithel. You can build your items in any order depending on the situation because I've sorted them by the price you have to pay for each item.",
+      "author": "Somesusthing",
+      "spell": "Inspire",
       "emblem": "Marksman",
       "emblem_talents": [
         "Fatal",
-        "Wilderness Blessing",
+        "Weapon Master",
         "Weakness Finder"
       ],
       "items": [
-        "Warrior Boots",
+        "Swift Boots",
         "Windtalker",
         "Haas' Claws",
-        "Sky Piercer",
         "Malefic Gun",
-        "Rose Gold Meteor"
+        "Great Dragon Spear",
+        "Berserker's Fury"
       ],
-      "likes": 2
+      "likes": 1
     }
   ],
   "44": [
-    {
-      "title": "rock grock rock grock, roam, flicker",
-      "author": "senseirice",
-      "spell": "Flicker",
-      "emblem": "Tank",
-      "emblem_talents": [
-        "Vitality",
-        "Wilderness Blessing",
-        "Concussive Blast"
-      ],
-      "items": [
-        "Warrior Boots",
-        "Blade Armor",
-        "Guardian Helmet",
-        "Dominance Ice",
-        "Thunder Belt",
-        "Chastise Pauldron"
-      ],
-      "likes": 6
-    },
     {
       "title": "Roam blessing: encourage\n\nThis build obviously focuses on physical defense as you can see\n\nIt has great if not best synergy with grock\n\nDownside: average magic defense \n\nAthena's shield is a spare item to replace chastise pauldron",
       "author": "BuildSmith",
@@ -2665,6 +2645,26 @@
         "Chastise Pauldron"
       ],
       "likes": 1
+    },
+    {
+      "title": " o(≧▽≦)o",
+      "author": "VodiVoidEclipseXen",
+      "spell": "Flicker",
+      "emblem": "Tank",
+      "emblem_talents": [
+        "Agility",
+        "Wilderness Blessing",
+        "Concussive Blast"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Chastise Pauldron",
+        "Dominance Ice",
+        "Immortality",
+        "Athena's Shield",
+        "Oracle"
+      ],
+      "likes": 0
     }
   ],
   "45": [
@@ -2686,7 +2686,7 @@
         "Sea Halberd",
         "Blade of Despair"
       ],
-      "likes": 15
+      "likes": 20
     },
     {
       "title": "Serangan cepat dan sakit ini bagus untuk war",
@@ -2726,10 +2726,30 @@
         "Haas' Claws",
         "Demon Hunter Sword"
       ],
-      "likes": 4
+      "likes": 5
     }
   ],
   "46": [
+    {
+      "title": "Bismillah dijamin, sekali ULTI one hit hehehe",
+      "author": "🗣️:\"Izin-ngasih-build",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Festival of Blood",
+        "Lethal Ignition",
+        "Inspire"
+      ],
+      "items": [
+        "Sky Piercer",
+        "Arcane Boots",
+        "Holy Crystal",
+        "Blood Wings",
+        "Concentrated Energy",
+        "Queen's Wings"
+      ],
+      "likes": 3
+    },
     {
       "title": "how about destroying heals while destroying the heroes also",
       "author": "iichanpogi",
@@ -2769,26 +2789,6 @@
         "Divine Glaive"
       ],
       "likes": 2
-    },
-    {
-      "title": "Bagus\n",
-      "author": "Feby",
-      "spell": "Flicker",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Bargain Hunter",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Demon Shoes",
-        "Sky Piercer",
-        "Genius Wand",
-        "Lightning Truncheon",
-        "Divine Glaive",
-        "Winter Crown"
-      ],
-      "likes": 1
     }
   ],
   "47": [
@@ -2810,50 +2810,70 @@
         "Queen's Wings",
         "Malefic Roar"
       ],
-      "likes": 7
+      "likes": 9
     },
     {
-      "title": "\"Try it out\"\n- Gemini",
-      "author": "Garo_1",
+      "title": "ini build cocok buat bantai bantai tapi khusus jungler ya ini damage nya lumayan sakit sama darahnya tebel",
+      "author": "china",
       "spell": "Bloody Retribution",
       "emblem": "Assassin",
       "emblem_talents": [
+        "Killing Spree",
         "Thrill",
-        "Seasoned Hunter",
-        "Killing Spree"
+        "Seasoned Hunter"
       ],
       "items": [
         "Tough Boots",
         "War Axe",
-        "Brute Force Breastplate",
         "Endless Battle",
-        "Sky Piercer",
-        "Malefic Roar"
+        "Queen's Wings",
+        "Blade of Despair",
+        "Brute Force Breastplate"
       ],
-      "likes": 5
+      "likes": 2
     },
     {
-      "title": "When closed the build, sell the fury hammer and do the endless battle\nIn case of good farm in early game, do the endless battle in second item, after de fury hammer",
-      "author": "Caracuri",
-      "spell": "Ice Retribution",
+      "title": "Lancelot EXP Lane \nTested | 62% Win Rate\nDemon Boots - Mana restore cuz no blue buff",
+      "author": "MLBBGodBuild",
+      "spell": "Execute",
       "emblem": "Assassin",
       "emblem_talents": [
         "Thrill",
-        "Seasoned Hunter",
+        "Festival of Blood",
         "Killing Spree"
       ],
       "items": [
         "War Axe",
-        "Tough Boots",
-        "Fury Hammer",
+        "Demon Shoes",
         "Brute Force Breastplate",
         "Queen's Wings",
-        "Malefic Roar"
+        "Rose Gold Meteor",
+        "Endless Battle"
       ],
-      "likes": 2
+      "likes": 0
     }
   ],
   "48": [
+    {
+      "title": "Poke dan Tebal",
+      "author": "BelugaK0yak",
+      "spell": "Revitalize",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Inspire",
+        "Focusing Mark",
+        "Pull Yourself Together"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Enchanted Talisman",
+        "Glowing Wand",
+        "Genius Wand",
+        "Guardian Helmet",
+        "Immortality"
+      ],
+      "likes": 1
+    },
     {
       "title": "Diggie explodes ",
       "author": "D.M.A.Z",
@@ -2917,8 +2937,8 @@
       "likes": 2
     },
     {
-      "title": "the new best build for Hylos, you can swap the cursed helmet for stormbelt or clock of destinity, but the best cursed helmet is the best option because it providesboth damage and survivability.\nyou can also choose between a healing spell, flicker, or smth else, depending on the situation \nhylos is a very good tank that can dominate battles and deals good damage ",
-      "author": "pupsik100zxcv",
+      "title": "damage",
+      "author": "nomeD",
       "spell": "Vengeance",
       "emblem": "Tank",
       "emblem_talents": [
@@ -2927,57 +2947,37 @@
         "Concussive Blast"
       ],
       "items": [
-        "Warrior Boots",
-        "Cursed Helmet",
-        "Dominance Ice",
-        "Antique Cuirass",
+        "Tough Boots",
         "Chastise Pauldron",
-        "Athena's Shield"
+        "Dominance Ice",
+        "Guardian Helmet",
+        "Antique Cuirass",
+        "Immortality"
       ],
       "likes": 1
     },
     {
-      "title": "Roaming blessing is encourage\n\nThis build used to be a top tier pick for me personally but it fell off recently due to high item prices\n\n\nThis build doesn't leave you defenseless and recommended to be played as a semi assassin picking off squishes to protect your team\n\nSpare items: guardian helmet if you hate recalling\n\nAthena's shield if enemy has penetration for radiant armor",
-      "author": "BuildSmith",
-      "spell": "Vengeance",
-      "emblem": "Tank",
+      "title": "พื้นฐานสำหรับผู้เล่นใหม่",
+      "author": "nitiphat ",
+      "spell": "Revitalize",
+      "emblem": "Common",
       "emblem_talents": [
-        "Concussive Blast",
-        "Tenacity",
-        "Agility"
+        "Vitality",
+        "Wilderness Blessing",
+        "Concussive Blast"
       ],
       "items": [
-        "Tough Boots",
+        "Rapid Boots",
         "Thunder Belt",
         "Dominance Ice",
         "Clock of Destiny",
-        "Antique Cuirass",
-        "Radiant Armor"
+        "Radiant Armor",
+        "Antique Cuirass"
       ],
       "likes": 1
     }
   ],
   "50": [
-    {
-      "title": "top build",
-      "author": "Drunk",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Rupture",
-        "Bargain Hunter",
-        "Impure Rage"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Sky Piercer",
-        "Divine Glaive",
-        "Wishing Lantern",
-        "Immortality",
-        "Lightning Truncheon"
-      ],
-      "likes": 3
-    },
     {
       "title": "Optimized on movement speed, a little bit of cooldown, no mana regen but intended for constant presence on battlefield even from base. High Damage",
       "author": "Beast_Master64",
@@ -3017,29 +3017,29 @@
         "Blade Armor"
       ],
       "likes": 1
-    }
-  ],
-  "51": [
+    },
     {
-      "title": "This build is for roam Helcurt",
-      "author": "MAQ",
-      "spell": "Revitalize",
-      "emblem": "Assassin",
+      "title": "I use this as a experiment build for Zhask it is a good mid game build granted enemy has no heavy lifestyle units it is good for pressure and bursting mm,mage or other soft target, I use tank emblems so the first skill does not get burst down quickly and so in late game it is tanky\nAnnoying to deal with you can use this for roaming Zhask if you want just change the build don't buy immortality and first build anti heal it not a good for roaming but I won matches using it, it was funny and a troll build mostly, arrival is to compensate for zhask lack of mobility so he can support anyone from the map that is the power of this build.",
+      "author": "Zhazker",
+      "spell": "Arrival",
+      "emblem": "Tank",
       "emblem_talents": [
         "Thrill",
         "Weapon Master",
         "Impure Rage"
       ],
       "items": [
-        "Rapid Boots",
-        "Sky Piercer",
-        "Hunter Strike",
-        "Malefic Roar",
-        "Blade of Despair",
-        "Endless Battle"
+        "Arcane Boots",
+        "Lightning Truncheon",
+        "Genius Wand",
+        "Fleeting Time",
+        "Holy Crystal",
+        "Immortality"
       ],
-      "likes": 13
-    },
+      "likes": 1
+    }
+  ],
+  "51": [
     {
       "title": "This build is actually idk I just thought it would be cool.😎",
       "author": "RandomMlbbGamer",
@@ -3079,6 +3079,26 @@
         "Sea Halberd"
       ],
       "likes": 2
+    },
+    {
+      "title": "build anti cc\n",
+      "author": "rawrrrr",
+      "spell": "Ice Retribution",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Rupture",
+        "Pull Yourself Together",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Rapid Boots",
+        "Sky Piercer",
+        "Antique Cuirass",
+        "Blade of Despair",
+        "Blade of the Heptaseas",
+        "Sea Halberd"
+      ],
+      "likes": 2
     }
   ],
   "52": [
@@ -3100,7 +3120,27 @@
         "Blood Wings",
         "Holy Crystal"
       ],
-      "likes": 4
+      "likes": 5
+    },
+    {
+      "title": "stormie",
+      "author": "jojoe12",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Wilderness Blessing",
+        "Lethal Ignition",
+        "Rupture"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Glowing Wand",
+        "Lightning Truncheon",
+        "Divine Glaive",
+        "Holy Crystal",
+        "Winter Crown"
+      ],
+      "likes": 1
     },
     {
       "title": "for burst ",
@@ -3119,26 +3159,6 @@
         "Holy Crystal",
         "Divine Glaive",
         "Blood Wings"
-      ],
-      "likes": 0
-    },
-    {
-      "title": "Burst",
-      "author": "Duskkeeper",
-      "spell": "Arrival",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Wilderness Blessing",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Demon Shoes",
-        "Lightning Truncheon",
-        "Holy Crystal",
-        "Divine Glaive",
-        "Blood Wings",
-        "Glowing Wand"
       ],
       "likes": 0
     }
@@ -3182,7 +3202,7 @@
         "Blade of Despair",
         "Endless Battle"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
       "title": "Build yang pasti kuat dari early, asal main aman jgn feed, build ini bakal makin kuat kalo agresif. Battle spell fliker lebih universal, tapi kalo ada cc ngeselin lebih dari 1 langsung pake purify(doa). Kalo sudah lategame menit 18+ uang lebih dari 13.000+, sepatu langsung ganti dengan BOD supaya damage nya makin sakit. Jangan beli sea halberd kalo musuh gaada mengandalkan heal atau shield, ganti dgn build urutan selanjutnya aja.",
@@ -3202,7 +3222,7 @@
         "Endless Battle",
         "Blade of Despair"
       ],
-      "likes": 8
+      "likes": 9
     }
   ],
   "54": [
@@ -3286,7 +3306,7 @@
         "Holy Crystal",
         "Fleeting Time"
       ],
-      "likes": 5
+      "likes": 6
     },
     {
       "title": "Battle Medic. Carry Yourself to Solo queue Mythic.\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nSkill Unlock Order\n 1>2>1>3. Then focus leveling first ability whenever possible.\nBuy in build order, skip sky piercer for late game if you don't get kills within first 8 minutes or the team has less kills than the enemy. \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nPlay Style:\nHyper Aggressive. As soon as you spawn, unlock the first ability to get more stacks before you reach mid. Then bombard the mage or roam with your first, make sure your passive stacks on them. Stick to MM for the first 5 minutes or till you push that lane. You have the simple job of making sure your enemies hate your guts in every team fight and every chase. \n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nItem Description:\n\nDemon Shoes: The only reason you're getting this is to solve the mana problem. You'll be very mana hungry early game but also need slot for damage items instead of mana items.\n\nFleeting Time: I dont know what Moontoon was smoking when they buffed her ult, with his item, you can have an ult uptime of 100%. A single or even double kill\\assist during your ult ensures that you get to ult AGAIN as soon as you finish your ult. Buy this asap.\n\nSky Piercer: Snowball item, since your enemy is busy buying anti heal, you're building damage to finish them off, if you manage to get kills during your ult within the first 10 minutes of the match, buy this and steal kills with your first ability. I've gone upwards of 24 kills in a single match.\n\nLightning Truncheon, Holy Crystal, Genius Wand: Damage items with good scaling, i've tested all items, these work the best in all scenarios.\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nSkill Checks:\nAs Angela, You can play the entire game without even looking at your screen and just focusing on the map. Do that. Unless enemy has natalia or aamon, you have no reason to never look at the map. Learn to move while only focusing on the map. \n\nYou can hold your ult key and hover over teammates to see what they are up to. Note that they can also tell that you're looking at them. Use this to encourage your exp or hyper to dive for a kill. Remember, YOU need those kills. Unless you're in mythic, YOU deserve and NEED those kills. \n\nIn case you are lacking kills or the team is losing, skip the sky piercer and buy the flask to get more sustain. Don't worry about heals, your healing also scales with your magic power. The same power that is used to kill the enemies is used to heal. \n\nDO. NOT. RECALL. Unless you manage to run out of mana, just use your first ability to heal and keep your teammates in the lane, or ult and rotate to help the other lane push. You're a battle medic. Its your JOB to keep them in the fight. Throw a slur if you have to, keep them in the fight.\n\nUse your first ability to damage enemies and heal allies. Try to focus on the damage aspect, In a chase, this is what will save you, the more it hits, the slower the enemies become. \n\nFlameshot serves two purposes. Spacing/escape and sniping/kills. Remember, you get sky piercer stacks even from a flameshot kills. You can use it even during your ult. Using it in close range trades damage for knockback, if a melee character is too close like argus, aldous or any tank. Just use flame shot, works especially well against tigreals. Spam it whenver he tries to combo, it will ruin it. Plus, the knock back is aoe. So you can throw away 5 enemies at the same time if they gank you.\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nCheck out my other builds for other play styles. ",
@@ -3309,47 +3329,27 @@
       "likes": 4
     },
     {
-      "title": "Take out marksmen and mages using this build\n",
-      "author": "Probuilds123",
-      "spell": "Flicker",
-      "emblem": "Common",
+      "title": "Abra kadbra i'ts my live 😆",
+      "author": "Kiyora",
+      "spell": "Inspire",
+      "emblem": "Marksman",
       "emblem_talents": [
-        "Impure Rage",
-        "Tenacity",
-        "Rupture"
+        "Weakness Finder",
+        "Weapon Master",
+        "Swift"
       ],
       "items": [
-        "Demon Shoes",
-        "Flask of the Oasis",
-        "Cursed Helmet",
-        "Clock of Destiny",
-        "Divine Glaive",
-        "Blood Wings"
+        "Swift Boots",
+        "Corrosion Scythe",
+        "Haas' Claws",
+        "Golden Staff",
+        "Blade of Despair",
+        "Berserker's Fury"
       ],
-      "likes": 2
+      "likes": 3
     }
   ],
   "56": [
-    {
-      "title": "This build comes from famous Gusion Youtuber named incontrol 05. It contains basic attack damage in this build, \"Starlium Sycthe\", the main item in this build. I've been using this ever since i discovered incon05 in 2024 and i never ever single try the other builds but i tried some builds one time haha yet It's still powerful these days but you just need to be accurate and efficiently using Gusion. ",
-      "author": "Sinnerman",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Lethal Ignition",
-        "Seasoned Hunter",
-        "Agility"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Genius Wand",
-        "Starlium Scythe",
-        "Holy Crystal",
-        "Blood Wings",
-        "Winter Crown"
-      ],
-      "likes": 10
-    },
     {
       "title": "No damage build",
       "author": "Letuzawa",
@@ -3368,11 +3368,31 @@
         "Lightning Truncheon",
         "Blood Wings"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
-      "title": "This is my perfect build",
-      "author": "Heyter",
+      "title": "damage500000",
+      "author": "miacc535312@gmail.com",
+      "spell": "Flicker",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Rupture",
+        "Seasoned Hunter",
+        "Impure Rage"
+      ],
+      "items": [
+        "Genius Wand",
+        "Sky Piercer",
+        "Holy Crystal",
+        "Lightning Truncheon",
+        "Divine Glaive",
+        "Blood Wings"
+      ],
+      "likes": 3
+    },
+    {
+      "title": "Good",
+      "author": "Viper_Kung",
       "spell": "Ice Retribution",
       "emblem": "Assassin",
       "emblem_talents": [
@@ -3385,10 +3405,10 @@
         "Genius Wand",
         "Sky Piercer",
         "Holy Crystal",
-        "Divine Glaive",
-        "Blood Wings"
+        "Lightning Truncheon",
+        "Divine Glaive"
       ],
-      "likes": 5
+      "likes": 3
     }
   ],
   "57": [
@@ -3410,7 +3430,7 @@
         "Blood Wings",
         "Genius Wand"
       ],
-      "likes": 7
+      "likes": 8
     },
     {
       "title": "Early Game Pressure, Mid Game farm, Late Game chill",
@@ -3455,6 +3475,26 @@
   ],
   "58": [
     {
+      "title": "Good in everyfight, short ult and s2 cd, high hp that helps surviving and harvest enemies with burst true damage, spell vamp and lifesteal, well balanced in damage and defense, high mobility tanks to ult cd and bruteforce ms\n\nIt maximizes sustain and physical attack while accumulating HP pool so the fighter can sustain while doing damage and ripping off enemies\n\nYou could change Brute force with Inmortality or Ice Domain if playing jungle, recommended to use flicker and wild blessing when playing exp.",
+      "author": "Retzen",
+      "spell": "",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Thrill",
+        "Seasoned Hunter",
+        "Killing Spree"
+      ],
+      "items": [
+        "Tough Boots",
+        "Sky Piercer",
+        "War Axe",
+        "Endless Battle",
+        "Queen's Wings",
+        "Brute Force Breastplate"
+      ],
+      "likes": 4
+    },
+    {
       "title": "Best build",
       "author": "MD_kakashi",
       "spell": "Vengeance",
@@ -3475,44 +3515,24 @@
       "likes": 4
     },
     {
-      "title": "Good in everyfight, short ult and s2 cd, high hp that helps surviving and harvest enemies with burst true damage, spell vamp and lifesteal, well balanced in damage and defense, high mobility tanks to ult cd and bruteforce ms\n\nIt maximizes sustain and physical attack while accumulating HP pool so the fighter can sustain while doing damage and ripping off enemies\n\nYou could change Brute force with Inmortality or Ice Domain if playing jungle, recommended to use flicker and wild blessing when playing exp.",
-      "author": "Retzen",
-      "spell": "",
+      "title": "The best mid to late game martis build super hybrid life steal",
+      "author": "mlbb_killer",
+      "spell": "Retribution",
       "emblem": "Fighter",
       "emblem_talents": [
         "Thrill",
-        "Seasoned Hunter",
+        "Festival of Blood",
         "Killing Spree"
       ],
       "items": [
         "Tough Boots",
         "Sky Piercer",
         "War Axe",
-        "Endless Battle",
+        "Blade of Despair",
         "Queen's Wings",
-        "Brute Force Breastplate"
+        "Malefic Roar"
       ],
-      "likes": 3
-    },
-    {
-      "title": "Shoes can be swapped out for combat boots depending on the situation. Armor should be chosen based on the enemies you’re facing; the armor options here generally work well. Instead of Malefic Roar, you can opt for the Atlantis Spear, Endless War, Blade of Despair, or armor. If you’re unfamiliar with the items, this build generally works well.",
-      "author": "SLayeR09",
-      "spell": "Ice Retribution",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Firmness",
-        "Festival of Blood",
-        "Killing Spree"
-      ],
-      "items": [
-        "Tough Boots",
-        "War Axe",
-        "Hunter Strike",
-        "Malefic Roar",
-        "Antique Cuirass",
-        "Athena's Shield"
-      ],
-      "likes": 1
+      "likes": 2
     }
   ],
   "59": [
@@ -3557,22 +3577,22 @@
       "likes": 2
     },
     {
-      "title": "w\n",
-      "author": "User_ML",
-      "spell": "Revitalize",
-      "emblem": "Common",
+      "title": "Build by Kyle from Team Falcons, Uranus jungle, insane resistance",
+      "author": "Caracuri",
+      "spell": "Bloody Retribution",
+      "emblem": "Tank",
       "emblem_talents": [
-        "Vitality",
-        "Tenacity",
-        "Lethal Ignition"
+        "Inspire",
+        "Seasoned Hunter",
+        "Impure Rage"
       ],
       "items": [
-        "Demon Shoes",
-        "Clock of Destiny",
-        "Lightning Truncheon",
-        "Guardian Helmet",
+        "Tough Boots",
+        "Brute Force Breastplate",
+        "Radiant Armor",
+        "Oracle",
         "Chastise Pauldron",
-        "Oracle"
+        "Blade Armor"
       ],
       "likes": 2
     }
@@ -3596,7 +3616,7 @@
         "Blade of Despair",
         "Wind of Nature"
       ],
-      "likes": 7
+      "likes": 9
     },
     {
       "title": "OP Hanabi Trinity Build: Damage Dealer\nSustain di team fight, Anti CC, damage gede.\nBattle spell disarankan: Aegis",
@@ -3616,7 +3636,7 @@
         "Malefic Gun",
         "Rose Gold Meteor"
       ],
-      "likes": 5
+      "likes": 6
     },
     {
       "title": "Wild vampire",
@@ -3658,7 +3678,7 @@
         "Windtalker",
         "Malefic Gun"
       ],
-      "likes": 3
+      "likes": 4
     },
     {
       "title": "Extreme dmg with ult and ability's strong to squishy and tanks.\nKilling Spree needed for if you get ambushed just ult with shield en then heal and get movement speed to chase or escape fights.\nhealing circle to heal so you don't have to go to base.\nBoots for spam skills without worring about mana.",
@@ -3678,7 +3698,7 @@
         "Divine Glaive",
         "Wishing Lantern"
       ],
-      "likes": 3
+      "likes": 4
     },
     {
       "title": "Anti Tank build. Replace Ice Queen Wand with Glowing Wand if needed.",
@@ -3720,27 +3740,7 @@
         "Athena's Shield",
         "Oracle"
       ],
-      "likes": 5
-    },
-    {
-      "title": "SimuKh = Speedy + Kaja, roam, flicker",
-      "author": "senseirice",
-      "spell": "Flicker",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Agility",
-        "Wilderness Blessing",
-        "Quantum Charge"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Thunder Belt",
-        "Brute Force Breastplate",
-        "Enchanted Talisman",
-        "Ice Queen Wand",
-        "Guardian Helmet"
-      ],
-      "likes": 5
+      "likes": 6
     },
     {
       "title": "Mid Kaja, faster rotation and strong early team fight. Strong damage if have 3 items, can 1 hit combo soft mage/mm heroes. Use ult, 2nd skill, 1st skill, then hit with passive. In team fight, just first skill and hit with passive, using your fast movement speed to poke, get good position, and scout enemies.",
@@ -3761,29 +3761,29 @@
         "Lightning Truncheon"
       ],
       "likes": 3
+    },
+    {
+      "title": "This build focuses on high regeneration to compensate for Kaja’s relatively low survivability. Since Kaja needs to stay in the middle of fights without strong crowd control immunity, he relies heavily on self-healing from his first skill. The selected items are designed to support his survivability. Clock of Destiny and Oracle have strong synergy, improving both his durability and healing effectiveness. Thunderbelt is a great early investment, allowing Kaja to remain impactful even into the late game. \n\nAdditionally, Conceal Boots further enhance Kaja’s playstyle by taking advantage of the roaming system, allowing him to gain gold more efficiently. By constantly poking enemies and rotating through the jungle and river, Kaja can create ambush opportunities. His first skill and passive make him very effective in this role, enabling him to maintain a high gold income (GPM) when played correctly. The goal is to reach 40% cooldown reduction so Kaja can spam his first skill more frequently. This helps him sustain through healing while also applying his passive debuff, which reduces the enemy’s damage output—making him tankier in a unique way. \n\nSince Kaja deals magic damage, Glowing Wand is a strong choice. It provides bonus movement speed, applies burn damage, and helps slow enemies, making it easier for Kaja to survive while staying close to his targets. The combination of Tough Boots and Brute Force Breastplate helps Kaja handle heavy crowd control. The additional movement speed from Brute Force also allows him to stay within range and maintain pressure on enemies. For emblems, the Support emblem is the best option due to its synergy with his first skill. Because his healing is based on a flat value, achieving 40% cooldown reduction is crucial to maximize its effectiveness during fights. The Brave Smite talent further enhances his sustain, as frequent skill usage ensures consistent healing in short intervals. \n\nAs a result, Kaja gains significant bonus movement speed from Thunderbelt, Glowing Wand, Brute Force Breastplate, and Support emblems. This high mobility allows him to stay on top of enemies, while continuously slowing them through his first skill, passive, and Thunderbelt effects. The combination makes it difficult for enemies to escape, while also improving Kaja’s survivability in extended fights. \n\nNote: Kaja’s passive can also trigger Brave Smite, making it effective in almost any situation for additional healing.",
+      "author": "grinti",
+      "spell": "Flicker",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Firmness",
+        "Tenacity",
+        "Brave Smite"
+      ],
+      "items": [
+        "Tough Boots",
+        "Thunder Belt",
+        "Clock of Destiny",
+        "Glowing Wand",
+        "Brute Force Breastplate",
+        "Oracle"
+      ],
+      "likes": 2
     }
   ],
   "63": [
-    {
-      "title": "U can play Mid or Jungle with this build. 1 Shot 1 Kill",
-      "author": "Otaku.",
-      "spell": "Ice Retribution",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Fatal",
-        "Master Assassin",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Starlium Scythe",
-        "Lightning Truncheon",
-        "Holy Crystal",
-        "Berserker's Fury",
-        "Great Dragon Spear"
-      ],
-      "likes": 17
-    },
     {
       "title": "This build is for salena cdr , tanky roam ",
       "author": "DEATH.99",
@@ -3802,25 +3802,45 @@
         "Wishing Lantern",
         "Holy Crystal"
       ],
-      "likes": 2
+      "likes": 3
     },
     {
-      "title": "One shot every cutie e-girls. Just trust. Jungle Selena",
-      "author": "Gurkancan",
-      "spell": "",
-      "emblem": "Mage",
+      "title": "selena healer build yesyes w -- i tried this in match, it helps survive heavy burst damage, and it also supports ur squishy teammates in team fights, like those dark system hanabis ~@x@~\n\nbut yeah i originally got this build from the youtuber celeste, please feel free to check her out!",
+      "author": "killuadayooo0x0",
+      "spell": "Revitalize",
+      "emblem": "Support",
       "emblem_talents": [
-        "Lethal Ignition",
-        "Inspire",
-        "Seasoned Hunter"
+        "Agility",
+        "Wilderness Blessing",
+        "Lethal Ignition"
       ],
       "items": [
         "Magic Shoes",
+        "Enchanted Talisman",
+        "Flask of the Oasis",
         "Starlium Scythe",
-        "Holy Crystal",
-        "Genius Wand",
-        "Blood Wings",
-        "Lightning Truncheon"
+        "Glowing Wand",
+        "Immortality"
+      ],
+      "likes": 3
+    },
+    {
+      "title": "This build is for playing roaming, but it's more than just roaming.",
+      "author": "Gurkancan",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Rupture",
+        "Wilderness Blessing",
+        "Impure Rage"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Enchanted Talisman",
+        "Glowing Wand",
+        "Wishing Lantern",
+        "Starlium Scythe",
+        "Holy Crystal"
       ],
       "likes": 1
     }
@@ -3844,7 +3864,7 @@
         "Blade of Despair",
         "Sea Halberd"
       ],
-      "likes": 9
+      "likes": 10
     },
     {
       "title": "one hit dan agak teballlllllllllllllllllllllllllllll",
@@ -3929,47 +3949,27 @@
       "likes": 1
     },
     {
-      "title": "sustain",
-      "author": "Norgus",
-      "spell": "Vengeance",
+      "title": "Claude Sustain",
+      "author": "ronaldoyusuf",
+      "spell": "Purify",
       "emblem": "Fighter",
       "emblem_talents": [
-        "Firmness",
+        "Swift",
         "Festival of Blood",
         "Quantum Charge"
       ],
       "items": [
-        "Tough Boots",
+        "Warrior Boots",
         "Demon Hunter Sword",
-        "Corrosion Scythe",
         "Golden Staff",
-        "Rose Gold Meteor",
-        "Wind of Nature"
+        "Corrosion Scythe",
+        "Sea Halberd",
+        "Winter Crown"
       ],
-      "likes": 2
+      "likes": 1
     }
   ],
   "66": [
-    {
-      "title": "One combo _ even deadly for tank if you know how to make the Athena's shield useless",
-      "author": "ɱıŋɧ.ɱıŋɧ",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Rupture",
-        "Bargain Hunter",
-        "Impure Rage"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Sky Piercer",
-        "Genius Wand",
-        "Lightning Truncheon",
-        "Holy Crystal",
-        "Wishing Lantern"
-      ],
-      "likes": 4
-    },
     {
       "title": "velocita di movimento e dmg",
       "author": "SoulDark",
@@ -3988,7 +3988,7 @@
         "Divine Glaive",
         "Holy Crystal"
       ],
-      "likes": 2
+      "likes": 3
     },
     {
       "title": "high magic power and sustainability",
@@ -4009,6 +4009,26 @@
         "Athena's Shield"
       ],
       "likes": 1
+    },
+    {
+      "title": "esta chida",
+      "author": "Memories",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Agility",
+        "Master Assassin",
+        "Killing Spree"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Lightning Truncheon",
+        "Sky Piercer",
+        "Holy Crystal",
+        "Divine Glaive",
+        "Blood Wings"
+      ],
+      "likes": 0
     }
   ],
   "67": [
@@ -4030,7 +4050,7 @@
         "Queen's Wings",
         "Malefic Gun"
       ],
-      "likes": 9
+      "likes": 11
     },
     {
       "title": "Trinity Spell Vamp & Trigger Pasif lebih cepat",
@@ -4092,7 +4112,7 @@
         "Divine Glaive",
         "Lightning Truncheon"
       ],
-      "likes": 2
+      "likes": 3
     },
     {
       "title": "poke enemy ",
@@ -4177,70 +4197,30 @@
       "likes": 2
     },
     {
-      "title": "For snowball games , after the level 4 u need to get kill from adc's. If u get 80 stack at skypiercer u gonna win, Trust. ",
-      "author": "Vollst",
+      "title": "Dapat may isang item bago sumabak sa clash or mas ok kung core item niya ang kaylangan bago sumabak sa clash\n",
+      "author": "Eataulos",
       "spell": "Ice Retribution",
-      "emblem": "Assassin",
+      "emblem": "Support",
       "emblem_talents": [
-        "War Cry",
         "Wilderness Blessing",
-        "Swift"
+        "War Cry",
+        "Agility"
       ],
       "items": [
         "Rapid Boots",
-        "Sky Piercer",
-        "Golden Staff",
         "Corrosion Scythe",
+        "Golden Staff",
         "Demon Hunter Sword",
-        "Malefic Roar"
+        "Malefic Roar",
+        "Sea Halberd"
       ],
       "likes": 1
     }
   ],
   "70": [
     {
-      "title": "The antiq and athena are situational conditions if they have like a lot of physical and magic, but you can change it later, i use this boots to run fast and to catch people using my first ability faster. The oracle improves healing, and domi gives overall more defence and anti healing. imo is conditional too, if the enemy has a lot damage you should use it or if there is a hero counter to bele.\n",
-      "author": "Mrtheproguys",
-      "spell": "Revitalize",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Tenacity",
-        "Vitality",
-        "Brave Smite"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Athena's Shield",
-        "Antique Cuirass",
-        "Oracle",
-        "Dominance Ice",
-        "Immortality"
-      ],
-      "likes": 11
-    },
-    {
-      "title": "The best build tank",
-      "author": "RADEN",
-      "spell": "Revitalize",
-      "emblem": "Tank",
-      "emblem_talents": [
-        "Vitality",
-        "Tenacity",
-        "Brave Smite"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Dominance Ice",
-        "Blade Armor",
-        "Guardian Helmet",
-        "Cursed Helmet",
-        "Immortality"
-      ],
-      "likes": 4
-    },
-    {
-      "title": "much resistance",
-      "author": "Tràđávỉahè",
+      "title": "buat lawan mm attack speed",
+      "author": "pranexdital",
       "spell": "Vengeance",
       "emblem": "Tank",
       "emblem_talents": [
@@ -4249,14 +4229,54 @@
         "Brave Smite"
       ],
       "items": [
-        "Tough Boots",
-        "Dominance Ice",
+        "Rapid Boots",
+        "Radiant Armor",
         "Antique Cuirass",
-        "Athena's Shield",
+        "Dominance Ice",
         "Blade Armor",
+        "Immortality"
+      ],
+      "likes": 3
+    },
+    {
+      "title": "bisa ngecounter mm attck speed kayak betrix mode pistol dan miya critikal",
+      "author": "ERORR404",
+      "spell": "Vengeance",
+      "emblem": "Common",
+      "emblem_talents": [
+        "Agility",
+        "Tenacity",
+        "Brave Smite"
+      ],
+      "items": [
+        "Thunder Belt",
+        "Blade Armor",
+        "Dominance Ice",
+        "Oracle",
+        "Immortality",
         "Chastise Pauldron"
       ],
       "likes": 2
+    },
+    {
+      "title": "build tahan banting buat counter musuh di tier atas ",
+      "author": "orochi",
+      "spell": "Vengeance",
+      "emblem": "Tank",
+      "emblem_talents": [
+        "Vitality",
+        "Tenacity",
+        "Concussive Blast"
+      ],
+      "items": [
+        "Blade Armor",
+        "Dominance Ice",
+        "Cursed Helmet",
+        "Antique Cuirass",
+        "Tough Boots",
+        "Athena's Shield"
+      ],
+      "likes": 1
     }
   ],
   "71": [
@@ -4340,7 +4360,7 @@
         "Queen's Wings",
         "Guardian Helmet"
       ],
-      "likes": 7
+      "likes": 9
     },
     {
       "title": "I introduce yall the Dumbass build\n\nHigh damage\nNot bad sustain\nAnd low mobility LOL (Dragon spear cab enhance it during ult) \n\n\nBut seriously idk if this works, just try it in classic \n",
@@ -4360,7 +4380,7 @@
         "Chastise Pauldron",
         "Guardian Helmet"
       ],
-      "likes": 5
+      "likes": 6
     },
     {
       "title": "High damage and Sustain",
@@ -4380,7 +4400,7 @@
         "Golden Staff",
         "Guardian Helmet"
       ],
-      "likes": 4
+      "likes": 5
     }
   ],
   "73": [
@@ -4402,7 +4422,7 @@
         "Concentrated Energy",
         "Divine Glaive"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
       "title": "Burst",
@@ -4425,9 +4445,9 @@
       "likes": 5
     },
     {
-      "title": "Build untuk kelincahan, pengurangan cooldown, dan masih berdamage",
-      "author": "ferryferrariel",
-      "spell": "Flicker",
+      "title": "innocent",
+      "author": "jojoe12",
+      "spell": "Purify",
       "emblem": "Mage",
       "emblem_talents": [
         "Inspire",
@@ -4436,13 +4456,13 @@
       ],
       "items": [
         "Magic Shoes",
-        "Glowing Wand",
-        "Concentrated Energy",
-        "Enchanted Talisman",
+        "Starlium Scythe",
+        "Feather of Heaven",
         "Holy Crystal",
-        "Divine Glaive"
+        "Divine Glaive",
+        "Wishing Lantern"
       ],
-      "likes": 0
+      "likes": 2
     }
   ],
   "74": [
@@ -4464,7 +4484,7 @@
         "Guardian Helmet",
         "Dominance Ice"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
       "title": "good for ambush",
@@ -4484,7 +4504,7 @@
         "Malefic Roar",
         "Sea Halberd"
       ],
-      "likes": 5
+      "likes": 6
     },
     {
       "title": "War Attack",
@@ -4509,46 +4529,6 @@
   ],
   "75": [
     {
-      "title": "Enemy die",
-      "author": "TopOne",
-      "spell": "Petrify",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Rupture",
-        "Bargain Hunter",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Divine Glaive",
-        "Sky Piercer",
-        "Lightning Truncheon",
-        "Holy Crystal",
-        "Arcane Boots",
-        "Glowing Wand"
-      ],
-      "likes": 11
-    },
-    {
-      "title": "Really good for solo player who wants to carry your own team as a midlaner, first item after arcane boots would be divine glave if your opponent is more likely have small hp, if ur opponent play more likely big defense after make arcane boots make a genius wand. you can pick between divine glaves and genius wand depend on your opp, and just change the other one wtih sky piercer. i can guarentee you to have a kill atleast 9 with this build but you gotta play fast before you opp carry have their item done. remember to ban wan wan cuz so hard to catch.",
-      "author": "nahlQ",
-      "spell": "Petrify",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Master Assassin",
-        "Lethal Ignition",
-        "Thrill"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Divine Glaive",
-        "Genius Wand",
-        "Glowing Wand",
-        "Blood Wings",
-        "Holy Crystal"
-      ],
-      "likes": 9
-    },
-    {
       "title": "best for eliminating enemy defenses, ITS ELITEEE trust ME HEHHEEHhheeeeeehehe",
       "author": "NasiGolek",
       "spell": "Petrify",
@@ -4566,7 +4546,47 @@
         "Lightning Truncheon",
         "Blood Wings"
       ],
-      "likes": 4
+      "likes": 6
+    },
+    {
+      "title": "for burst and anti-sustain heroes",
+      "author": "velatko",
+      "spell": "Petrify",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Rupture",
+        "Pull Yourself Together",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Genius Wand",
+        "Glowing Wand",
+        "Lightning Truncheon",
+        "Divine Glaive",
+        "Holy Crystal"
+      ],
+      "likes": 2
+    },
+    {
+      "title": "Burst",
+      "author": "Duskkeeper",
+      "spell": "Petrify",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Rupture",
+        "Wilderness Blessing",
+        "Temporal Reign"
+      ],
+      "items": [
+        "Demon Shoes",
+        "Genius Wand",
+        "Holy Crystal",
+        "Blood Wings",
+        "Divine Glaive",
+        "Immortality"
+      ],
+      "likes": 1
     }
   ],
   "76": [
@@ -4591,26 +4611,6 @@
       "likes": 4
     },
     {
-      "title": "Focused on one-shotting the opponent. ",
-      "author": "Aliila",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Agility",
-        "Bargain Hunter",
-        "Impure Rage"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Lightning Truncheon",
-        "Holy Crystal",
-        "Blood Wings",
-        "Divine Glaive",
-        "Wishing Lantern"
-      ],
-      "likes": 1
-    },
-    {
       "title": "Utility / Sustain",
       "author": "Duskkeeper",
       "spell": "Execute",
@@ -4629,28 +4629,48 @@
         "Immortality"
       ],
       "likes": 1
+    },
+    {
+      "title": "heal, utility, dmg reduction + fleeting time -- roam",
+      "author": "killuadayooo0x0",
+      "spell": "Revitalize",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Agility",
+        "Wilderness Blessing",
+        "Focusing Mark"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Fleeting Time",
+        "Flask of the Oasis",
+        "Genius Wand",
+        "Holy Crystal",
+        "Divine Glaive"
+      ],
+      "likes": 0
     }
   ],
   "77": [
     {
-      "title": "badang ni c1tr0v",
-      "author": "c1tr0v",
+      "title": "Cocok untuk main badang roam\n- CD 30%\n- Cari stack thunder belt\n- Combo Shield (Oracle+Rosegold+emblem support) skill 2 badang shieldnya jadi besar\n- Rosegold cocok untuk fighter ditambah ada att speed jadi cocok untuk badang\n- Domi + Blade armor + Firmness cocok untuk menambahkan damage thunder belt\n- Quantum charge cocok untuk tarik ulur\n- Tenacity supaya tidak gampang mati\n",
+      "author": "Keya",
       "spell": "Flicker",
-      "emblem": "Fighter",
+      "emblem": "Support",
       "emblem_talents": [
-        "Agility",
-        "Wilderness Blessing",
-        "Concussive Blast"
+        "Firmness",
+        "Tenacity",
+        "Quantum Charge"
       ],
       "items": [
-        "Rapid Boots",
+        "Magic Shoes",
         "Thunder Belt",
         "Dominance Ice",
-        "Guardian Helmet",
-        "Queen's Wings",
-        "Immortality"
+        "Oracle",
+        "Rose Gold Meteor",
+        "Blade Armor"
       ],
-      "likes": 4
+      "likes": 5
     },
     {
       "title": "ONE SHOT BUILD LATE SWAP SKY PIERCER IF LOW WITH BoD",
@@ -4673,24 +4693,24 @@
       "likes": 4
     },
     {
-      "title": "Cocok untuk main badang roam\n- CD 30%\n- Cari stack thunder belt\n- Combo Shield (Oracle+Rosegold+emblem support) skill 2 badang shieldnya jadi besar\n- Rosegold cocok untuk fighter ditambah ada att speed jadi cocok untuk badang\n- Domi + Blade armor + Firmness cocok untuk menambahkan damage thunder belt\n- Quantum charge cocok untuk tarik ulur\n- Tenacity supaya tidak gampang mati\n",
-      "author": "Keya",
+      "title": ".\n",
+      "author": "APPZAAAAASTYLE.",
       "spell": "Flicker",
       "emblem": "Support",
       "emblem_talents": [
-        "Firmness",
-        "Tenacity",
-        "Quantum Charge"
+        "Focusing Mark",
+        "Wilderness Blessing",
+        "Agility"
       ],
       "items": [
-        "Magic Shoes",
-        "Thunder Belt",
-        "Dominance Ice",
+        "Rapid Boots",
         "Oracle",
-        "Rose Gold Meteor",
-        "Blade Armor"
+        "Dominance Ice",
+        "Brute Force Breastplate",
+        "Athena's Shield",
+        "Immortality"
       ],
-      "likes": 4
+      "likes": 3
     }
   ],
   "78": [
@@ -4712,7 +4732,7 @@
         "Guardian Helmet",
         "Blade of Despair"
       ],
-      "likes": 1
+      "likes": 3
     },
     {
       "title": "normal build by zexo",
@@ -4732,7 +4752,7 @@
         "Guardian Helmet",
         "Immortality"
       ],
-      "likes": 1
+      "likes": 2
     },
     {
       "title": "Top Global 50< Khufra build\nRoam blessing: Encourage\n\nYou can switch with quantum charge (against tanky cc comp) or conc blast (against squishy comps). Final item is flexible and you can ditch hepta for other items.\n\nI have 2.2k matches with Khufra, with a 62% winrate (improving) and this is my build.",
@@ -4756,26 +4776,6 @@
     }
   ],
   "79": [
-    {
-      "title": "BESt build",
-      "author": "NOOB346",
-      "spell": "Flicker",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Rupture",
-        "Weapon Master",
-        "Killing Spree"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Sky Piercer",
-        "Hunter Strike",
-        "Malefic Roar",
-        "Rose Gold Meteor",
-        "Sea Halberd"
-      ],
-      "likes": 9
-    },
     {
       "title": "Ade imo",
       "author": "Juliyou",
@@ -4815,28 +4815,48 @@
         "Immortality"
       ],
       "likes": 3
+    },
+    {
+      "title": "tank killer/burst\n",
+      "author": "H$Z",
+      "spell": "Flicker",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Thrill",
+        "Bargain Hunter",
+        "Temporal Reign"
+      ],
+      "items": [
+        "Tough Boots",
+        "Sky Piercer",
+        "Hunter Strike",
+        "Blade of the Heptaseas",
+        "Endless Battle",
+        "Malefic Roar"
+      ],
+      "likes": 3
     }
   ],
   "80": [
     {
-      "title": ".",
-      "author": "Sedtha",
-      "spell": "Ice Retribution",
+      "title": "Awal awal ambil sepatu polosan terus skip langsung ke \n1.concentreated energy\nUntuk item kedua tergantung lawan\n\nKalo lawan tipis tipis?\nAmbil genius Wand\n\nKalau lawan tebal tebal/Shield?\nAmbil divine glaive\n\nKalo lawan sustain/ngeheal Mulu?\nAmbil glowing Wand\n\nTapi kalo aku sih aku ambil divine glaive\n\n\nGenius Wand sebenarnya bisa diganti winter aja (Recommended)\n\nKenapa winter? Kalo udah late game guin initiator dalam turret harus sambil winter kalau gak mati sendiri \n\nOh iya sepatu pake magic boots\n\nSisanya ikutin aja \n\nIntinya item wajib tuh\nConcentreated energy (early)\nBlood wings (mid)\nWinter crown (late game)\n\nNapa gak ambil item defense bang?\nBuild demek bosku kita ambil blood wings supaya kita sustain sedikit ingat ya sedikit",
+      "author": "Mitchel",
+      "spell": "Flicker",
       "emblem": "Mage",
       "emblem_talents": [
-        "Inspire",
-        "Seasoned Hunter",
-        "Temporal Reign"
+        "Firmness",
+        "Master Assassin",
+        "Lethal Ignition"
       ],
       "items": [
-        "Magic Shoes",
         "Concentrated Energy",
-        "Brute Force Breastplate",
-        "Winter Crown",
-        "Queen's Wings",
-        "Divine Glaive"
+        "Divine Glaive",
+        "Wishing Lantern",
+        "Blood Wings",
+        "Holy Crystal",
+        "Genius Wand"
       ],
-      "likes": 11
+      "likes": 6
     },
     {
       "title": "Roam",
@@ -4859,47 +4879,27 @@
       "likes": 4
     },
     {
-      "title": "Awal awal ambil sepatu polosan terus skip langsung ke \n1.concentreated energy\nUntuk item kedua tergantung lawan\n\nKalo lawan tipis tipis?\nAmbil genius Wand\n\nKalau lawan tebal tebal/Shield?\nAmbil divine glaive\n\nKalo lawan sustain/ngeheal Mulu?\nAmbil glowing Wand\n\nTapi kalo aku sih aku ambil divine glaive\n\n\nGenius Wand sebenarnya bisa diganti winter aja (Recommended)\n\nKenapa winter? Kalo udah late game guin initiator dalam turret harus sambil winter kalau gak mati sendiri \n\nOh iya sepatu pake magic boots\n\nSisanya ikutin aja \n\nIntinya item wajib tuh\nConcentreated energy (early)\nBlood wings (mid)\nWinter crown (late game)\n\nNapa gak ambil item defense bang?\nBuild demek bosku kita ambil blood wings supaya kita sustain sedikit ingat ya sedikit",
-      "author": "Mitchel",
-      "spell": "Flicker",
+      "title": "Perfectly balanced between burst and sustain. Use Flame Retribution for extra damage. If you want to use Winter Crown swap out with Queen's Wings instead. Just try it out and see for yourself✌🏼",
+      "author": "Ngura",
+      "spell": "",
       "emblem": "Mage",
       "emblem_talents": [
-        "Firmness",
-        "Master Assassin",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Concentrated Energy",
-        "Divine Glaive",
-        "Wishing Lantern",
-        "Blood Wings",
-        "Holy Crystal",
-        "Genius Wand"
-      ],
-      "likes": 4
-    }
-  ],
-  "81": [
-    {
-      "title": "ESME M7 AURORA",
-      "author": "Cala",
-      "spell": "",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Inspire",
-        "Festival of Blood",
+        "Thrill",
+        "Seasoned Hunter",
         "Impure Rage"
       ],
       "items": [
-        "Warrior Boots",
-        "Oracle",
-        "Queen's Wings",
-        "Enchanted Talisman",
-        "Radiant Armor",
-        "Chastise Pauldron"
+        "Concentrated Energy",
+        "Magic Shoes",
+        "Genius Wand",
+        "Cursed Helmet",
+        "Brute Force Breastplate",
+        "Queen's Wings"
       ],
-      "likes": 10
-    },
+      "likes": 2
+    }
+  ],
+  "81": [
     {
       "title": "With this build you have everything\n45 % cd reduction\nToughness  through an early  oracle and esme is the beast wearer of oracle \nPick glowing wand over dominant ice  Hp > armor  esme had one of the best armor growth in the game and more damage = more shield\nHoly crystal  more damage more shield \nLast item pick whatever is best  in the game  ( immortality, winter crown > athena's shield , chastise pauldron, blade armor)\nNever buy the following list of item : \n- ice wand the spell 2 of esme already apply slow , spell vamp is nerf on esme \n- queen's wing  is a good item for fighter who long fight . But esme is initiator who doesn't like long trade .\n- clock of  destiny you dont need mana and don't want to long trade .\n\n\n",
       "author": "skyfy",
@@ -4918,27 +4918,47 @@
         "Holy Crystal",
         "Blood Wings"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
-      "title": "Sustain \n",
-      "author": "EXPhelps",
-      "spell": "Vengeance",
+      "title": "A",
+      "author": "JLP18",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Bargain Hunter",
+        "Thrill",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Clock of Destiny",
+        "Genius Wand",
+        "Winter Crown",
+        "Fleeting Time",
+        "Oracle"
+      ],
+      "likes": 0
+    },
+    {
+      "title": "wkwkk",
+      "author": "ChevPurity",
+      "spell": "Aegis",
       "emblem": "Support",
       "emblem_talents": [
         "Agility",
         "Festival of Blood",
-        "Impure Rage"
+        "War Cry"
       ],
       "items": [
         "Tough Boots",
-        "Oracle",
-        "Queen's Wings",
         "Enchanted Talisman",
-        "Dominance Ice",
-        "Chastise Pauldron"
+        "Glowing Wand",
+        "Concentrated Energy",
+        "Divine Glaive",
+        "Blood Wings"
       ],
-      "likes": 3
+      "likes": 0
     }
   ],
   "82": [
@@ -4960,7 +4980,7 @@
         "Dominance Ice",
         "Guardian Helmet"
       ],
-      "likes": 3
+      "likes": 4
     },
     {
       "title": "build buat tarung lama dan bisa incer belakang atau core musuh early to mid sakit jadi bisa di manfaatkan buat menit  \n1-10 masih kuat",
@@ -5022,27 +5042,7 @@
         "Ice Queen Wand",
         "Brute Force Breastplate"
       ],
-      "likes": 6
-    },
-    {
-      "title": "Always be the first get to level 2 before the enemy if you can, This way you can quickly do the exp crab, then zone the enemy to deny the exp. You will dominate the game if you build up stacks for sky piercer early. This build is what gets me to mythical immortal 200+ stars. Kasi dooy si guile.",
-      "author": "Try.Again",
-      "spell": "",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Agility",
-        "Festival of Blood",
-        "Impure Rage"
-      ],
-      "items": [
-        "Sky Piercer",
-        "Rapid Boots",
-        "War Axe",
-        "Brute Force Breastplate",
-        "Sea Halberd",
-        "Ice Queen Wand"
-      ],
-      "likes": 2
+      "likes": 8
     },
     {
       "title": "strong defender and attacker unkillable when there is lot of minion",
@@ -5062,7 +5062,27 @@
         "Brute Force Breastplate",
         "Oracle"
       ],
-      "likes": 1
+      "likes": 4
+    },
+    {
+      "title": "Always be the first get to level 2 before the enemy if you can, This way you can quickly do the exp crab, then zone the enemy to deny the exp. You will dominate the game if you build up stacks for sky piercer early. This build is what gets me to mythical immortal 200+ stars. Kasi dooy si guile.",
+      "author": "Try.Again",
+      "spell": "",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Agility",
+        "Festival of Blood",
+        "Impure Rage"
+      ],
+      "items": [
+        "Sky Piercer",
+        "Rapid Boots",
+        "War Axe",
+        "Brute Force Breastplate",
+        "Sea Halberd",
+        "Ice Queen Wand"
+      ],
+      "likes": 3
     }
   ],
   "84": [
@@ -5084,27 +5104,27 @@
         "Malefic Roar",
         "Immortality"
       ],
-      "likes": 3
+      "likes": 5
     },
     {
-      "title": "Use red retri,u dmg in early will more burst",
-      "author": "Neptune",
-      "spell": "Retribution",
-      "emblem": "Assassin",
+      "title": "meta ",
+      "author": "RUANL0K",
+      "spell": "Ice Retribution",
+      "emblem": "Marksman",
       "emblem_talents": [
         "Fatal",
         "Seasoned Hunter",
-        "Quantum Charge"
+        "War Cry"
       ],
       "items": [
         "Berserker's Fury",
-        "Great Dragon Spear",
         "Tough Boots",
+        "Haas' Claws",
+        "War Axe",
         "Endless Battle",
-        "Malefic Roar",
         "Rose Gold Meteor"
       ],
-      "likes": 2
+      "likes": 1
     },
     {
       "title": "p",
@@ -5146,7 +5166,7 @@
         "Malefic Roar",
         "Immortality"
       ],
-      "likes": 10
+      "likes": 13
     },
     {
       "title": "W",
@@ -5231,24 +5251,24 @@
       "likes": 4
     },
     {
-      "title": "Anti-fall, survivability, max CDR, poke, area anti-heal\nYou might feel the cooldown a bit at the start; the Glaive will help if the game is going badly to avoid suffering from the opponent's magic defense; Talisman is vital for cooldown reduction and mana so you don't have to recall to base for mana.",
-      "author": "Demonex",
+      "title": "raa\n",
+      "author": "Akumakwon",
       "spell": "Flicker",
       "emblem": "Mage",
       "emblem_talents": [
-        "Inspire",
-        "Weapon Master",
-        "Lethal Ignition"
+        "Agility",
+        "Bargain Hunter",
+        "Impure Rage"
       ],
       "items": [
-        "Enchanted Talisman",
-        "Divine Glaive",
         "Magic Shoes",
         "Glowing Wand",
         "Wishing Lantern",
-        "Concentrated Energy"
+        "Divine Glaive",
+        "Winter Crown",
+        "Blood Wings"
       ],
-      "likes": 1
+      "likes": 0
     }
   ],
   "87": [
@@ -5270,47 +5290,47 @@
         "Antique Cuirass",
         "Guardian Helmet"
       ],
-      "likes": 5
+      "likes": 7
     },
     {
-      "title": "pure HP+Damage, sustain long in fight, front line (Optional u can use revitilization or vengeance to sustain even more if u exp or roam I prefer vengeance)",
-      "author": "Gus?_Auro?",
-      "spell": "Bloody Retribution",
-      "emblem": "Fighter",
+      "title": "K",
+      "author": "Rddddor",
+      "spell": "Vengeance",
+      "emblem": "Tank",
       "emblem_talents": [
-        "Vitality",
+        "Firmness",
         "Tenacity",
         "Concussive Blast"
       ],
       "items": [
-        "Athena's Shield",
-        "Queen's Wings",
         "Antique Cuirass",
-        "Clock of Destiny",
-        "Holy Crystal",
-        "Concentrated Energy"
+        "Cursed Helmet",
+        "Immortality",
+        "Oracle",
+        "Tough Boots",
+        "War Axe"
       ],
-      "likes": 4
+      "likes": 2
     },
     {
-      "title": "Best build for solo roam/exp baxia try it now!!!\n",
-      "author": "Baxiamain",
-      "spell": "Revitalize",
+      "title": "Exp",
+      "author": "Ddilzx",
+      "spell": "Vengeance",
       "emblem": "Fighter",
       "emblem_talents": [
-        "Thrill",
+        "Vitality",
         "Festival of Blood",
         "Concussive Blast"
       ],
       "items": [
-        "Dominance Ice",
-        "Oracle",
-        "Cursed Helmet",
         "Tough Boots",
+        "Chastise Pauldron",
+        "Radiant Armor",
         "Antique Cuirass",
-        "Blade Armor"
+        "Cursed Helmet",
+        "Dominance Ice"
       ],
-      "likes": 2
+      "likes": 0
     }
   ],
   "88": [
@@ -5352,7 +5372,7 @@
         "Sea Halberd",
         "Hunter Strike"
       ],
-      "likes": 1
+      "likes": 2
     },
     {
       "title": "Masha",
@@ -5456,27 +5476,7 @@
         "Magic Blade",
         "Oracle"
       ],
-      "likes": 3
-    },
-    {
-      "title": "Sustained and burst build, just be careful of cc",
-      "author": "CrazyDave",
-      "spell": "Ice Retribution",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Thrill",
-        "Weapon Master",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Feather of Heaven",
-        "Concentrated Energy",
-        "Genius Wand",
-        "Holy Crystal",
-        "Divine Glaive"
-      ],
-      "likes": 1
+      "likes": 6
     },
     {
       "title": "Dark System Police, roam, flicker",
@@ -5497,29 +5497,29 @@
         "Immortality"
       ],
       "likes": 1
+    },
+    {
+      "title": "Boleh pake glowing wand jika mid tidak membelinya",
+      "author": "Sil",
+      "spell": "Vengeance",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Swift",
+        "Master Assassin",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Feather of Heaven",
+        "Concentrated Energy",
+        "Genius Wand",
+        "Divine Glaive",
+        "Winter Crown"
+      ],
+      "likes": 1
     }
   ],
   "91": [
-    {
-      "title": "ceciIon instssnt kill",
-      "author": "sukarno",
-      "spell": "Flicker",
-      "emblem": "Common",
-      "emblem_talents": [
-        "Lethal Ignition",
-        "Agility",
-        "Weapon Master"
-      ],
-      "items": [
-        "Enchanted Talisman",
-        "Lightning Truncheon",
-        "Wishing Lantern",
-        "Holy Crystal",
-        "Queen's Wings",
-        "Blood Wings"
-      ],
-      "likes": 6
-    },
     {
       "title": "The supreme Cecilion build, it has everything you might want or need on him, and no this is not an exaggeration, you can test it out for yourself ",
       "author": "BuildSmith",
@@ -5538,7 +5538,7 @@
         "Divine Glaive",
         "Ice Queen Wand"
       ],
-      "likes": 0
+      "likes": 1
     },
     {
       "title": "High Damage also you can exchange the boots into divine glaive for penetration or bloddy wings for shield it depends on the system whether the opposing team is tanky or not but yeah you will get absurd amount of damage by 18min mark if you gonna lock item with 200-250 stacks ",
@@ -5557,6 +5557,26 @@
         "Lightning Truncheon",
         "Wishing Lantern",
         "Holy Crystal"
+      ],
+      "likes": 1
+    },
+    {
+      "title": "Talent Wilderness bisa di ganti dengan bargain hunter atau weapon master",
+      "author": "M0n4rch_",
+      "spell": "Sprint",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Inspire",
+        "Wilderness Blessing",
+        "Impure Rage"
+      ],
+      "items": [
+        "Clock of Destiny",
+        "Demon Shoes",
+        "Glowing Wand",
+        "Wishing Lantern",
+        "Blood Wings",
+        "Divine Glaive"
       ],
       "likes": 0
     }
@@ -5603,24 +5623,24 @@
       "likes": 1
     },
     {
-      "title": "Carmilla tuh lebih enak pake build sustain, karena skill-skill nya itu cocok buat war jangka panjang ",
-      "author": "vindutch",
-      "spell": "Vengeance",
+      "title": "item Carmilla untuk party untuk solo pun boleh tapi Recommended untuk party lah ",
+      "author": "Nikoz",
+      "spell": "Flicker",
       "emblem": "Tank",
       "emblem_talents": [
-        "Tenacity",
-        "Firmness",
-        "Brave Smite"
+        "Vitality",
+        "Pull Yourself Together",
+        "Impure Rage"
       ],
       "items": [
-        "Tough Boots",
+        "Rapid Boots",
         "Thunder Belt",
         "Dominance Ice",
-        "Oracle",
-        "Queen's Wings",
-        "Lightning Truncheon"
+        "Brute Force Breastplate",
+        "Lightning Truncheon",
+        "Wishing Lantern"
       ],
-      "likes": 1
+      "likes": 0
     }
   ],
   "93": [
@@ -5642,47 +5662,27 @@
         "Chastise Pauldron",
         "Guardian Helmet"
       ],
-      "likes": 2
+      "likes": 3
     },
     {
-      "title": "atlas ni c1tr0v",
-      "author": "c1tr0v",
+      "title": "Roam blessing: Encourage\n\nSpare items:\nBlade armor\nAthena's shield\n\nNote: Don't question the item order, and don't mess with it",
+      "author": "BuildSmith",
       "spell": "Flicker",
       "emblem": "Tank",
       "emblem_talents": [
-        "Vitality",
-        "Tenacity",
-        "Concussive Blast"
+        "Concussive Blast",
+        "Pull Yourself Together",
+        "Firmness"
       ],
       "items": [
         "Rapid Boots",
-        "Dominance Ice",
         "Guardian Helmet",
-        "Blade Armor",
-        "Immortality",
-        "Radiant Armor"
-      ],
-      "likes": 0
-    },
-    {
-      "title": "Rotasi cepat, montage, tahan lama, dan cooldown reduction.",
-      "author": "Algoritma",
-      "spell": "Flicker",
-      "emblem": "Tank",
-      "emblem_talents": [
-        "Firmness",
-        "Wilderness Blessing",
-        "Concussive Blast"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Dominance Ice",
         "Fleeting Time",
-        "Antique Cuirass",
+        "Dominance Ice",
         "Radiant Armor",
-        "Immortality"
+        "Antique Cuirass"
       ],
-      "likes": 0
+      "likes": 1
     }
   ],
   "94": [
@@ -5704,7 +5704,7 @@
         "Malefic Roar",
         "Blade of Despair"
       ],
-      "likes": 7
+      "likes": 8
     },
     {
       "title": "A try for those of you who use Ranked",
@@ -5724,24 +5724,24 @@
         "Blade of Despair",
         "Wind of Nature"
       ],
-      "likes": 1
+      "likes": 2
     },
     {
-      "title": "what attack do you play, good build, do you know how to play Calasic? Ranked, for you, for me, it's ok to use according to the class of people in Bingai",
-      "author": "ANZOH",
-      "spell": "Flicker",
-      "emblem": "Marksman",
+      "title": "(I'm wrath, i will destroy all) solo rank turret eater",
+      "author": "Ikoz",
+      "spell": "Ice Retribution",
+      "emblem": "Support",
       "emblem_talents": [
-        "Thrill",
-        "Bargain Hunter",
-        "Quantum Charge"
+        "Inspire",
+        "Wilderness Blessing",
+        "Weakness Finder"
       ],
       "items": [
-        "Sea Halberd",
-        "Warrior Boots",
-        "Windtalker",
-        "Demon Hunter Sword",
+        "Magic Shoes",
+        "Corrosion Scythe",
         "Berserker's Fury",
+        "Haas' Claws",
+        "Great Dragon Spear",
         "Blade of Despair"
       ],
       "likes": 1
@@ -5766,7 +5766,7 @@
         "Immortality",
         "Guardian Helmet"
       ],
-      "likes": 14
+      "likes": 16
     },
     {
       "title": "This build isn’t for every type of enemies. This is a general build, not for chase nor soaking a lot of damage.\n\n40% CDR, \nHigh regen capabilities from War Axe, Queen’s Wings, and Oracle.\n20 (Oracle) + 50 (RGM) + 8 (Fighter Emblem) Hybrid Defense.\nHigh “low HP clutch” potential (Queen’s Wings’ damage reduction + RGM’s shield + Oracle boosts shield and spell vamp).\nMedium Extra HP > Higher chance of activating 8% damage bonus from Sea Halberd.\nAbove average att spd > Faster 2nd dash from 3rd skill.\nHigh Physical att + dmg bonus from War Cry, Sea Halberd, and Queen’s Wings.\n\nWhen possible, replace Magic Shoes with BFB. 10% CDR, 0-48 adaptive att, 25% resilience, and extra mov spd.\nIf you need to replace an item to buy a counter item, discard Oracle/RGM/BFB.\n\nTo those who think this build contains too much of damage items, just know this.\n HP Recovered (Spell Vamp) = Skill Damage x Spell Vamp x Spell Vamp Ratio.\n\nBy the time I’m writing this, I’ve achieved 4334 matches with 60% WR on YZ. Expect this build won’t be effective as time goes on, due to game changes (emblems, items, META heroes, etc.)",
@@ -5786,7 +5786,7 @@
         "Rose Gold Meteor",
         "Oracle"
       ],
-      "likes": 7
+      "likes": 8
     },
     {
       "title": "Best for swarmed condition can sustain, can escape in any situation, can stay sustained in a long fight ",
@@ -5811,46 +5811,6 @@
   ],
   "96": [
     {
-      "title": "For people with thin blood types",
-      "author": "louyi",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Rupture",
-        "Bargain Hunter",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Enchanted Talisman",
-        "Glowing Wand",
-        "Genius Wand",
-        "Holy Crystal",
-        "Lightning Truncheon"
-      ],
-      "likes": 2
-    },
-    {
-      "title": "Luo Yi Burst ",
-      "author": "ronaldoyusuf",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Inspire",
-        "Weapon Master",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Enchanted Talisman",
-        "Glowing Wand",
-        "Holy Crystal",
-        "Divine Glaive",
-        "Winter Crown"
-      ],
-      "likes": 1
-    },
-    {
       "title": "Coba aja udahh",
       "author": "🗣️:\"Izin-ngasih-build",
       "spell": "Flicker",
@@ -5869,6 +5829,26 @@
         "Genius Wand"
       ],
       "likes": 1
+    },
+    {
+      "title": "สายไฟล์",
+      "author": "ลั่วอี้",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Inspire",
+        "Bargain Hunter",
+        "Impure Rage"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Enchanted Talisman",
+        "Glowing Wand",
+        "Genius Wand",
+        "Divine Glaive",
+        "Holy Crystal"
+      ],
+      "likes": 0
     }
   ],
   "97": [
@@ -5952,7 +5932,7 @@
         "Guardian Helmet",
         "Immortality"
       ],
-      "likes": 4
+      "likes": 5
     },
     {
       "title": "Ini untuk yang main khaled roam ini build bagus\nItu item ke lima ama enam tergantung situasi ya",
@@ -5972,7 +5952,7 @@
         "Athena's Shield",
         "Immortality"
       ],
-      "likes": 3
+      "likes": 4
     },
     {
       "title": "Pure damage build, good for handling any squishy hero.",
@@ -6076,27 +6056,7 @@
         "Rose Gold Meteor",
         "Sea Halberd"
       ],
-      "likes": 3
-    },
-    {
-      "title": "Is this ok try comment",
-      "author": "AxpēX",
-      "spell": "Flicker",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Rupture",
-        "Festival of Blood",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Blade of the Heptaseas",
-        "Sea Halberd",
-        "Malefic Gun",
-        "Warrior Boots",
-        "Brute Force Breastplate",
-        "Rose Gold Meteor"
-      ],
-      "likes": 3
+      "likes": 4
     },
     {
       "title": "Hand of Despair, gold lane, flicker",
@@ -6115,6 +6075,26 @@
         "Malefic Gun",
         "Wind of Nature",
         "Blade of Despair"
+      ],
+      "likes": 1
+    },
+    {
+      "title": "Brust you NI",
+      "author": "Reddy",
+      "spell": "Flicker",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "War Cry",
+        "Agility",
+        "Master Assassin"
+      ],
+      "items": [
+        "Blade of the Heptaseas",
+        "Tough Boots",
+        "Malefic Gun",
+        "Sky Piercer",
+        "Blade of Despair",
+        "Rose Gold Meteor"
       ],
       "likes": 1
     }
@@ -6161,27 +6141,47 @@
       "likes": 1
     },
     {
-      "title": "Yve godly build",
-      "author": "LilBoom04",
+      "title": "I,It balances high-velocity early wave clear with devastating late-game magic penetration and durability to protect your Hero Power.⚔️ Equipment Purchase Order\n  1,Arcane Boots: Gives early Magic Penetration to ensure your Skill 1 pokes chunk enemy health lines immediately.\n  2,Ice Queen Wand: Your absolute core item. Grants the crucial \"sticky\" slow effect on every skill hit, locking enemies in place.\n  3,Clock of Destiny: Provides a massive pool of HP and Mana. (Pro-tip: Rush the Elegant Gem component piece early for free lane   sustain).\n  4,Divine Glaive: Destroys mid-game frontline tanks by instantly slicing through early Magic Defense items like Athena's Shield.\n  5,Blood Wings: Adds raw endgame Magic Power alongside a massive protective shield and movement speed boost to survive late-game assassin dives.\n  6,Holy Crystal: The ultimate finisher. Its percentage-based passive multiplies the huge Magic Power pool built from your previous  items, maximizing your end-game burst.\nII,Emblem Set\n     Main Emblem: Mage (For flat Magic Power, Cooldown Reduction, and Magic Penetration).\n         Ability 1: Rupture (+5 Adaptive Penetration to secure early-game lane dominance).\n         Ability 2: Pull Yourself Together (Reduces your Battle Spell and item cooldowns by 15%).\n         Ability 3: Impure Rage (Deals extra adaptive damage based on enemy HP and restores Mana continuously).\nIII,Battle SpellFlicker: Mandatory for instantaneous repositioning, escaping ganks, or adjusting your location during your Ultimate. IV,Situational Swaps (The Counter Rules)\n (i)Against Heavy Regen (Estes, Angela, Uranus, Terizla): Replace Blood Wings with Glowing Wand in your 4th slot to slash enemy healing by 50%.\n (ii)Against High-Mobility Burst (Fanny, Ling, Saber): Swap Flicker to Purify or Petrify",
+      "author": "Nyx_Ast",
       "spell": "Flicker",
       "emblem": "Mage",
       "emblem_talents": [
-        "Inspire",
-        "Wilderness Blessing",
-        "Impure Rage"
+        "Pull Yourself Together",
+        "Impure Rage",
+        "Rupture"
       ],
       "items": [
         "Arcane Boots",
-        "Glowing Wand",
-        "Lightning Truncheon",
-        "Holy Crystal",
+        "Ice Queen Wand",
+        "Clock of Destiny",
         "Divine Glaive",
-        "Blood Wings"
+        "Blood Wings",
+        "Holy Crystal"
       ],
-      "likes": 1
+      "likes": 0
     }
   ],
   "102": [
+    {
+      "title": "This build focuses on Mathilda’s ability to go in and out freely while constantly annoying enemies. By combining Thunderbelt with her passive, she can keep enemies slowed and pressured, making it very difficult for them to catch or punish her. The use of Queen’s Wings may seem unusual at first, but it serves as an emergency tool. When her HP drops significantly, the damage reduction effect gives her enough time to escape or reset the fight. At the same time, Flask of the Oasis provides additional support by helping reduce cooldowns and improving her overall utility for the team. The main goal of this build is to allow Mathilda to engage, poke, and disengage safely. She can jump in, apply pressure, provide vision, and then get out without being punished. This makes her extremely hard to deal with, especially in prolonged fights. With her high mobility, Mathilda can also threaten the enemy backline, targeting mages, assassins, or marksmen. She doesn’t always need to secure kills—simply disrupting their positioning and forcing them to play defensively is already a big advantage for her team. You have two spell options: Sprint and Purify. The choice depends on the enemy lineup. If the enemy relies heavily on slows, Sprint is the better option since it helps you maintain mobility and keep your in–out playstyle smooth. However, if the enemy has strong single-target or long-duration crowd control, Purify becomes more valuable to prevent getting locked down. Always remember that Mathilda’s role in this build is to constantly annoy enemies. You want to keep poking them with your passive’s bonus damage while applying slow from Thunderbelt. At the same time, you gain significant movement speed from your passive and talents, allowing you to stay elusive and difficult to catch while maintaining pressure.",
+      "author": "grinti",
+      "spell": "Sprint",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Agility",
+        "Wilderness Blessing",
+        "Quantum Charge"
+      ],
+      "items": [
+        "Rapid Boots",
+        "Thunder Belt",
+        "Queen's Wings",
+        "Flask of the Oasis",
+        "Brute Force Breastplate",
+        "Ice Queen Wand"
+      ],
+      "likes": 3
+    },
     {
       "title": "Use encourage roam blessing,I didnt see it on build page. You can go for cod if you want, but late game you should swap it for a situational item. Ie. Team taking massive damage go vial if heavy magic radiant armor.  Need blade armor? Maybe! \n\nFocuses on heavy harass and vision, take out split pushes, ambush, and poke. Make use of quantum charge speed boost cool down and petrify for escapes. Isolate and help kidnap with your jungler. Matilda is not a babysitter get to level 4 asap help mage rotate or jungle clear with skill two. Snowball and end game early.",
       "author": "Dook33",
@@ -6221,29 +6221,29 @@
         "Holy Crystal"
       ],
       "likes": 1
-    },
-    {
-      "title": "Use this build if you want a hybrid mathilda ",
-      "author": "NashNash",
-      "spell": "Aegis",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Agility",
-        "Bargain Hunter",
-        "Temporal Reign"
-      ],
-      "items": [
-        "Enchanted Talisman",
-        "Arcane Boots",
-        "Holy Crystal",
-        "Blood Wings",
-        "Brute Force Breastplate",
-        "Oracle"
-      ],
-      "likes": 0
     }
   ],
   "103": [
+    {
+      "title": "Make your enemy suffer. 🔥 Use your paquito skill base on situation don't stick in one combo. ",
+      "author": "Loading...",
+      "spell": "Flicker",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Rupture",
+        "Weapon Master",
+        "Impure Rage"
+      ],
+      "items": [
+        "Tough Boots",
+        "Hunter Strike",
+        "War Axe",
+        "Queen's Wings",
+        "Malefic Roar",
+        "Immortality"
+      ],
+      "likes": 17
+    },
     {
       "title": "A build for a team with an assassin in the jungle, for spamming and survivability",
       "author": "mrpackage",
@@ -6262,7 +6262,7 @@
         "Queen's Wings",
         "Dominance Ice"
       ],
-      "likes": 4
+      "likes": 8
     },
     {
       "title": "Build if there is a tank in the jungle and roam",
@@ -6282,27 +6282,7 @@
         "Blade of Despair",
         "Rose Gold Meteor"
       ],
-      "likes": 2
-    },
-    {
-      "title": "Paquito EXP Basically ",
-      "author": "Bungkonmuang17",
-      "spell": "Flicker",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Killing Spree",
-        "Festival of Blood"
-      ],
-      "items": [
-        "Tough Boots",
-        "Hunter Strike",
-        "War Axe",
-        "Queen's Wings",
-        "Endless Battle",
-        "Blade of Despair"
-      ],
-      "likes": 2
+      "likes": 5
     }
   ],
   "104": [
@@ -6324,7 +6304,7 @@
         "Guardian Helmet",
         "Immortality"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
       "title": "Shoes can be replaced with something that reduces control.",
@@ -6364,30 +6344,10 @@
         "Radiant Armor",
         "Antique Cuirass"
       ],
-      "likes": 3
+      "likes": 4
     }
   ],
   "105": [
-    {
-      "title": "Rosgold bisa diganti dengan heptasis",
-      "author": "syahdan",
-      "spell": "Flicker",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Weapon Master",
-        "Quantum Charge"
-      ],
-      "items": [
-        "Malefic Gun",
-        "Sea Halberd",
-        "Hunter Strike",
-        "Winter Crown",
-        "Blade of Despair",
-        "Rose Gold Meteor"
-      ],
-      "likes": 2
-    },
     {
       "title": "DMG + FAST RELOAD\nSHOTGUN HIT BY PENETRATION ABOUT 2.1K ON 15 LVL ( MAX DMG IS 2.4K) BUT IN THIS BUILD U HAVE FAST SHOTGUN RELOAD",
       "author": "Garstka",
@@ -6405,6 +6365,26 @@
         "Malefic Roar",
         "Blade of Despair",
         "Sea Halberd"
+      ],
+      "likes": 3
+    },
+    {
+      "title": "Rosgold bisa diganti dengan heptasis",
+      "author": "syahdan",
+      "spell": "Flicker",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Rupture",
+        "Weapon Master",
+        "Quantum Charge"
+      ],
+      "items": [
+        "Malefic Gun",
+        "Sea Halberd",
+        "Hunter Strike",
+        "Winter Crown",
+        "Blade of Despair",
+        "Rose Gold Meteor"
       ],
       "likes": 2
     },
@@ -6448,7 +6428,7 @@
         "Oracle",
         "Antique Cuirass"
       ],
-      "likes": 5
+      "likes": 9
     },
     {
       "title": "Enak buat tim fight",
@@ -6468,27 +6448,27 @@
         "Oracle",
         "Queen's Wings"
       ],
-      "likes": 3
+      "likes": 4
     },
     {
-      "title": "Build ini mengikuti patch terbaru dan build ini sangat sustain saat di war cocok untuk war jangka panjang dan dapat TB tim kalian",
-      "author": "Shiroi",
-      "spell": "Flicker",
-      "emblem": "Tank",
+      "title": "enak buat yang suka main maju maju sendirian saat war lorrd ",
+      "author": "ERORR404",
+      "spell": "Vengeance",
+      "emblem": "Fighter",
       "emblem_talents": [
-        "Brave Smite",
+        "Agility",
         "Festival of Blood",
-        "Vitality"
+        "Brave Smite"
       ],
       "items": [
-        "Tough Boots",
         "Thunder Belt",
         "War Axe",
-        "Oracle",
-        "Guardian Helmet",
+        "Queen's Wings",
+        "Dominance Ice",
+        "Chastise Pauldron",
         "Immortality"
       ],
-      "likes": 4
+      "likes": 2
     }
   ],
   "107": [
@@ -6510,47 +6490,47 @@
         "Lightning Truncheon",
         "Divine Glaive"
       ],
-      "likes": 5
+      "likes": 6
     },
     {
-      "title": "For Natan Jungler. High risk, high reward highground carry, critical build, to surprise 1v1 pick-off Natan",
-      "author": "#T1B0R_04",
-      "spell": "Ice Retribution",
+      "title": "For those that want to be a complete attack speed beast. It will work for those with skill",
+      "author": "WeakLoser",
+      "spell": "Inspire",
       "emblem": "Marksman",
       "emblem_talents": [
-        "Swift",
-        "Bargain Hunter",
-        "Quantum Charge"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Windtalker",
-        "Feather of Heaven",
-        "Berserker's Fury",
-        "Malefic Gun",
-        "Immortality"
-      ],
-      "likes": 4
-    },
-    {
-      "title": "oneshot",
-      "author": "Soveny",
-      "spell": "Inspire",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Thrill",
+        "Fatal",
         "Bargain Hunter",
         "Weakness Finder"
       ],
       "items": [
         "Feather of Heaven",
-        "Sea Halberd",
+        "Golden Staff",
+        "Haas' Claws",
         "Windtalker",
-        "Holy Crystal",
-        "Divine Glaive",
-        "Tough Boots"
+        "Wishing Lantern",
+        "Starlium Scythe"
       ],
-      "likes": 4
+      "likes": 2
+    },
+    {
+      "title": "Burst",
+      "author": "Duskkeeper",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Rupture",
+        "Weapon Master",
+        "Quantum Charge"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Feather of Heaven",
+        "Starlium Scythe",
+        "Windtalker",
+        "Berserker's Fury",
+        "Divine Glaive"
+      ],
+      "likes": 2
     }
   ],
   "108": [
@@ -6637,26 +6617,6 @@
       "likes": 12
     },
     {
-      "title": "This build is very effective,you can snowball early and with windtalker you jungle farm and minion clear becomes faster\n",
-      "author": "AideNN",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Seasoned Hunter",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Sky Piercer",
-        "Windtalker",
-        "Genius Wand",
-        "Holy Crystal",
-        "Divine Glaive"
-      ],
-      "likes": 11
-    },
-    {
       "title": "With this build, you can beat even the strongest fighter, even a fully farmed Yu Zhong.",
       "author": "Kairos",
       "spell": "Ice Retribution",
@@ -6674,29 +6634,49 @@
         "Holy Crystal",
         "Divine Glaive"
       ],
-      "likes": 7
+      "likes": 8
+    },
+    {
+      "title": "Feather of Heaven bisa diganti degan wintalker sesuai kebutuhan, jika ingin mendapatkan mofmenspeed saat menyerang belilah wintalker. Feather of Heaven bisa diganti dengan glowing wand sesuai kondisi dan situasi, item terahir juga bisa diganti esuai kondisi, ubtuk emblem bagian rupt aure bisa diganti dengan thrill apabila musuhnya kekurangan badan (tidak ada tank). gunakan pasift ammon sebijak mungkin ",
+      "author": "M1kaela",
+      "spell": "Retribution",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Seasoned Hunter",
+        "Killing Spree",
+        "Rupture"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Feather of Heaven",
+        "Genius Wand",
+        "Holy Crystal",
+        "Starlium Scythe",
+        "Blood Wings"
+      ],
+      "likes": 4
     }
   ],
   "110": [
     {
-      "title": "my granny, mid, flameshot",
-      "author": "senseirice",
-      "spell": "",
-      "emblem": "Common",
+      "title": "Anti-heal Valentina: Glowing Wand and Divine Glaive can be swapped depending on the situation. This build was used in MPL PH Season 17 (Aurora Yue, TNC Storm, and Falcons Hadji). You can also use Purify as your battle spell, depending on the situation.",
+      "author": "Aesa.",
+      "spell": "Flicker",
+      "emblem": "Mage",
       "emblem_talents": [
-        "Thrill",
-        "Bargain Hunter",
-        "Temporal Reign"
+        "Inspire",
+        "Wilderness Blessing",
+        "Impure Rage"
       ],
       "items": [
-        "Rapid Boots",
+        "Magic Shoes",
+        "Glowing Wand",
         "Lightning Truncheon",
-        "Genius Wand",
-        "Holy Crystal",
+        "Divine Glaive",
         "Blood Wings",
-        "Divine Glaive"
+        "Holy Crystal"
       ],
-      "likes": 5
+      "likes": 1
     },
     {
       "title": "in exp line livesteal and position damage ",
@@ -6741,26 +6721,6 @@
   ],
   "111": [
     {
-      "title": "New build for the exp lane quite good at bursting down enemies",
-      "author": "Relic",
-      "spell": "Flicker",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Swift",
-        "Festival of Blood",
-        "Brave Smite"
-      ],
-      "items": [
-        "Warrior Boots",
-        "Thunder Belt",
-        "Dominance Ice",
-        "Feather of Heaven",
-        "Starlium Scythe",
-        "Clock of Destiny"
-      ],
-      "likes": 8
-    },
-    {
       "title": "Cara memberikan damage:\nStarlium Scythe : Saya lebih suka menggunakan ini ketimbang Feather of Heaven (di season ini), karena ada banyak tank yang menggunakan Chastise Pauldron sehinga meng-counter Attack Speed-nya; Damage Starlium Scythe lebih konsisten karena memiliki cooldown konstan dan bersifat True Damage sehingga tidak bisa di-counter oleh item Defense. Selain itu, Starlium Scythe juga memberikan efek slow yang tidak dimiliki Feather of Heaven.\n\nCara sustain:\nPada early game, Edith biasanya memberikan dps yang lebih besar dengan menggunakan skill-nya, serta Basic Attack-nya juga memberikan efek Overload yang men-trigger Spell Vamp. Oleh karena itu, sustain awalnya lebih baik menggunakan Spell Vamp ketimbang Life Steal. Ini menjadi pertimbangan mengapa saya menggunakan emblem Tank ketimbang Emblem Fighter, karena Emblem Fighter hanya memberikan Life Steal, sedangkan Emblem Tank memberikan HP dan Hybrid Defense yang lebih kepakai.\nFestival of Blood (Ability) : 6% Spell Vamp + 0.5% per Kill/Assist (max 12 kali)\nIce Queen Wand : 10% Spell Vamp\n\nPada mid dan late game, Life steal juga bisa dipakai, terutama jika menggunakan build Feather of Heaven (bisa ditambah Concentrated Energy dan Inspire)\n\nKelemahan Edith\n1) Edith kuatnya jika nge-stack Physical & Magic Defense\nThunderbelt : 15 Phy + 15 Mag, bisa tambah stack Hybrid Defense (20- sampai 30- an rata-rata)\nDipakai untuk item pertama agar stacknya bisa menggulung lebih awal.\nItem core karena mengatasi poin 2) sekaligus memberikan dmg tambahan (50 + Total Defense ketika Basic Attack)\nDominance Ice : 40 Phy + 40 Magic, dan memberikan tambahan (8 Phy + 8 Mag) untuk setiap lawan di dekatnya. Jadinya bisa berpotensi untuk memberikan 160 Total Defense\nBlade Armor : + 80 Phy, kadang dipakai dibandingkan Radiant Armor yang berpotensi memberikan 140 Mag, untuk meng-counter mobility (karena memberikan efek slow) dan dmg hero Marksman late game. \n\n2) Edith jalannya lama\nRapid Boot : Sangat membantu mobilitas, serta mengurangi efek slow. Namun jika hero banyak CC, ganti menggunakan Tough Boots untuk CC Duration Reduction\nThunderbelt : + 20 Movement Speed, sekaligus memberikan efek slow\nDominance Ice : +5% Movement Speed\nStarlium Scythe : Efek slow 15%\nAgility (Ability) : 4% Movement Speed\nIce Queen Wand : + 7 Movement Speed, sekaligus memberikan efek slow\n\nTambahan\nConcussive Blast (Ability) dipakai untuk mempercepat laning Edith, agar bisa membantu team fight yang lain lebih cepat. Bawalah ia War sering-sering!!!!\nFlicker dipakai dibandingkan Inspire karena saya tidak suka lawan kabur-kaburan.",
       "author": "imabirdd",
       "spell": "Flicker",
@@ -6778,7 +6738,7 @@
         "Blade Armor",
         "Ice Queen Wand"
       ],
-      "likes": 6
+      "likes": 7
     },
     {
       "title": "Tebal, Tahan Badan, Damage lumayan",
@@ -6799,29 +6759,29 @@
         "Radiant Armor"
       ],
       "likes": 1
+    },
+    {
+      "title": "kuat di let gem\n",
+      "author": "yadzit ",
+      "spell": "Inspire",
+      "emblem": "Marksman",
+      "emblem_talents": [
+        "Thrill",
+        "Bargain Hunter",
+        "Weakness Finder"
+      ],
+      "items": [
+        "Swift Boots",
+        "Feather of Heaven",
+        "Starlium Scythe",
+        "Ice Queen Wand",
+        "Oracle",
+        "Queen's Wings"
+      ],
+      "likes": 0
     }
   ],
   "112": [
-    {
-      "title": "Massive heal by SG MRO top 1",
-      "author": "ChevPurity",
-      "spell": "Revitalize",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Inspire",
-        "Pull Yourself Together",
-        "Focusing Mark"
-      ],
-      "items": [
-        "Demon Shoes",
-        "Flask of the Oasis",
-        "Fleeting Time",
-        "Glowing Wand",
-        "Holy Crystal",
-        "Enchanted Talisman"
-      ],
-      "likes": 12
-    },
     {
       "title": "idk",
       "author": "Gateau",
@@ -6861,94 +6821,94 @@
         "Dominance Ice"
       ],
       "likes": 1
+    },
+    {
+      "title": "Floryn marikina",
+      "author": "Joseph24",
+      "spell": "Revitalize",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Inspire",
+        "Pull Yourself Together",
+        "Temporal Reign"
+      ],
+      "items": [
+        "Demon Shoes",
+        "Flask of the Oasis",
+        "Fleeting Time",
+        "Enchanted Talisman",
+        "Holy Crystal",
+        "Glowing Wand"
+      ],
+      "likes": 0
     }
   ],
   "113": [
     {
-      "title": "EXP bisa junggel bisa tinggal tambah retri terus retri harus warna biru",
-      "author": "mraha",
-      "spell": "Petrify",
-      "emblem": "Fighter",
+      "title": "Build ini bagus damage nya nusuk banget kalo mau pake exp emblem hunter ganti ke master assassin lalu emblem marksman ganti ke emblem assassin/fighter ",
+      "author": "Ikbal",
+      "spell": "Retribution",
+      "emblem": "Marksman",
       "emblem_talents": [
         "Thrill",
-        "Killing Spree",
-        "Festival of Blood"
-      ],
-      "items": [
-        "Sky Piercer",
-        "Tough Boots",
-        "Hunter Strike",
-        "Endless Battle",
-        "War Axe",
-        "Sea Halberd"
-      ],
-      "likes": 7
-    },
-    {
-      "title": "yin cocok untuk jungle\n",
-      "author": "NOOB346",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Thrill",
-        "Master Assassin",
+        "Seasoned Hunter",
         "Lethal Ignition"
       ],
       "items": [
+        "Blade of Despair",
         "Rapid Boots",
-        "Hunter Strike",
-        "Sky Piercer",
-        "Sea Halberd",
-        "Blade of Despair",
-        "Malefic Roar"
-      ],
-      "likes": 4
-    },
-    {
-      "title": "build spell vamp dan burst damage ",
-      "author": "sukarno",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Rupture",
-        "Master Assassin",
-        "Lethal Ignition"
-      ],
-      "items": [
-        "Warrior Boots",
         "War Axe",
-        "Sky Piercer",
-        "Sea Halberd",
-        "Blade of Despair",
+        "Hunter Strike",
+        "Blade of the Heptaseas",
         "Malefic Roar"
       ],
       "likes": 2
+    },
+    {
+      "title": "This build works really well for the EXP lane because it gives a solid balance of damage and sustain, which helps a lot with my rotations when I’m using Yin. I usually start by cutting the lane, especially if I’m up against sustain-heavy fighters like Yu Zhong, Ruby, or Phoveus. Doing this lets me control the wave early and rotate faster to help my team.\n\nIf I’m facing squishier fighters like Guinevere or Zilong, I switch to the Fighter Emblem for higher damage. It’s a more aggressive setup, but it still gives enough sustain to stay in fights.\n\nFor items, I like to build Fury Hammer first so I can get early penetration. After that, I go for Sea Halberd since it’s a big help for Yin, especially against enemies with sustain.\n\nAs for spells, Petrify is a must-have because it helps extend your crowd control and makes it easier to secure kills. But depending on your playstyle or role, you can also use Flicker, Execute, or even Retribution if you’re going jungle.\n\nOverall, this setup keeps Yin flexible and effective, no matter the matchup.",
+      "author": "minsik",
+      "spell": "Petrify",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Thrill",
+        "Festival of Blood",
+        "Concussive Blast"
+      ],
+      "items": [
+        "Tough Boots",
+        "Sea Halberd",
+        "Malefic Roar",
+        "Queen's Wings",
+        "Blade of Despair",
+        "Winter Crown"
+      ],
+      "likes": 3
+    },
+    {
+      "title": "Fighter yin\n\nThis build makes sure he can't lose a fight in his ultimate\n\n1. He gets plot armor on low hp\n2. He gets a great heal by killing the opponent in the domain",
+      "author": "BuildSmith",
+      "spell": "Ice Retribution",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Killing Spree",
+        "Master Assassin",
+        "Thrill"
+      ],
+      "items": [
+        "Tough Boots",
+        "Sea Halberd",
+        "Rose Gold Meteor",
+        "Hunter Strike",
+        "Queen's Wings",
+        "Oracle"
+      ],
+      "likes": 1
     }
   ],
   "114": [
     {
-      "title": "FBK + Ins.K + maniac ",
-      "author": "ChevPurity",
-      "spell": "Inspire",
-      "emblem": "Marksman",
-      "emblem_talents": [
-        "Swift",
-        "Weapon Master",
-        "Weakness Finder"
-      ],
-      "items": [
-        "Corrosion Scythe",
-        "Demon Hunter Sword",
-        "Golden Staff",
-        "Malefic Gun",
-        "Sea Halberd",
-        "Rose Gold Meteor"
-      ],
-      "likes": 6
-    },
-    {
-      "title": "100% blood kills , savage",
-      "author": "ChevPurity",
+      "title": "Vary on your match's conditions",
+      "author": "AdtK",
       "spell": "Inspire",
       "emblem": "Fighter",
       "emblem_talents": [
@@ -6957,14 +6917,34 @@
         "Weakness Finder"
       ],
       "items": [
-        "Windtalker",
-        "Haas' Claws",
-        "Berserker's Fury",
+        "Corrosion Scythe",
+        "Demon Hunter Sword",
+        "Golden Staff",
         "Malefic Gun",
-        "Sea Halberd",
-        "Sky Piercer"
+        "Haas' Claws",
+        "Wind of Nature"
       ],
       "likes": 2
+    },
+    {
+      "title": "Attack Speed CRIT",
+      "author": "Fillet",
+      "spell": "Inspire",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Master Assassin",
+        "Weakness Finder",
+        "Fatal"
+      ],
+      "items": [
+        "Windtalker",
+        "Warrior Boots",
+        "Haas' Claws",
+        "Malefic Gun",
+        "Rose Gold Meteor",
+        "Sea Halberd"
+      ],
+      "likes": 1
     },
     {
       "title": "This good in late game and early (depends on the player)",
@@ -7006,7 +6986,27 @@
         "Guardian Helmet",
         "Queen's Wings"
       ],
-      "likes": 3
+      "likes": 4
+    },
+    {
+      "title": "Perfect build for Gojo Satoru. Try this and Hollow Purple their ass.",
+      "author": "Ngura",
+      "spell": "Flicker",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Agility",
+        "Weapon Master",
+        "Impure Rage"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Enchanted Talisman",
+        "Glowing Wand",
+        "Wishing Lantern",
+        "Divine Glaive",
+        "Blood Wings"
+      ],
+      "likes": 1
     },
     {
       "title": "Anti-Tank",
@@ -7027,26 +7027,6 @@
         "Divine Glaive"
       ],
       "likes": 1
-    },
-    {
-      "title": "Optimal Build for your xavier make sure your enemy is squishy. \nif the enemy have high HP you can change lightning to wishing lantern\n\nyou can burst high HP when in early you snowball \n\nnote: situational emblem abilty 1 you can change peneteration for more damage. \nnote 2: in late game you can change boots to magic power such as blood wings or another magic damage but i realy realy reccomend blood wings",
-      "author": "Bwleee",
-      "spell": "Flicker",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Agility",
-        "Bargain Hunter",
-        "Impure Rage"
-      ],
-      "items": [
-        "Magic Shoes",
-        "Enchanted Talisman",
-        "Glowing Wand",
-        "Lightning Truncheon",
-        "Divine Glaive",
-        "Holy Crystal"
-      ],
-      "likes": 3
     }
   ],
   "116": [
@@ -7068,7 +7048,27 @@
         "Holy Crystal",
         "Queen's Wings"
       ],
-      "likes": 24
+      "likes": 25
+    },
+    {
+      "title": "High sustain, High damage, High survivability. ",
+      "author": "KenPapi",
+      "spell": "Vengeance",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Thrill",
+        "Festival of Blood",
+        "Killing Spree"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Feather of Heaven",
+        "Concentrated Energy",
+        "Queen's Wings",
+        "Clock of Destiny",
+        "Brute Force Breastplate"
+      ],
+      "likes": 9
     },
     {
       "title": "test build",
@@ -7089,26 +7089,6 @@
         "Divine Glaive"
       ],
       "likes": 8
-    },
-    {
-      "title": "exxp nanaman",
-      "author": "Soveny",
-      "spell": "Inspire",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Swift",
-        "Festival of Blood",
-        "War Cry"
-      ],
-      "items": [
-        "Arcane Boots",
-        "Feather of Heaven",
-        "Windtalker",
-        "Concentrated Energy",
-        "Divine Glaive",
-        "Holy Crystal"
-      ],
-      "likes": 5
     }
   ],
   "117": [
@@ -7130,27 +7110,7 @@
         "Brute Force Breastplate",
         "Chastise Pauldron"
       ],
-      "likes": 7
-    },
-    {
-      "title": "kalo early musuh sakit sepatu bisa ganti ke warior tarung lama bisa juga early belum terlalu kuat tapi kalo 3 item tadi udah jadi bisa jadi kuat bgt jadi sabar aja ",
-      "author": "rajapasar",
-      "spell": "Bloody Retribution",
-      "emblem": "Tank",
-      "emblem_talents": [
-        "Firmness",
-        "Impure Rage",
-        "Festival of Blood"
-      ],
-      "items": [
-        "Tough Boots",
-        "Brute Force Breastplate",
-        "Chastise Pauldron",
-        "Oracle",
-        "Guardian Helmet",
-        "Athena's Shield"
-      ],
-      "likes": 3
+      "likes": 8
     },
     {
       "title": "im back\n",
@@ -7170,69 +7130,89 @@
         "Guardian Helmet",
         "Antique Cuirass"
       ],
-      "likes": 3
+      "likes": 4
+    },
+    {
+      "title": "fix tahan lama kalau pakai ni\n",
+      "author": "DANiiiiiiiiiiiii",
+      "spell": "Bloody Retribution",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Firmness",
+        "Festival of Blood",
+        "Concussive Blast"
+      ],
+      "items": [
+        "Rapid Boots",
+        "War Axe",
+        "Cursed Helmet",
+        "Queen's Wings",
+        "Brute Force Breastplate",
+        "Oracle"
+      ],
+      "likes": 4
     }
   ],
   "118": [
     {
-      "title": "asasd",
-      "author": "Kenyx",
-      "spell": "Ice Retribution",
+      "title": "Early game damage",
+      "author": "Eatsuki",
+      "spell": "Retribution",
       "emblem": "Mage",
       "emblem_talents": [
-        "Thrill",
+        "Rupture",
         "Seasoned Hunter",
         "Temporal Reign"
       ],
       "items": [
         "Arcane Boots",
-        "Genius Wand",
-        "Holy Crystal",
         "Concentrated Energy",
+        "Holy Crystal",
         "Wishing Lantern",
-        "Divine Glaive"
+        "Divine Glaive",
+        "Winter Crown"
       ],
-      "likes": 4
+      "likes": 0
     },
     {
-      "title": "The Best Build and Emblem in Joy 100% Working and Win ",
-      "author": "Kise",
-      "spell": "",
+      "title": "enak bet ini item",
+      "author": "aufa",
+      "spell": "Bloody Retribution",
       "emblem": "Assassin",
       "emblem_talents": [
         "Rupture",
         "Seasoned Hunter",
-        "Temporal Reign"
-      ],
-      "items": [
-        "Holy Crystal",
-        "Sky Piercer",
-        "Genius Wand",
-        "Blood Wings",
-        "Divine Glaive",
-        "Magic Shoes"
-      ],
-      "likes": 3
-    },
-    {
-      "title": "Burst",
-      "author": "Raizel",
-      "spell": "Ice Retribution",
-      "emblem": "Mage",
-      "emblem_talents": [
-        "Lethal Ignition",
-        "Rupture",
-        "Seasoned Hunter"
+        "Lethal Ignition"
       ],
       "items": [
         "Arcane Boots",
         "Concentrated Energy",
-        "Blood Wings",
-        "Divine Glaive",
+        "Enchanted Talisman",
+        "Holy Crystal",
         "Lightning Truncheon",
-        "Winter Crown"
+        "Genius Wand"
       ],
-      "likes": 2
+      "likes": 0
+    },
+    {
+      "title": "paling bagus, apalagi pas skil 2, kalo mau tambah sakit pake 2 holy",
+      "author": "AFZZAT",
+      "spell": "Ice Retribution",
+      "emblem": "Mage",
+      "emblem_talents": [
+        "Thrill",
+        "Weapon Master",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Arcane Boots",
+        "Holy Crystal",
+        "Concentrated Energy",
+        "Wishing Lantern",
+        "Divine Glaive",
+        "Blood Wings"
+      ],
+      "likes": 1
     }
   ],
   "119": [
@@ -7319,66 +7299,66 @@
       "likes": 4
     },
     {
-      "title": "Damage",
-      "author": "Don_Kihote",
+      "title": "Semi-tank build, can still deal sustained damage while tanking.",
+      "author": "zupotter",
       "spell": "Petrify",
-      "emblem": "Assassin",
+      "emblem": "Fighter",
       "emblem_talents": [
-        "Rupture",
-        "Master Assassin",
-        "Impure Rage"
+        "Thrill",
+        "Festival of Blood",
+        "War Cry"
       ],
       "items": [
+        "War Axe",
         "Tough Boots",
-        "Sea Halberd",
-        "Blade of the Heptaseas",
-        "Malefic Roar",
-        "Endless Battle",
-        "Blade of Despair"
+        "Brute Force Breastplate",
+        "Oracle",
+        "Dominance Ice",
+        "Queen's Wings"
       ],
-      "likes": 5
+      "likes": 2
     },
     {
-      "title": "uhh",
-      "author": "Don_Kihote",
+      "title": "Meta build ",
+      "author": "LilBoom04",
       "spell": "Flicker",
-      "emblem": "Tank",
+      "emblem": "Fighter",
       "emblem_talents": [
-        "Agility",
+        "Thrill",
         "Festival of Blood",
         "Brave Smite"
       ],
       "items": [
         "Tough Boots",
-        "Dominance Ice",
+        "Hunter Strike",
+        "Oracle",
         "Chastise Pauldron",
-        "Radiant Armor",
-        "Immortality",
+        "Rose Gold Meteor",
         "Queen's Wings"
       ],
-      "likes": 4
+      "likes": 2
     }
   ],
   "121": [
     {
-      "title": "Focus on maximising attack speed and passive trigger.",
-      "author": "Keroronom",
-      "spell": "Inspire",
-      "emblem": "Marksman",
+      "title": "Painful DPS Late Game ",
+      "author": "mycrazyarc",
+      "spell": "Flicker",
+      "emblem": "Fighter",
       "emblem_talents": [
-        "Swift",
-        "Weapon Master",
-        "Weakness Finder"
+        "Rupture",
+        "Bargain Hunter",
+        "Impure Rage"
       ],
       "items": [
-        "Swift Boots",
+        "Sea Halberd",
+        "Tough Boots",
+        "Sky Piercer",
         "Corrosion Scythe",
         "Demon Hunter Sword",
-        "Golden Staff",
-        "Windtalker",
-        "Malefic Gun"
+        "Rose Gold Meteor"
       ],
-      "likes": 9
+      "likes": 1
     },
     {
       "title": "Top Global",
@@ -7398,27 +7378,27 @@
         "Malefic Gun",
         "Rose Gold Meteor"
       ],
-      "likes": 1
+      "likes": 2
     },
     {
-      "title": "Depend ",
-      "author": "AxpēX",
+      "title": "This build makes your ultimate so powerful that the enemy will retreat before facing your teammates. Always position yourself at the back of the team or wait for your support to set. ",
+      "author": "Loading...",
       "spell": "Flicker",
-      "emblem": "Fighter",
+      "emblem": "Assassin",
       "emblem_talents": [
-        "Thrill",
+        "Rupture",
         "Weapon Master",
-        "War Cry"
+        "Impure Rage"
       ],
       "items": [
+        "Swift Boots",
         "Corrosion Scythe",
+        "Demon Hunter Sword",
         "Blade of Despair",
-        "Malefic Gun",
-        "Hunter Strike",
-        "Rose Gold Meteor",
-        "Sea Halberd"
+        "Malefic Roar",
+        "Wind of Nature"
       ],
-      "likes": 0
+      "likes": 1
     }
   ],
   "122": [
@@ -7485,26 +7465,6 @@
   ],
   "123": [
     {
-      "title": "Durable",
-      "author": "Kenyx",
-      "spell": "Vengeance",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Inspire",
-        "Festival of Blood",
-        "Impure Rage"
-      ],
-      "items": [
-        "Warrior Boots",
-        "War Axe",
-        "Hunter Strike",
-        "Brute Force Breastplate",
-        "Oracle",
-        "Malefic Roar"
-      ],
-      "likes": 12
-    },
-    {
       "title": "Expect your Cici to be glass cannon. In-n-out playstyle, always aim for low HP enemies. Ever since Moontoon Fked around with both Fighter emblem and War Axe stats, I found this build works on various situations. Best not to drag the match for too long or you would give enemies the chance for potential comeback.",
       "author": "Mgaji77",
       "spell": "",
@@ -7522,69 +7482,27 @@
         "Winter Crown",
         "Malefic Roar"
       ],
-      "likes": 10
+      "likes": 14
     },
     {
-      "title": "CICI SELANGOR M7",
-      "author": "Cala",
-      "spell": "",
+      "title": "Meta build",
+      "author": "LilBoom04",
+      "spell": "Vengeance",
       "emblem": "Fighter",
       "emblem_talents": [
         "Brave Smite",
         "Festival of Blood",
-        "Agility"
+        "Thrill"
       ],
       "items": [
-        "Warrior Boots",
+        "Tough Boots",
         "War Axe",
         "Brute Force Breastplate",
+        "Hunter Strike",
         "Oracle",
-        "Radiant Armor",
-        "Athena's Shield"
+        "Malefic Roar"
       ],
       "likes": 3
-    }
-  ],
-  "124": [
-    {
-      "title": "Best Build For Chip",
-      "author": "Pogisaurus",
-      "spell": "",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Vitality",
-        "Wilderness Blessing",
-        "Concussive Blast"
-      ],
-      "items": [
-        "Thunder Belt",
-        "Rapid Boots",
-        "Dominance Ice",
-        "Guardian Helmet",
-        "Cursed Helmet",
-        "Athena's Shield"
-      ],
-      "likes": 1
-    },
-    {
-      "title": "chip ni c1tr0v",
-      "author": "c1tr0v",
-      "spell": "Revitalize",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Agility",
-        "Pull Yourself Together",
-        "Concussive Blast"
-      ],
-      "items": [
-        "Rapid Boots",
-        "Thunder Belt",
-        "Dominance Ice",
-        "Oracle",
-        "Cursed Helmet",
-        "Immortality"
-      ],
-      "likes": 0
     }
   ],
   "125": [
@@ -7629,24 +7547,24 @@
       "likes": 4
     },
     {
-      "title": "Full damage build u can also change blood wings for guardian helmet and change Brave Smite for Impure Rage for more damage. ",
-      "author": "T3E_Shogun",
+      "title": "Top Markotop, Sebagai Pro peler Zhuxin\n",
+      "author": "Aylnz",
       "spell": "Flicker",
-      "emblem": "Mage",
+      "emblem": "Common",
       "emblem_talents": [
-        "Rupture",
-        "Weapon Master",
+        "Agility",
+        "Wilderness Blessing",
         "Brave Smite"
       ],
       "items": [
-        "Demon Shoes",
+        "Tough Boots",
         "Clock of Destiny",
-        "Holy Crystal",
-        "Divine Glaive",
-        "Wishing Lantern",
-        "Blood Wings"
+        "Glowing Wand",
+        "Ice Queen Wand",
+        "Blood Wings",
+        "Brute Force Breastplate"
       ],
-      "likes": 3
+      "likes": 2
     }
   ],
   "126": [
@@ -7668,7 +7586,7 @@
         "Brute Force Breastplate",
         "Blade of Despair"
       ],
-      "likes": 35
+      "likes": 38
     },
     {
       "title": "This build is all about maximizing Suyou's cooldown reduction making him slippery in team fights. This build's play style is all about going in and unleashing your combo and dashing out to safety.",
@@ -7688,7 +7606,7 @@
         "Malefic Roar",
         "Blade of Despair"
       ],
-      "likes": 10
+      "likes": 11
     },
     {
       "title": "Pasti sakit\n",
@@ -7713,46 +7631,6 @@
   ],
   "127": [
     {
-      "title": "Jungle Lukas Build\nBefore War Axe, buy the Fury Hammer from Hunter Strike\nWar Axe as first item for the Sustainability and CDR\nUpgrade Fury Hammer to Hunter Strike\nIf you're losing, buy Queen's Wings first and then Great Dragon Spear later\nif you're winning, buy Great Dragon Spear and then Queen's Wings later\nRose Gold Meteor for more Sustainability, Shield and Hybrid Defense\n\nOverall:9 (for me)\n\nAttributes (all items): CDR :40% (MAX) Hybrid Defense :100+\n                                  Attack Speed : 1.20+ Physical Attack:500+\n                                  Resillience:25% MovementSpeed:300+\n                                  Penetration:30+\n",
-      "author": "SparklinzzV2",
-      "spell": "Ice Retribution",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Impure Rage",
-        "Seasoned Hunter",
-        "Rupture"
-      ],
-      "items": [
-        "Tough Boots",
-        "War Axe",
-        "Hunter Strike",
-        "Great Dragon Spear",
-        "Queen's Wings",
-        "Rose Gold Meteor"
-      ],
-      "likes": 19
-    },
-    {
-      "title": "sustain",
-      "author": "visen",
-      "spell": "Vengeance",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Thrill",
-        "Festival of Blood",
-        "Temporal Reign"
-      ],
-      "items": [
-        "Tough Boots",
-        "War Axe",
-        "Brute Force Breastplate",
-        "Endless Battle",
-        "Queen's Wings",
-        "Immortality"
-      ],
-      "likes": 3
-    },
-    {
       "title": "can do 1v5 if no cc enemy",
       "author": "Kaiisensei",
       "spell": "Flicker",
@@ -7770,7 +7648,47 @@
         "Oracle",
         "Malefic Roar"
       ],
+      "likes": 3
+    },
+    {
+      "title": "Gold rose meteor can be instead sea halberd",
+      "author": "Brzozaq",
+      "spell": "Ice Retribution",
+      "emblem": "Fighter",
+      "emblem_talents": [
+        "Rupture",
+        "Festival of Blood",
+        "War Cry"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Thunder Belt",
+        "Blade of the Heptaseas",
+        "War Axe",
+        "Blade of Despair",
+        "Sea Halberd"
+      ],
       "likes": 2
+    },
+    {
+      "title": "that build provide sustaine and good burst dmg when it reach full Stacks ",
+      "author": "Yyyyyyy",
+      "spell": "Flicker",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Thrill",
+        "Festival of Blood",
+        "Impure Rage"
+      ],
+      "items": [
+        "Hunter Strike",
+        "Tough Boots",
+        "War Axe",
+        "Queen's Wings",
+        "Brute Force Breastplate",
+        "Rose Gold Meteor"
+      ],
+      "likes": 1
     }
   ],
   "128": [
@@ -7792,27 +7710,27 @@
         "Oracle",
         "Immortality"
       ],
-      "likes": 2
+      "likes": 3
     },
     {
-      "title": "TANK SUPPORT",
-      "author": "UCOK",
+      "title": "Selama sy pake kalea, sy selalu bertemu macam lylia, zuxin, makanya saya pakai Radiant (bisa digati tergantung hero lawan) dan untuk thunder lebih baik sy ganti dengan antique, karna saya pikir kalea ini hero yg bukan sepenuhnya TB (Tahan Badan)",
+      "author": "Darrr",
       "spell": "Flicker",
       "emblem": "Tank",
       "emblem_talents": [
-        "Concussive Blast",
-        "Vitality",
-        "Pull Yourself Together"
+        "Inspire",
+        "Pull Yourself Together",
+        "Concussive Blast"
       ],
       "items": [
-        "Tough Boots",
-        "Thunder Belt",
+        "Rapid Boots",
+        "Radiant Armor",
+        "Dominance Ice",
         "Antique Cuirass",
         "Oracle",
-        "Chastise Pauldron",
-        "Athena's Shield"
+        "Immortality"
       ],
-      "likes": 2
+      "likes": 1
     },
     {
       "title": "ya\n",
@@ -7877,22 +7795,22 @@
       "likes": 4
     },
     {
-      "title": "High burn equipment",
-      "author": "Lagoonah",
+      "title": "Trinity mage zetian",
+      "author": "Agung",
       "spell": "Flicker",
       "emblem": "Mage",
       "emblem_talents": [
-        "Rupture",
-        "Wilderness Blessing",
-        "Lethal Ignition"
+        "Inspire",
+        "Bargain Hunter",
+        "Impure Rage"
       ],
       "items": [
         "Arcane Boots",
-        "Glowing Wand",
         "Lightning Truncheon",
-        "Concentrated Energy",
-        "Sky Piercer",
-        "Holy Crystal"
+        "Divine Glaive",
+        "Holy Crystal",
+        "Wishing Lantern",
+        "Blood Wings"
       ],
       "likes": 2
     }
@@ -7916,7 +7834,27 @@
         "Great Dragon Spear",
         "Malefic Gun"
       ],
-      "likes": 7
+      "likes": 10
+    },
+    {
+      "title": "Attack speed.\n",
+      "author": "Abcj",
+      "spell": "Inspire",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Weapon Master",
+        "Swift",
+        "Weakness Finder"
+      ],
+      "items": [
+        "Windtalker",
+        "Corrosion Scythe",
+        "Haas' Claws",
+        "Golden Staff",
+        "Demon Hunter Sword",
+        "Blade of Despair"
+      ],
+      "likes": 6
     },
     {
       "title": "Early kills, sustain and late game power.",
@@ -7937,49 +7875,9 @@
         "Endless Battle"
       ],
       "likes": 5
-    },
-    {
-      "title": "Attack speed.\n",
-      "author": "Abcj",
-      "spell": "Inspire",
-      "emblem": "Assassin",
-      "emblem_talents": [
-        "Weapon Master",
-        "Swift",
-        "Weakness Finder"
-      ],
-      "items": [
-        "Windtalker",
-        "Corrosion Scythe",
-        "Haas' Claws",
-        "Golden Staff",
-        "Demon Hunter Sword",
-        "Blade of Despair"
-      ],
-      "likes": 4
     }
   ],
   "131": [
-    {
-      "title": "Full Damage But Not Easy to die",
-      "author": "Kazato",
-      "spell": "Vengeance",
-      "emblem": "Fighter",
-      "emblem_talents": [
-        "Rupture",
-        "Festival of Blood",
-        "War Cry"
-      ],
-      "items": [
-        "Tough Boots",
-        "War Axe",
-        "Queen's Wings",
-        "Oracle",
-        "Malefic Roar",
-        "Blade of Despair"
-      ],
-      "likes": 38
-    },
     {
       "title": "Sanford build (best build imo)",
       "author": "LilBoom04",
@@ -7998,7 +7896,7 @@
         "Rose Gold Meteor",
         "Malefic Roar"
       ],
-      "likes": 5
+      "likes": 6
     },
     {
       "title": "Good at late game \nAnd burst\n",
@@ -8019,49 +7917,29 @@
         "Guardian Helmet"
       ],
       "likes": 4
-    }
-  ],
-  "132": [
-    {
-      "title": "Focus on Cooldown from emblems to maximize skill 1/2 frequency. With Pull Yourself Together will increase mobility options for Marcell. \n\nOptional Suggestions :\nBoots : Armor / CD / Movement\nEmblem : \nT1 - Hybrid Def\nT2 - Def Reduc. / Wilderness \nT3 - Focusing Mark / Conc. Blast\nSpell - Sprint\n",
-      "author": "Seeroc",
-      "spell": "Flicker",
-      "emblem": "Support",
-      "emblem_talents": [
-        "Inspire",
-        "Pull Yourself Together",
-        "Quantum Charge"
-      ],
-      "items": [
-        "Tough Boots",
-        "Thunder Belt",
-        "Dominance Ice",
-        "Oracle",
-        "Immortality",
-        "Radiant Armor"
-      ],
-      "likes": 23
     },
     {
-      "title": "Marcel ROAM focuss on thunderbelt stack, so you need this PELARI KALCER build to quickly SKRINSHUT enemies like Lancelot combo and then quickly runs away before you get stunned by enemies\n───────────\nEN :\nBuy only raw shoes at ur early game, and then quickly buy THUNDERBELT so you could get around 40+ stack on MIDGAME. You might need to adapt Helcurt Roam playstyle (hit & run) as well as you keep stacking thunderbelt while stunning enemies with your individual passive.\nAvoid casting Ultimate too often to avoid stunning ur teammates.\n\nYour GOAL is only poking enemies skill or even spell, as also stunning them while doing some thunderbelt stacks up\n───────────\nID :\nBeli SEPATU MENTAHAN di awal, langsung jadikan THUNDERBELT (hati2 nyumbang kill ke musuh pas belum jadi sepatu ngicir lu). Intinya Marcel cuma mainin passive SKRINSHUT nya sambil dapet bonus stack Thunderbelt. Kaya user Lancetot abang2an 120fps licin yg ngedash2 ke musuh langsung kabur sebelum ke poke balik.\n\nFLICKER manfaatin buat ngeskrinshut musuh yg sekarat pas habis war. Walau cuma lu sendirian yg ngejar dia, tenang masih ada SubEmblem CONCLUSIVE BLAST buat nambah efek damage kaget\n\nULTIMATE nya marcel gaboleh sembarangan. Bener2 butuh timing dan positioning pas biar ga bikin tim sendiri rata\n\nINTINYA TERUSLAH BERLARI KALCER ",
-      "author": "【夢】Kittyawn",
-      "spell": "",
-      "emblem": "Support",
+      "title": "Best for teamfight and solo ",
+      "author": "DARUSDR",
+      "spell": "Flicker",
+      "emblem": "Fighter",
       "emblem_talents": [
-        "Agility",
-        "Wilderness Blessing",
-        "Concussive Blast"
+        "Impure Rage",
+        "Festival of Blood",
+        "Thrill"
       ],
       "items": [
         "Rapid Boots",
-        "Thunder Belt",
-        "Dominance Ice",
-        "Radiant Armor",
-        "Chastise Pauldron",
+        "War Axe",
+        "Queen's Wings",
+        "Oracle",
+        "Rose Gold Meteor",
         "Immortality"
       ],
-      "likes": 6
-    },
+      "likes": 3
+    }
+  ],
+  "132": [
     {
       "title": "เน้นการรักษา\nและสนับสนุนเพื่อนร่วมทีม\n",
       "author": "nitiphat ",
@@ -8080,7 +7958,109 @@
         "Blood Wings",
         "Immortality"
       ],
-      "likes": 4
+      "likes": 5
+    },
+    {
+      "title": "Build ini fokus pada inisiasi hit & run, dengan langsung mendekati musuh untuk mengenai pasfinya. Imo/Domi bisa diganti dengan rose gold meteor jika ingn ful shield, ataupun ganti fleeting jika fokus cd. Early game cukup mirroring dan rotasi bareng trio mid untuk press musuh dan dapaetin item thunder belt/dominance ice, mid game fokus press tipis tetapi jangan melupakan objektif penting agar item cepat jadii dan marcel lebih sustain. Jangan ragu untuk memakai revitalis untuk menyelamatkan teman dari ganking ataupun jika ingin inisasi karena marcel sangat tipis dan tidak bisa bertahan terlalu lama jika no item.",
+      "author": "XeraPhine",
+      "spell": "Revitalize",
+      "emblem": "Tank",
+      "emblem_talents": [
+        "Agility",
+        "Pull Yourself Together",
+        "Focusing Mark"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Thunder Belt",
+        "Flask of the Oasis",
+        "Oracle",
+        "Dominance Ice",
+        "Immortality"
+      ],
+      "likes": 3
+    },
+    {
+      "title": "botas rapidas para auxiliar na rotação no inicio de game para garantir o efeito da bota escolhida, recomendo efeito de força para a equipe, foque em fazer os combos e fazendo a play de esperar a passiva carregar para garantir stacks sem precisar tomar dano ou sacrificar de tomar controle de grupo e morrer, ate mesmo de uma emboscada",
+      "author": "shindonigth",
+      "spell": "Flicker",
+      "emblem": "Support",
+      "emblem_talents": [
+        "Inspire",
+        "Wilderness Blessing",
+        "Quantum Charge"
+      ],
+      "items": [
+        "Rapid Boots",
+        "Thunder Belt",
+        "Chastise Pauldron",
+        "Brute Force Breastplate",
+        "Oracle",
+        "Guardian Helmet"
+      ],
+      "likes": 1
+    }
+  ],
+  "133": [
+    {
+      "title": "my build for jungle hirara. you can change the BOD for malefic roar if u prefer penetrations",
+      "author": "ZarifMarco",
+      "spell": "Ice Retribution",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Lethal Ignition",
+        "Seasoned Hunter",
+        "Thrill"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Hunter Strike",
+        "War Axe",
+        "Blade of Despair",
+        "Queen's Wings",
+        "Sea Halberd"
+      ],
+      "likes": 1
+    },
+    {
+      "title": "W",
+      "author": "NeoMT",
+      "spell": "Ice Retribution",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Rupture",
+        "Weapon Master",
+        "Lethal Ignition"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Hunter Strike",
+        "War Axe",
+        "Endless Battle",
+        "Blade of Despair",
+        "Queen's Wings"
+      ],
+      "likes": 1
+    },
+    {
+      "title": "Build coldown dan damage ",
+      "author": "Ayano",
+      "spell": "Ice Retribution",
+      "emblem": "Assassin",
+      "emblem_talents": [
+        "Inspire",
+        "Seasoned Hunter",
+        "Impure Rage"
+      ],
+      "items": [
+        "Magic Shoes",
+        "Hunter Strike",
+        "War Axe",
+        "Queen's Wings",
+        "Blade of Despair",
+        "Malefic Roar"
+      ],
+      "likes": 1
     }
   ]
 }
