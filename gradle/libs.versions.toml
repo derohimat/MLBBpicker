@@ -16,6 +16,7 @@ lifecycleViewmodelNav3 = "2.10.0"
 kotlinxSerializationJson = "1.6.3"
 coil = "2.6.0"
 mockito = "5.11.0"
+billing = "9.1.0"
 
 
 
@@ -45,6 +46,7 @@ androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecy
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+billing = { module = "com.android.billingclient:billing-ktx", version.ref = "billing" }
 
 
 

@@ -147,3 +147,17 @@ data class BanRecommendation(
     val reason: String
 )
 
+// ─── Solo Queue ──────────────────────────────────────────────────────────────
+
+data class SoloHeroRank(
+    val heroId: Int,
+    val heroName: String,
+    val imgSrc: String,
+    val role: List<String>,
+    val soloScore: Double,
+    val winRate: Double,
+    val pickRate: Double,
+    val banRate: Double,
+    val tier: String, // "S", "A", "B", "C", "D"
+    val topBuild: HeroBuild? = null
+)

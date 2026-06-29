@@ -92,6 +92,9 @@ dependencies {
 
   // Image Loading
   implementation(libs.coil.compose)
+
+  // Google Play Billing
+  implementation(libs.billing)
 }
 
 
