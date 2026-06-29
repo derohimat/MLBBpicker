@@ -191,46 +191,83 @@ fun MainScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFF1E293B).copy(alpha = 0.9f))
-                    .border(BorderStroke(1.dp, Brush.verticalGradient(listOf(Color(0xFF334155), Color(0xFF1E293B)))))
-                    .padding(vertical = 14.dp, horizontal = 16.dp)
+                    .background(Color(0xFF0F172A)) // Seamless blend with Scaffold background
+                    .padding(top = 16.dp, bottom = 12.dp, start = 16.dp, end = 16.dp)
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column {
-                        Text(
-                            text = "MLBB PICKER",
-                            color = Color(0xFFD4AF37), // Gold
-                            fontWeight = FontWeight.Black,
-                            fontSize = 20.sp,
-                            letterSpacing = 1.5.sp
-                        )
-                        Text(
-                            text = "Smart Draft Companion",
-                            color = Color(0xFF94A3B8),
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            // Gold theme crown/star accent
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                tint = Color(0xFFD4AF37),
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "MLBB PICKER",
+                                color = Color(0xFFD4AF37),
+                                fontWeight = FontWeight.Black,
+                                fontSize = 21.sp,
+                                letterSpacing = 2.sp
+                            )
+                        }
+                        // Premium Tier Badge
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    if (isPremium) {
+                                        Brush.horizontalGradient(listOf(Color(0xFFD4AF37), Color(0xFFB45309)))
+                                    } else {
+                                        Brush.horizontalGradient(listOf(Color(0xFF475569), Color(0xFF334155)))
+                                    },
+                                    RoundedCornerShape(6.dp)
+                                        )
+                                .border(
+                                    0.5.dp,
+                                    if (isPremium) Color(0xFFD4AF37) else Color(0xFF64748B),
+                                    RoundedCornerShape(6.dp)
+                                )
+                                .padding(horizontal = 10.dp, vertical = 4.dp)
+                        ) {
+                            Text(
+                                text = if (isPremium) "PRO ACTIVE" else "FREE VERSION",
+                                color = if (isPremium) Color.Black else Color(0xFFE2E8F0),
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                letterSpacing = 1.sp
+                            )
+                        }
                     }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Real-Time Counter & Synergy Assistant",
+                        color = Color(0xFF64748B),
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(start = 28.dp)
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    // Sleek thin golden bottom divider line
                     Box(
                         modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
                             .background(
-                                Brush.horizontalGradient(listOf(Color(0xFFD4AF37), Color(0xFFB45309))),
-                                RoundedCornerShape(20.dp)
+                                Brush.horizontalGradient(
+                                    colors = listOf(
+                                        Color(0xFFD4AF37).copy(alpha = 0.0f),
+                                        Color(0xFFD4AF37).copy(alpha = 0.25f),
+                                        Color(0xFFD4AF37).copy(alpha = 0.0f)
+                                    )
+                                )
                             )
-                            .padding(horizontal = 8.dp, vertical = 3.dp)
-                    ) {
-                        Text(
-                            text = if (isPremium) "PRO" else "FREE TIER",
-                            color = if (isPremium) Color.Black else Color.White,
-                            fontSize = 8.sp,
-                            fontWeight = FontWeight.Black,
-                            letterSpacing = 0.5.sp
-                        )
-                    }
+                    )
                 }
             }
 
