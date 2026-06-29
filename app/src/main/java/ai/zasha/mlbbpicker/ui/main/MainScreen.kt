@@ -577,6 +577,48 @@ fun MainScreen(
                                 }
                             }
                         }
+
+                        // ─── Debug Tools (Premium Simulator) ──────────────────
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                            border = BorderStroke(1.dp, Color(0xFFEF4444).copy(alpha = 0.5f)),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = "Developer Testing Tools",
+                                    color = Color(0xFFEF4444),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 14.sp
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text("Simulate Pro Account", color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+                                        Text("Toggle off to lock Pro features; toggle on to unlock", color = Color(0xFF94A3B8), fontSize = 11.sp)
+                                    }
+                                    Switch(
+                                        checked = isPremium,
+                                        onCheckedChange = { enable ->
+                                            if (enable) {
+                                                PremiumManager.unlockPremium("lifetime", "mock_debug_token")
+                                            } else {
+                                                PremiumManager.revokePremium()
+                                            }
+                                        },
+                                        colors = SwitchDefaults.colors(
+                                            checkedThumbColor = Color(0xFFD4AF37),
+                                            checkedTrackColor = Color(0xFF475569)
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
                 1 -> {
