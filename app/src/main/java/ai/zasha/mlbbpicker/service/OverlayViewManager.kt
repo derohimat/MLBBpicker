@@ -2,6 +2,7 @@ package ai.zasha.mlbbpicker.service
 
 import android.annotation.SuppressLint
 import android.content.Context
+import ai.zasha.mlbbpicker.data.*
 import android.graphics.PixelFormat
 import android.os.Build
 import android.view.Gravity
@@ -9,11 +10,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -26,11 +29,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -113,14 +118,14 @@ class OverlayViewManager(private val context: Context) {
     private var bubbleX = 100
     private var bubbleY = 300
 
-    // State holders for draft
-    private val selectedEnemies = mutableStateListOf<Hero?>().apply { repeat(5) { add(null) } }
-    private val selectedAllies = mutableStateListOf<Hero?>().apply { repeat(5) { add(null) } }
+    // Delegate draft state to central DraftManager
+    private val selectedEnemies get() = DraftManager.selectedEnemies
+    private val selectedAllies get() = DraftManager.selectedAllies
+    private val counterSuggestions get() = DraftManager.counterSuggestions
+    private val synergySuggestions get() = DraftManager.synergySuggestions
+    private val banRecommendations get() = DraftManager.banRecommendations
 
-    private val counterSuggestions = mutableStateListOf<CounterSuggestion>()
-    private val synergySuggestions = mutableStateListOf<SynergySuggestion>()
     private val metaStats = mutableStateListOf<HeroMetaStats>()
-    private val banRecommendations = mutableStateListOf<BanRecommendation>()
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
@@ -196,11 +201,13 @@ class OverlayViewManager(private val context: Context) {
                             .padding(4.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = "MLBB",
-                            color = Color(0xFFD4AF37),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 12.sp
+                        Image(
+                            painter = painterResource(id = ai.zasha.mlbbpicker.R.mipmap.ic_launcher),
+                            contentDescription = "MLBB Picker Launcher Icon",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
                         )
                     }
                 }
@@ -231,13 +238,20 @@ class OverlayViewManager(private val context: Context) {
             y = bubbleY
         }
 
-        // Setup touch listener for dragging and clicking
+        // Setup touch listener for dragging, clicking, and long-pressing to close
         composeView.setOnTouchListener(object : View.OnTouchListener {
             private var initialX = 0
             private var initialY = 0
             private var initialTouchX = 0f
             private var initialTouchY = 0f
             private var touchTime = 0L
+            private val longPressHandler = android.os.Handler(android.os.Looper.getMainLooper())
+            private var isLongPressed = false
+            private val longPressRunnable = Runnable {
+                isLongPressed = true
+                android.widget.Toast.makeText(context, "Draft Assistant dismissed", android.widget.Toast.LENGTH_SHORT).show()
+                hideOverlay()
+            }
 
             override fun onTouch(v: View, event: MotionEvent): Boolean {
                 when (event.action) {
@@ -247,15 +261,27 @@ class OverlayViewManager(private val context: Context) {
                         initialTouchX = event.rawX
                         initialTouchY = event.rawY
                         touchTime = System.currentTimeMillis()
+                        isLongPressed = false
+                        longPressHandler.postDelayed(longPressRunnable, 600) // 600ms long press
                         return true
                     }
                     MotionEvent.ACTION_MOVE -> {
-                        params.x = initialX + (event.rawX - initialTouchX).toInt()
-                        params.y = initialY + (event.rawY - initialTouchY).toInt()
-                        windowManager.updateViewLayout(composeView, params)
+                        val diffX = abs(event.rawX - initialTouchX)
+                        val diffY = abs(event.rawY - initialTouchY)
+                        if (diffX > 10 || diffY > 10) {
+                            longPressHandler.removeCallbacks(longPressRunnable)
+                        }
+                        if (!isLongPressed) {
+                            params.x = initialX + (event.rawX - initialTouchX).toInt()
+                            params.y = initialY + (event.rawY - initialTouchY).toInt()
+                            windowManager.updateViewLayout(composeView, params)
+                        }
                         return true
                     }
                     MotionEvent.ACTION_UP -> {
+                        longPressHandler.removeCallbacks(longPressRunnable)
+                        if (isLongPressed) return true
+                        
                         bubbleX = params.x
                         bubbleY = params.y
                         val diffX = abs(event.rawX - initialTouchX)
@@ -320,6 +346,9 @@ class OverlayViewManager(private val context: Context) {
                                 selectedAllies[index] = hero
                             }
                             updateRecommendations()
+                        },
+                        onDismiss = {
+                            hideOverlay()
                         }
                     )
                 }
@@ -354,43 +383,12 @@ class OverlayViewManager(private val context: Context) {
     }
 
     private fun updateRecommendations() {
-        val enemies = selectedEnemies.filterNotNull().map { it.id }
-        val allies = selectedAllies.filterNotNull().map { it.id }
-
-        // Update ban recommendations excluding already picked heroes
-        val allPickedIds = (enemies + allies).toSet()
-        val bans = BanHelper.getRecommendedBans(metaStats, excludeHeroIds = allPickedIds)
-        banRecommendations.clear()
-        banRecommendations.addAll(bans)
-
-        coroutineScope.launch {
-            if (enemies.isNotEmpty()) {
-                val counters = heroRepository.getCounterSuggestions(enemies)
-                counterSuggestions.clear()
-                counterSuggestions.addAll(counters.take(15))
-            } else {
-                counterSuggestions.clear()
-            }
-
-            if (allies.isNotEmpty()) {
-                val synergies = heroRepository.getSynergySuggestions(allies)
-                synergySuggestions.clear()
-                synergySuggestions.addAll(synergies.take(15))
-            } else {
-                synergySuggestions.clear()
-            }
-        }
+        DraftManager.updateRecommendations(coroutineScope, heroRepository, metaStats)
     }
 
     /** Swap heroes between two slots (supports cross-team swapping) */
     private fun swapSlots(fromType: String, fromIdx: Int, toType: String, toIdx: Int) {
-        val fromList = if (fromType == "enemy") selectedEnemies else selectedAllies
-        val toList = if (toType == "enemy") selectedEnemies else selectedAllies
-
-        val temp = fromList[fromIdx]
-        fromList[fromIdx] = toList[toIdx]
-        toList[toIdx] = temp
-
+        DraftManager.swapSlots(fromType, fromIdx, toType, toIdx)
         updateRecommendations()
     }
 
@@ -437,13 +435,15 @@ fun OverlayPanelContent(
     counterSuggestions: List<CounterSuggestion>,
     synergySuggestions: List<SynergySuggestion>,
     metaStats: List<HeroMetaStats>,
-    banRecommendations: List<BanRecommendation>,
+    banRecommendations: List<BanRecommendation> = emptyList(),
     buildRepository: BuildRepository,
+    isFullScreen: Boolean = false,
     onCollapse: () -> Unit,
     onClearAll: () -> Unit,
     onUpdateRecommendations: () -> Unit,
     onSwapSlots: (String, Int, String, Int) -> Unit,
-    onSelectHero: (String, Int, Hero?) -> Unit
+    onSelectHero: (String, Int, Hero?) -> Unit,
+    onDismiss: () -> Unit
 ) {
     var activeSlotType by remember { mutableStateOf<String?>(null) } // "enemy" or "ally"
     var activeSlotIndex by remember { mutableStateOf(-1) }
@@ -493,9 +493,16 @@ fun OverlayPanelContent(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xE60F172A)) // Semi-transparent Slate 900
-            .border(1.dp, Color(0xFF334155), RoundedCornerShape(16.dp))
+            .then(
+                if (isFullScreen) {
+                    Modifier.background(Color(0xFF0F172A))
+                } else {
+                    Modifier
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color(0xE60F172A))
+                        .border(1.dp, Color(0xFF334155), RoundedCornerShape(16.dp))
+                }
+            )
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Header
@@ -522,14 +529,25 @@ fun OverlayPanelContent(
                             modifier = Modifier.size(18.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.width(4.dp))
-                    IconButton(onClick = onCollapse, modifier = Modifier.size(32.dp)) {
-                        Icon(
-                            Icons.Default.Close,
-                            contentDescription = "Collapse",
-                            tint = Color(0xFFF1F5F9),
-                            modifier = Modifier.size(18.dp)
-                        )
+                    if (!isFullScreen) {
+                        Spacer(modifier = Modifier.width(4.dp))
+                        IconButton(onClick = onCollapse, modifier = Modifier.size(32.dp)) {
+                            Icon(
+                                Icons.Default.KeyboardArrowDown,
+                                contentDescription = "Collapse",
+                                tint = Color(0xFFF1F5F9),
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(4.dp))
+                        IconButton(onClick = onDismiss, modifier = Modifier.size(32.dp)) {
+                            Icon(
+                                Icons.Default.Close,
+                                contentDescription = "Dismiss Overlay",
+                                tint = Color(0xFFEF4444),
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
                     }
                 }
             }
@@ -548,6 +566,17 @@ fun OverlayPanelContent(
 
             // Hero Selection View
             if (activeSlotType != null) {
+                val currentHeroId = if (activeSlotType == "enemy") {
+                    selectedEnemies.getOrNull(activeSlotIndex)?.id
+                } else {
+                    selectedAllies.getOrNull(activeSlotIndex)?.id
+                }
+                val selectedHeroIds = (selectedEnemies + selectedAllies)
+                    .filterNotNull()
+                    .map { it.id }
+                    .filter { it != currentHeroId }
+                    .toSet()
+
                 HeroSelectionView(
                     activeSlotType = activeSlotType!!,
                     activeSlotIndex = activeSlotIndex,
@@ -555,6 +584,18 @@ fun OverlayPanelContent(
                     searchQuery = searchQuery,
                     onSearchChange = { searchQuery = it },
                     metaStatsMap = metaStatsMap,
+                    selectedHeroIds = selectedHeroIds,
+                    counterSuggestions = counterSuggestions,
+                    synergySuggestions = synergySuggestions,
+                    banRecommendations = banRecommendations.map { it.heroId }.toSet(),
+                    selectedRoleFilter = selectedRoleFilter,
+                    onRoleSelected = { selectedRoleFilter = it },
+                    initialFilter = when (activePanel) {
+                        0 -> "Counter"
+                        1 -> "Synergy"
+                        2 -> "Ban"
+                        else -> "All"
+                    },
                     onSelectHero = { hero ->
                         onSelectHero(activeSlotType!!, activeSlotIndex, hero)
                         activeSlotType = null
@@ -743,6 +784,36 @@ fun OverlayPanelContent(
 // ─── Hero Selection View ─────────────────────────────────────────────────────
 
 @Composable
+private fun PickerFilterChip(
+    text: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .background(
+                color = if (selected) Color(0xFFD4AF37) else Color(0xFF1E293B),
+                shape = RoundedCornerShape(12.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = if (selected) Color(0xFFD4AF37) else Color(0xFF334155),
+                shape = RoundedCornerShape(12.dp)
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 4.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            color = if (selected) Color.Black else Color(0xFF94A3B8),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
 private fun HeroSelectionView(
     activeSlotType: String,
     activeSlotIndex: Int,
@@ -750,10 +821,48 @@ private fun HeroSelectionView(
     searchQuery: String,
     onSearchChange: (String) -> Unit,
     metaStatsMap: Map<Int, HeroMetaStats>,
+    selectedHeroIds: Set<Int>,
+    counterSuggestions: List<CounterSuggestion>,
+    synergySuggestions: List<SynergySuggestion>,
+    banRecommendations: Set<Int>,
+    selectedRoleFilter: String?,
+    onRoleSelected: (String?) -> Unit,
+    initialFilter: String,
     onSelectHero: (Hero) -> Unit,
     onRemove: () -> Unit,
     onCancel: () -> Unit
 ) {
+    val resolvedInitialFilter = remember(initialFilter, counterSuggestions, synergySuggestions, banRecommendations) {
+        when (initialFilter) {
+            "Counter" -> if (counterSuggestions.isNotEmpty()) "Counter" else "All"
+            "Synergy" -> if (synergySuggestions.isNotEmpty()) "Synergy" else "All"
+            "Ban" -> if (banRecommendations.isNotEmpty()) "Ban" else "All"
+            else -> "All"
+        }
+    }
+    var pickerFilter by remember(resolvedInitialFilter) { mutableStateOf(resolvedInitialFilter) }
+
+    val displayedHeroes = remember(heroes, pickerFilter, counterSuggestions, synergySuggestions, banRecommendations, selectedRoleFilter) {
+        var list = when (pickerFilter) {
+            "Counter" -> {
+                val counterIds = counterSuggestions.map { it.id }.toSet()
+                heroes.filter { counterIds.contains(it.id) }
+            }
+            "Synergy" -> {
+                val synergyIds = synergySuggestions.map { it.id }.toSet()
+                heroes.filter { synergyIds.contains(it.id) }
+            }
+            "Ban" -> {
+                heroes.filter { banRecommendations.contains(it.id) }
+            }
+            else -> heroes
+        }
+        if (selectedRoleFilter != null) {
+            list = list.filter { it.roleList.any { r -> r.equals(selectedRoleFilter, true) } }
+        }
+        list
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -779,6 +888,33 @@ private fun HeroSelectionView(
                 Text("Remove", fontSize = 11.sp, color = Color.White)
             }
         }
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        // Picker Filter Chips
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            PickerFilterChip("All", pickerFilter == "All") { pickerFilter = "All" }
+            if (counterSuggestions.isNotEmpty()) {
+                PickerFilterChip("Counters", pickerFilter == "Counter") { pickerFilter = "Counter" }
+            }
+            if (synergySuggestions.isNotEmpty()) {
+                PickerFilterChip("Synergies", pickerFilter == "Synergy") { pickerFilter = "Synergy" }
+            }
+            if (banRecommendations.isNotEmpty()) {
+                PickerFilterChip("Bans", pickerFilter == "Ban") { pickerFilter = "Ban" }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(6.dp))
+
+        // Role Filter Chips
+        RoleFilterChips(
+            selectedRole = selectedRoleFilter,
+            onRoleSelected = onRoleSelected
+        )
 
         Spacer(modifier = Modifier.height(6.dp))
 
@@ -810,12 +946,19 @@ private fun HeroSelectionView(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            items(heroes) { hero ->
+            items(displayedHeroes) { hero ->
                 val stats = metaStatsMap[hero.id]
+                val isAlreadySelected = selectedHeroIds.contains(hero.id)
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onSelectHero(hero) }
+                        .then(
+                            if (isAlreadySelected) {
+                                Modifier.alpha(0.35f)
+                            } else {
+                                Modifier.clickable { onSelectHero(hero) }
+                            }
+                        )
                         .padding(4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

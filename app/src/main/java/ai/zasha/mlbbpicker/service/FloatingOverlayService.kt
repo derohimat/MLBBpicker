@@ -79,8 +79,10 @@ class FloatingOverlayService : Service() {
                         if (foregroundApp != null) {
                             val isMlbb = foregroundApp == "com.mobile.legends"
                             val isOwnApp = foregroundApp == packageName
-                            if (isMlbb || isOwnApp) {
+                            if (isMlbb) {
                                 overlayViewManager.showOverlay()
+                            } else if (isOwnApp) {
+                                overlayViewManager.hideOverlay()
                             } else {
                                 if (autoHide) {
                                     overlayViewManager.hideOverlay()

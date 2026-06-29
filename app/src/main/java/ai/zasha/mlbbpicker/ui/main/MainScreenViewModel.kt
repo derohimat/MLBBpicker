@@ -24,7 +24,8 @@ data class MainScreenState(
     val autoHideEnabled: Boolean = true,
     val isUpdatingPatch: Boolean = false,
     val patchUpdateProgress: Float = 0f,
-    val patchUpdateStatus: String = ""
+    val patchUpdateStatus: String = "",
+    val lastUpdateTime: String = "Bundled Assets"
 )
 
 class MainScreenViewModel(
@@ -52,7 +53,8 @@ class MainScreenViewModel(
         isDrawOverlayGranted: Boolean,
         isUsageStatsGranted: Boolean,
         autoDetectEnabled: Boolean,
-        autoHideEnabled: Boolean
+        autoHideEnabled: Boolean,
+        context: Context
     ) {
         _uiState.update {
             it.copy(
@@ -60,7 +62,8 @@ class MainScreenViewModel(
                 isDrawOverlayGranted = isDrawOverlayGranted,
                 isUsageStatsGranted = isUsageStatsGranted,
                 autoDetectEnabled = autoDetectEnabled,
-                autoHideEnabled = autoHideEnabled
+                autoHideEnabled = autoHideEnabled,
+                lastUpdateTime = DataPatchManager.getLastUpdateTime(context)
             )
         }
     }
@@ -94,7 +97,8 @@ class MainScreenViewModel(
                         isUpdatingPatch = false,
                         patchUpdateStatus = "Update completed successfully!",
                         heroes = repository.heroes,
-                        metaStats = metaStatsRepository.offlineStats
+                        metaStats = metaStatsRepository.offlineStats,
+                        lastUpdateTime = DataPatchManager.getLastUpdateTime(context)
                     )
                 }
             } else {
@@ -119,7 +123,8 @@ class MainScreenViewModel(
                     it.copy(
                         patchUpdateStatus = "Local patches cleared. Reloaded default assets.",
                         heroes = repository.heroes,
-                        metaStats = metaStatsRepository.offlineStats
+                        metaStats = metaStatsRepository.offlineStats,
+                        lastUpdateTime = DataPatchManager.getLastUpdateTime(context)
                     )
                 }
             } else {

@@ -96,7 +96,8 @@ class MainActivity : ComponentActivity() {
             isDrawOverlayGranted = overlayGranted,
             isUsageStatsGranted = usageGranted,
             autoDetectEnabled = autoDetect,
-            autoHideEnabled = autoHide
+            autoHideEnabled = autoHide,
+            context = this
         )
     }
 

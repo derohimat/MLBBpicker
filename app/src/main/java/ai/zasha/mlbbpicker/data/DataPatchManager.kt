@@ -90,4 +90,13 @@ object DataPatchManager {
         }
         success
     }
+
+    fun getLastUpdateTime(context: Context): String {
+        val file = File(context.filesDir, "heroes.json")
+        if (!file.exists()) return "Bundled Assets"
+        val lastModified = file.lastModified()
+        if (lastModified == 0L) return "Bundled Assets"
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault())
+        return sdf.format(java.util.Date(lastModified))
+    }
 }

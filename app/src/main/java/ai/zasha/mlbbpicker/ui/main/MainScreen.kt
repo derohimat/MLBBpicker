@@ -153,6 +153,7 @@ fun MainScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
                             .padding(horizontal = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
