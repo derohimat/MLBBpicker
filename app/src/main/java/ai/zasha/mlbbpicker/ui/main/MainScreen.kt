@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.flow.StateFlow
 import androidx.compose.runtime.collectAsState
+import androidx.compose.animation.*
+import androidx.compose.foundation.lazy.rememberLazyListState
+import kotlinx.coroutines.launch
 
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -188,23 +191,46 @@ fun MainScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp),
-                contentAlignment = Alignment.Center
+                    .background(Color(0xFF1E293B).copy(alpha = 0.9f))
+                    .border(BorderStroke(1.dp, Brush.verticalGradient(listOf(Color(0xFF334155), Color(0xFF1E293B)))))
+                    .padding(vertical = 14.dp, horizontal = 16.dp)
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "MLBB PICKER",
-                        color = Color(0xFFD4AF37), // Gold
-                        fontWeight = FontWeight.Black,
-                        fontSize = 24.sp,
-                        letterSpacing = 2.sp
-                    )
-                    Text(
-                        text = "Smart Draft Overlay Companion",
-                        color = Color(0xFF94A3B8),
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Medium
-                    )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            text = "MLBB PICKER",
+                            color = Color(0xFFD4AF37), // Gold
+                            fontWeight = FontWeight.Black,
+                            fontSize = 20.sp,
+                            letterSpacing = 1.5.sp
+                        )
+                        Text(
+                            text = "Smart Draft Companion",
+                            color = Color(0xFF94A3B8),
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                Brush.horizontalGradient(listOf(Color(0xFFD4AF37), Color(0xFFB45309))),
+                                RoundedCornerShape(20.dp)
+                            )
+                            .padding(horizontal = 8.dp, vertical = 3.dp)
+                    ) {
+                        Text(
+                            text = if (isPremium) "PRO" else "FREE TIER",
+                            color = if (isPremium) Color.Black else Color.White,
+                            fontSize = 8.sp,
+                            fontWeight = FontWeight.Black,
+                            letterSpacing = 0.5.sp
+                        )
+                    }
                 }
             }
 
@@ -361,11 +387,16 @@ fun MainScreen(
                         // Service Control Card
                         Card(
                             modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
-                            border = BorderStroke(1.dp, Color(0xFF334155)),
+                            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                            border = BorderStroke(1.dp, Color(0xFFD4AF37).copy(alpha = 0.25f)),
                             shape = RoundedCornerShape(12.dp)
                         ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Brush.verticalGradient(listOf(Color(0xFF1E293B), Color(0xFF111827))))
+                                    .padding(16.dp)
+                            ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -399,10 +430,14 @@ fun MainScreen(
                                         onClick = onToggleService,
                                         colors = ButtonDefaults.buttonColors(
                                             containerColor = if (state.isServiceRunning) Color(0xFFEF4444) else Color(0xFFD4AF37),
-                                            contentColor = Color.White
-                                        )
+                                            contentColor = Color.Black
+                                        ),
+                                        shape = RoundedCornerShape(8.dp)
                                     ) {
-                                        Text(if (state.isServiceRunning) "Stop" else "Start")
+                                        Text(
+                                            if (state.isServiceRunning) "Stop" else "Start",
+                                            fontWeight = FontWeight.Bold
+                                        )
                                     }
                                 }
 
@@ -456,11 +491,16 @@ fun MainScreen(
                         // Permissions Card
                         Card(
                             modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
-                            border = BorderStroke(1.dp, Color(0xFF334155)),
+                            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                            border = BorderStroke(1.dp, Color(0xFFD4AF37).copy(alpha = 0.25f)),
                             shape = RoundedCornerShape(12.dp)
                         ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Brush.verticalGradient(listOf(Color(0xFF1E293B), Color(0xFF111827))))
+                                    .padding(16.dp)
+                            ) {
                                 Text(
                                     text = "System Permissions Required",
                                     color = Color.White,
@@ -500,11 +540,16 @@ fun MainScreen(
                         // Data Update Settings Card
                         Card(
                             modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
-                            border = BorderStroke(1.dp, Color(0xFF334155)),
+                            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+                            border = BorderStroke(1.dp, Color(0xFFD4AF37).copy(alpha = 0.25f)),
                             shape = RoundedCornerShape(12.dp)
                         ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Brush.verticalGradient(listOf(Color(0xFF1E293B), Color(0xFF111827))))
+                                    .padding(16.dp)
+                            ) {
                                 Text(
                                     text = "Offline Data Patch",
                                     color = Color.White,
@@ -1506,6 +1551,12 @@ fun SoloQueueScreen(
         }
     }
 
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+    val showScrollToTop by remember {
+        derivedStateOf { listState.firstVisibleItemIndex > 2 }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -1572,17 +1623,48 @@ fun SoloQueueScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // List
-        if (rankedHeroes.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No data available", color = Color(0xFF64748B))
-            }
-        } else {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(rankedHeroes) { rank ->
-                    SoloHeroCard(rank = rank)
+        // List container with FAB overlay
+        Box(modifier = Modifier.weight(1f)) {
+            if (rankedHeroes.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("No data available", color = Color(0xFF64748B))
+                }
+            } else {
+                LazyColumn(
+                    state = listState,
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(rankedHeroes) { rank ->
+                        SoloHeroCard(rank = rank)
+                    }
+                }
+
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = showScrollToTop,
+                    enter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }),
+                    exit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 }),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp)
+                ) {
+                    SmallFloatingActionButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                listState.animateScrollToItem(0)
+                            }
+                        },
+                        containerColor = Color(0xFFD4AF37),
+                        contentColor = Color.Black,
+                        shape = CircleShape,
+                        modifier = Modifier.size(44.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowUp,
+                            contentDescription = "Scroll to Top",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
             }
         }
