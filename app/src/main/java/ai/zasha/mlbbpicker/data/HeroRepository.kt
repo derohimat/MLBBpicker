@@ -31,10 +31,42 @@ class HeroRepository(private val context: Context) {
     private val tag = "HeroRepository"
     private val json = Json { ignoreUnknownKeys = true }
 
-    // Lazy load the local asset datasets
-    val heroes: List<Hero> by lazy {
-        try {
-            val jsonText = context.assets.open("heroes.json").bufferedReader().use { it.readText() }
+    private var _heroes: List<Hero>? = null
+    val heroes: List<Hero>
+        get() {
+            if (_heroes == null) {
+                _heroes = loadHeroes()
+            }
+            return _heroes!!
+        }
+
+    private var _offlineCounters: Map<String, List<CounterSuggestion>>? = null
+    private val offlineCounters: Map<String, List<CounterSuggestion>>
+        get() {
+            if (_offlineCounters == null) {
+                _offlineCounters = loadOfflineCounters()
+            }
+            return _offlineCounters!!
+        }
+
+    private var _offlineSynergies: Map<String, List<SynergySuggestion>>? = null
+    private val offlineSynergies: Map<String, List<SynergySuggestion>>
+        get() {
+            if (_offlineSynergies == null) {
+                _offlineSynergies = loadOfflineSynergies()
+            }
+            return _offlineSynergies!!
+        }
+
+    fun reload() {
+        _heroes = null
+        _offlineCounters = null
+        _offlineSynergies = null
+    }
+
+    private fun loadHeroes(): List<Hero> {
+        return try {
+            val jsonText = DataPatchManager.getLocalFileText(context, "heroes.json")
             json.decodeFromString<List<Hero>>(jsonText)
         } catch (e: Exception) {
             Log.e(tag, "Failed to load heroes.json", e)
@@ -42,9 +74,9 @@ class HeroRepository(private val context: Context) {
         }
     }
 
-    private val offlineCounters: Map<String, List<CounterSuggestion>> by lazy {
-        try {
-            val jsonText = context.assets.open("counters.json").bufferedReader().use { it.readText() }
+    private fun loadOfflineCounters(): Map<String, List<CounterSuggestion>> {
+        return try {
+            val jsonText = DataPatchManager.getLocalFileText(context, "counters.json")
             json.decodeFromString<Map<String, List<CounterSuggestion>>>(jsonText)
         } catch (e: Exception) {
             Log.e(tag, "Failed to load counters.json", e)
@@ -52,9 +84,9 @@ class HeroRepository(private val context: Context) {
         }
     }
 
-    private val offlineSynergies: Map<String, List<SynergySuggestion>> by lazy {
-        try {
-            val jsonText = context.assets.open("synergies.json").bufferedReader().use { it.readText() }
+    private fun loadOfflineSynergies(): Map<String, List<SynergySuggestion>> {
+        return try {
+            val jsonText = DataPatchManager.getLocalFileText(context, "synergies.json")
             json.decodeFromString<Map<String, List<SynergySuggestion>>>(jsonText)
         } catch (e: Exception) {
             Log.e(tag, "Failed to load synergies.json", e)
@@ -63,10 +95,15 @@ class HeroRepository(private val context: Context) {
     }
 
     private fun isOnline(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork ?: return false
-        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-        return activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        return try {
+            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = connectivityManager.activeNetwork ?: return false
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+            activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        } catch (e: Exception) {
+            Log.e(tag, "Failed to check connectivity state, defaulting to offline mode", e)
+            false
+        }
     }
 
     suspend fun getCounterSuggestions(enemyHeroIds: List<Int>): List<CounterSuggestion> = withContext(Dispatchers.IO) {

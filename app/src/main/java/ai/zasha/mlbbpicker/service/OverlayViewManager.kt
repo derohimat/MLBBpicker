@@ -140,6 +140,23 @@ class OverlayViewManager(private val context: Context) {
     fun showOverlay() {
         if (isShowing) return
         isShowing = true
+        
+        // Reload repositories to pick up any new OTA patches
+        heroRepository.reload()
+        metaStatsRepository.reload()
+        buildRepository.reload()
+
+        // Refresh meta stats and ban recommendations from new patch
+        coroutineScope.launch {
+            val stats = metaStatsRepository.getMetaStats()
+            metaStats.clear()
+            metaStats.addAll(stats)
+            val bans = BanHelper.getRecommendedBans(stats)
+            banRecommendations.clear()
+            banRecommendations.addAll(bans)
+            updateRecommendations()
+        }
+
         if (isExpanded) {
             showPanel()
         } else {
@@ -295,6 +312,14 @@ class OverlayViewManager(private val context: Context) {
                         },
                         onSwapSlots = { fromType, fromIdx, toType, toIdx ->
                             swapSlots(fromType, fromIdx, toType, toIdx)
+                        },
+                        onSelectHero = { slotType, index, hero ->
+                            if (slotType == "enemy") {
+                                selectedEnemies[index] = hero
+                            } else {
+                                selectedAllies[index] = hero
+                            }
+                            updateRecommendations()
                         }
                     )
                 }
@@ -417,7 +442,8 @@ fun OverlayPanelContent(
     onCollapse: () -> Unit,
     onClearAll: () -> Unit,
     onUpdateRecommendations: () -> Unit,
-    onSwapSlots: (String, Int, String, Int) -> Unit
+    onSwapSlots: (String, Int, String, Int) -> Unit,
+    onSelectHero: (String, Int, Hero?) -> Unit
 ) {
     var activeSlotType by remember { mutableStateOf<String?>(null) } // "enemy" or "ally"
     var activeSlotIndex by remember { mutableStateOf(-1) }
@@ -530,24 +556,14 @@ fun OverlayPanelContent(
                     onSearchChange = { searchQuery = it },
                     metaStatsMap = metaStatsMap,
                     onSelectHero = { hero ->
-                        if (activeSlotType == "enemy") {
-                            (selectedEnemies as MutableList<Hero?>)[activeSlotIndex] = hero
-                        } else {
-                            (selectedAllies as MutableList<Hero?>)[activeSlotIndex] = hero
-                        }
+                        onSelectHero(activeSlotType!!, activeSlotIndex, hero)
                         activeSlotType = null
                         activeSlotIndex = -1
-                        onUpdateRecommendations()
                     },
                     onRemove = {
-                        if (activeSlotType == "enemy") {
-                            (selectedEnemies as MutableList<Hero?>)[activeSlotIndex] = null
-                        } else {
-                            (selectedAllies as MutableList<Hero?>)[activeSlotIndex] = null
-                        }
+                        onSelectHero(activeSlotType!!, activeSlotIndex, null)
                         activeSlotType = null
                         activeSlotIndex = -1
-                        onUpdateRecommendations()
                     },
                     onCancel = {
                         activeSlotType = null

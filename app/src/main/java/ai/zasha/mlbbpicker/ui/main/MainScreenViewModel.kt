@@ -1,11 +1,13 @@
 package ai.zasha.mlbbpicker.ui.main
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ai.zasha.mlbbpicker.data.Hero
 import ai.zasha.mlbbpicker.data.HeroRepository
 import ai.zasha.mlbbpicker.data.HeroMetaStats
 import ai.zasha.mlbbpicker.data.MetaStatsRepository
+import ai.zasha.mlbbpicker.data.DataPatchManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +21,10 @@ data class MainScreenState(
     val isDrawOverlayGranted: Boolean = false,
     val isUsageStatsGranted: Boolean = false,
     val autoDetectEnabled: Boolean = true,
-    val autoHideEnabled: Boolean = true
+    val autoHideEnabled: Boolean = true,
+    val isUpdatingPatch: Boolean = false,
+    val patchUpdateProgress: Float = 0f,
+    val patchUpdateStatus: String = ""
 )
 
 class MainScreenViewModel(
@@ -57,6 +62,73 @@ class MainScreenViewModel(
                 autoDetectEnabled = autoDetectEnabled,
                 autoHideEnabled = autoHideEnabled
             )
+        }
+    }
+
+    fun triggerPatchUpdate(context: Context) {
+        if (_uiState.value.isUpdatingPatch) return
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    isUpdatingPatch = true,
+                    patchUpdateProgress = 0f,
+                    patchUpdateStatus = "Starting update..."
+                )
+            }
+
+            val result = DataPatchManager.updatePatches(context.applicationContext) { progress, status ->
+                _uiState.update {
+                    it.copy(
+                        patchUpdateProgress = progress,
+                        patchUpdateStatus = status
+                    )
+                }
+            }
+
+            if (result.isSuccess) {
+                repository.reload()
+                metaStatsRepository.reload()
+                _uiState.update {
+                    it.copy(
+                        isUpdatingPatch = false,
+                        patchUpdateStatus = "Update completed successfully!",
+                        heroes = repository.heroes,
+                        metaStats = metaStatsRepository.offlineStats
+                    )
+                }
+            } else {
+                val errorMsg = result.exceptionOrNull()?.message ?: "Unknown error"
+                _uiState.update {
+                    it.copy(
+                        isUpdatingPatch = false,
+                        patchUpdateStatus = "Update failed: $errorMsg"
+                    )
+                }
+            }
+        }
+    }
+
+    fun clearPatchUpdate(context: Context) {
+        viewModelScope.launch {
+            val success = DataPatchManager.clearPatches(context.applicationContext)
+            if (success) {
+                repository.reload()
+                metaStatsRepository.reload()
+                _uiState.update {
+                    it.copy(
+                        patchUpdateStatus = "Local patches cleared. Reloaded default assets.",
+                        heroes = repository.heroes,
+                        metaStats = metaStatsRepository.offlineStats
+                    )
+                }
+            } else {
+                _uiState.update {
+                    it.copy(
+                        patchUpdateStatus = "Failed to clear patch files."
+                    )
+                }
+            }
         }
     }
 }

@@ -292,6 +292,89 @@ fun MainScreen(
                                 )
                             }
                         }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Data Update Settings Card
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                            border = BorderStroke(1.dp, Color(0xFF334155)),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = "Offline Data Patch",
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = "Download latest hero recommendations, item builds, and meta statistics from GitHub raw storage.",
+                                    color = Color(0xFF94A3B8),
+                                    fontSize = 11.sp
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                if (state.isUpdatingPatch) {
+                                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                        LinearProgressIndicator(
+                                            progress = { state.patchUpdateProgress },
+                                            modifier = Modifier.fillMaxWidth(),
+                                            color = Color(0xFFD4AF37),
+                                            trackColor = Color(0xFF334155)
+                                        )
+                                        Text(
+                                            text = "Updating: ${state.patchUpdateStatus} (${(state.patchUpdateProgress * 100).toInt()}%)",
+                                            color = Color(0xFFD4AF37),
+                                            fontSize = 11.sp,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    }
+                                } else {
+                                    if (state.patchUpdateStatus.isNotEmpty()) {
+                                        Text(
+                                            text = state.patchUpdateStatus,
+                                            color = if (state.patchUpdateStatus.contains("success", ignoreCase = true) || state.patchUpdateStatus.contains("reloaded", ignoreCase = true)) Color(0xFF10B981) else Color(0xFFEF4444),
+                                            fontSize = 12.sp,
+                                            fontWeight = FontWeight.Bold,
+                                            modifier = Modifier.padding(bottom = 8.dp)
+                                        )
+                                    }
+
+                                    val context = LocalContext.current
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        Button(
+                                            onClick = { viewModel.triggerPatchUpdate(context) },
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = Color(0xFFD4AF37),
+                                                contentColor = Color.Black
+                                            ),
+                                            modifier = Modifier.weight(1f),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text("Update Data", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                        }
+
+                                        Button(
+                                            onClick = { viewModel.clearPatchUpdate(context) },
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = Color(0xFF374151),
+                                                contentColor = Color.White
+                                            ),
+                                            modifier = Modifier.weight(1f),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text("Clear Patches", fontSize = 12.sp)
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 1 -> {

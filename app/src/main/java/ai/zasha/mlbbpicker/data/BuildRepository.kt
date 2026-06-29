@@ -13,10 +13,22 @@ class BuildRepository(private val context: Context) {
     private val tag = "BuildRepository"
     private val json = Json { ignoreUnknownKeys = true }
 
-    /** Map of heroId (as string) → list of builds */
-    private val buildsMap: Map<String, List<HeroBuild>> by lazy {
-        try {
-            val jsonText = context.assets.open("builds.json").bufferedReader().use { it.readText() }
+    private var _buildsMap: Map<String, List<HeroBuild>>? = null
+    private val buildsMap: Map<String, List<HeroBuild>>
+        get() {
+            if (_buildsMap == null) {
+                _buildsMap = loadBuilds()
+            }
+            return _buildsMap!!
+        }
+
+    fun reload() {
+        _buildsMap = null
+    }
+
+    private fun loadBuilds(): Map<String, List<HeroBuild>> {
+        return try {
+            val jsonText = DataPatchManager.getLocalFileText(context, "builds.json")
             json.decodeFromString<Map<String, List<HeroBuild>>>(jsonText)
         } catch (e: Exception) {
             Log.e(tag, "Failed to load builds.json", e)

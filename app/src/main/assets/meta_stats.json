@@ -13,9 +13,9 @@
       "Chase",
       "Magic Damage"
     ],
-    "pick_rate": 0.57,
-    "win_rate": 52.01,
-    "ban_rate": 2.03,
+    "pick_rate": 0.52,
+    "win_rate": 50.56,
+    "ban_rate": 1.86,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -33,9 +33,9 @@
       "Guard",
       "Crowd Control"
     ],
-    "pick_rate": 1.12,
-    "win_rate": 50.32,
-    "ban_rate": 4.75,
+    "pick_rate": 1.44,
+    "win_rate": 52.24,
+    "ban_rate": 41,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -53,9 +53,9 @@
       "Burst",
       "Support"
     ],
-    "pick_rate": 0.14,
-    "win_rate": 49.2,
-    "ban_rate": 0.1,
+    "pick_rate": 0.23,
+    "win_rate": 48.82,
+    "ban_rate": 0.19,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -75,9 +75,9 @@
       "Charge",
       "Regen"
     ],
-    "pick_rate": 1.09,
-    "win_rate": 48.32,
-    "ban_rate": 2.46,
+    "pick_rate": 0.96,
+    "win_rate": 50.29,
+    "ban_rate": 4.86,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -96,9 +96,9 @@
       "Charge",
       "Damage"
     ],
-    "pick_rate": 0.14,
-    "win_rate": 35.5,
-    "ban_rate": 0.04,
+    "pick_rate": 0.38,
+    "win_rate": 42.95,
+    "ban_rate": 0.11,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -117,9 +117,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 0.24,
-    "win_rate": 46.66,
-    "ban_rate": 0.12,
+    "pick_rate": 0.33,
+    "win_rate": 48.88,
+    "ban_rate": 0.17,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -137,9 +137,9 @@
       "Guard",
       "Support"
     ],
-    "pick_rate": 2.23,
-    "win_rate": 44.18,
-    "ban_rate": 10.74,
+    "pick_rate": 2.15,
+    "win_rate": 48.35,
+    "ban_rate": 16.41,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -157,9 +157,9 @@
       "Charge",
       "Burst"
     ],
-    "pick_rate": 0.15,
-    "win_rate": 42.07,
-    "ban_rate": 0.19,
+    "pick_rate": 0.26,
+    "win_rate": 52.72,
+    "ban_rate": 0.41,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -178,9 +178,9 @@
       "Charge",
       "Burst"
     ],
-    "pick_rate": 0.99,
-    "win_rate": 54.61,
-    "ban_rate": 0.66,
+    "pick_rate": 0.8,
+    "win_rate": 50.31,
+    "ban_rate": 1.12,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -198,9 +198,9 @@
       "Crowd Control",
       "Initiator"
     ],
-    "pick_rate": 1.39,
-    "win_rate": 55.39,
-    "ban_rate": 11.01,
+    "pick_rate": 1.35,
+    "win_rate": 52.52,
+    "ban_rate": 12.99,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -218,9 +218,9 @@
       "Damage",
       "Charge"
     ],
-    "pick_rate": 0.22,
-    "win_rate": 49.25,
-    "ban_rate": 0.42,
+    "pick_rate": 0.21,
+    "win_rate": 52.66,
+    "ban_rate": 0.53,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -238,9 +238,9 @@
       "Crowd Control",
       "Poke"
     ],
-    "pick_rate": 0.24,
-    "win_rate": 44.9,
-    "ban_rate": 0.02,
+    "pick_rate": 0.31,
+    "win_rate": 47.88,
+    "ban_rate": 0.08,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -259,9 +259,9 @@
       "Charge",
       "Burst"
     ],
-    "pick_rate": 0.89,
-    "win_rate": 49.46,
-    "ban_rate": 1.43,
+    "pick_rate": 1,
+    "win_rate": 50.9,
+    "ban_rate": 1.53,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -280,9 +280,9 @@
       "Damage",
       "Regen"
     ],
-    "pick_rate": 0.57,
-    "win_rate": 44.94,
-    "ban_rate": 0.84,
+    "pick_rate": 1.25,
+    "win_rate": 48.59,
+    "ban_rate": 3.04,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -302,9 +302,9 @@
       "Push",
       "Burst"
     ],
-    "pick_rate": 0.12,
-    "win_rate": 47.56,
-    "ban_rate": 0.05,
+    "pick_rate": 0.22,
+    "win_rate": 51,
+    "ban_rate": 0.09,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -323,9 +323,9 @@
       "Damage",
       "Crowd Control"
     ],
-    "pick_rate": 0.1,
-    "win_rate": 47.75,
-    "ban_rate": 0.06,
+    "pick_rate": 0.15,
+    "win_rate": 49.45,
+    "ban_rate": 0.08,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -344,9 +344,9 @@
       "Support",
       "Damage"
     ],
-    "pick_rate": 0.89,
-    "win_rate": 55.85,
-    "ban_rate": 26.94,
+    "pick_rate": 0.48,
+    "win_rate": 50.69,
+    "ban_rate": 9.93,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -364,9 +364,9 @@
       "Finisher",
       "Damage"
     ],
-    "pick_rate": 1.57,
-    "win_rate": 51.91,
-    "ban_rate": 15.29,
+    "pick_rate": 1.29,
+    "win_rate": 51.06,
+    "ban_rate": 2.12,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -384,9 +384,9 @@
       "Crowd Control",
       "Regen"
     ],
-    "pick_rate": 1.37,
-    "win_rate": 49.37,
-    "ban_rate": 10.21,
+    "pick_rate": 1.82,
+    "win_rate": 51.07,
+    "ban_rate": 23.89,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -405,9 +405,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 0.82,
-    "win_rate": 53.84,
-    "ban_rate": 1.1,
+    "pick_rate": 0.64,
+    "win_rate": 52.36,
+    "ban_rate": 0.9,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -425,9 +425,9 @@
       "Burst",
       "Finisher"
     ],
-    "pick_rate": 0.64,
-    "win_rate": 48.72,
-    "ban_rate": 0.13,
+    "pick_rate": 0.78,
+    "win_rate": 50.26,
+    "ban_rate": 0.52,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -445,8 +445,8 @@
       "Finisher",
       "Burst"
     ],
-    "pick_rate": 0.29,
-    "win_rate": 50.87,
+    "pick_rate": 0.3,
+    "win_rate": 51.92,
     "ban_rate": 0.07,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
@@ -466,9 +466,9 @@
       "Crowd Control",
       "Damage"
     ],
-    "pick_rate": 0.92,
-    "win_rate": 48.63,
-    "ban_rate": 2.56,
+    "pick_rate": 0.88,
+    "win_rate": 49.72,
+    "ban_rate": 1.32,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -486,9 +486,9 @@
       "Poke",
       "Burst"
     ],
-    "pick_rate": 0.58,
-    "win_rate": 46.46,
-    "ban_rate": 0.07,
+    "pick_rate": 0.6,
+    "win_rate": 48.68,
+    "ban_rate": 0.1,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -506,9 +506,9 @@
       "Poke",
       "Burst"
     ],
-    "pick_rate": 0.33,
-    "win_rate": 41.87,
-    "ban_rate": 0.06,
+    "pick_rate": 0.56,
+    "win_rate": 46.16,
+    "ban_rate": 0.14,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -527,9 +527,9 @@
       "Support",
       "Crowd Control"
     ],
-    "pick_rate": 0.22,
-    "win_rate": 56.88,
-    "ban_rate": 6.64,
+    "pick_rate": 0.09,
+    "win_rate": 48.77,
+    "ban_rate": 0.86,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -548,9 +548,9 @@
       "Chase",
       "Control"
     ],
-    "pick_rate": 0.54,
-    "win_rate": 47.8,
-    "ban_rate": 0.33,
+    "pick_rate": 0.88,
+    "win_rate": 46.05,
+    "ban_rate": 1.69,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -568,9 +568,9 @@
       "Damage",
       "Regen"
     ],
-    "pick_rate": 0.39,
-    "win_rate": 47.25,
-    "ban_rate": 0.16,
+    "pick_rate": 0.41,
+    "win_rate": 47.54,
+    "ban_rate": 0.4,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -588,9 +588,9 @@
       "Burst",
       "Chase"
     ],
-    "pick_rate": 1.75,
-    "win_rate": 50.6,
-    "ban_rate": 0.47,
+    "pick_rate": 1.68,
+    "win_rate": 49.29,
+    "ban_rate": 0.6,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -608,9 +608,9 @@
       "Finisher",
       "Burst"
     ],
-    "pick_rate": 0.86,
-    "win_rate": 50.07,
-    "ban_rate": 0.47,
+    "pick_rate": 0.88,
+    "win_rate": 50.7,
+    "ban_rate": 0.51,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -628,9 +628,9 @@
       "Damage",
       "Control"
     ],
-    "pick_rate": 0.33,
-    "win_rate": 48.08,
-    "ban_rate": 0.06,
+    "pick_rate": 0.6,
+    "win_rate": 50.85,
+    "ban_rate": 0.17,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -648,9 +648,9 @@
       "Guard",
       "Poke"
     ],
-    "pick_rate": 0.61,
-    "win_rate": 56.25,
-    "ban_rate": 27.99,
+    "pick_rate": 0.31,
+    "win_rate": 55.49,
+    "ban_rate": 10.82,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -669,9 +669,9 @@
       "Charge",
       "Burst"
     ],
-    "pick_rate": 0.23,
-    "win_rate": 41.63,
-    "ban_rate": 0.11,
+    "pick_rate": 0.53,
+    "win_rate": 47.27,
+    "ban_rate": 0.3,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -691,9 +691,9 @@
       "Control",
       "Burst"
     ],
-    "pick_rate": 0.14,
-    "win_rate": 46.03,
-    "ban_rate": 0.08,
+    "pick_rate": 0.22,
+    "win_rate": 49.71,
+    "ban_rate": 0.11,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -712,9 +712,9 @@
       "Regen",
       "Mixed Damage"
     ],
-    "pick_rate": 0.22,
-    "win_rate": 38.6,
-    "ban_rate": 0.08,
+    "pick_rate": 0.32,
+    "win_rate": 41.86,
+    "ban_rate": 0.23,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -732,9 +732,9 @@
       "Regen",
       "Guard"
     ],
-    "pick_rate": 0.83,
-    "win_rate": 49.48,
-    "ban_rate": 18.63,
+    "pick_rate": 0.69,
+    "win_rate": 52.32,
+    "ban_rate": 27.41,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -752,9 +752,9 @@
       "Control",
       "Burst"
     ],
-    "pick_rate": 0.38,
-    "win_rate": 46.69,
-    "ban_rate": 0.23,
+    "pick_rate": 0.74,
+    "win_rate": 49.68,
+    "ban_rate": 1.71,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -772,9 +772,9 @@
       "Chase",
       "Finisher"
     ],
-    "pick_rate": 0.76,
-    "win_rate": 51.61,
-    "ban_rate": 6.68,
+    "pick_rate": 0.63,
+    "win_rate": 43.34,
+    "ban_rate": 2.29,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -794,9 +794,9 @@
       "Guard",
       "Charge"
     ],
-    "pick_rate": 0.17,
-    "win_rate": 51.66,
-    "ban_rate": 0.24,
+    "pick_rate": 0.14,
+    "win_rate": 51.89,
+    "ban_rate": 0.54,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -814,9 +814,9 @@
       "Poke",
       "Guard"
     ],
-    "pick_rate": 2.37,
-    "win_rate": 52.17,
-    "ban_rate": 37.51,
+    "pick_rate": 1.75,
+    "win_rate": 54.62,
+    "ban_rate": 36.59,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -834,9 +834,9 @@
       "Initiator",
       "Control"
     ],
-    "pick_rate": 0.31,
-    "win_rate": 38.7,
-    "ban_rate": 1.56,
+    "pick_rate": 0.79,
+    "win_rate": 42.86,
+    "ban_rate": 4.18,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -855,9 +855,9 @@
       "Damage",
       "Chase"
     ],
-    "pick_rate": 1.79,
-    "win_rate": 53.71,
-    "ban_rate": 29.01,
+    "pick_rate": 1.38,
+    "win_rate": 53.66,
+    "ban_rate": 20.03,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -876,9 +876,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 1.15,
-    "win_rate": 56.06,
-    "ban_rate": 31.79,
+    "pick_rate": 0.65,
+    "win_rate": 50.24,
+    "ban_rate": 5.77,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -898,9 +898,9 @@
       "Crowd Control",
       "Burst"
     ],
-    "pick_rate": 0.29,
-    "win_rate": 44.03,
-    "ban_rate": 0.13,
+    "pick_rate": 0.4,
+    "win_rate": 45.7,
+    "ban_rate": 0.19,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -919,9 +919,9 @@
       "Regen",
       "Control"
     ],
-    "pick_rate": 0.77,
-    "win_rate": 47.55,
-    "ban_rate": 49.1,
+    "pick_rate": 0.66,
+    "win_rate": 52.6,
+    "ban_rate": 75.1,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -939,9 +939,9 @@
       "Poke",
       "Burst"
     ],
-    "pick_rate": 2.44,
-    "win_rate": 57.48,
-    "ban_rate": 7.15,
+    "pick_rate": 2,
+    "win_rate": 57.09,
+    "ban_rate": 5.7,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -959,9 +959,9 @@
       "Burst",
       "Finisher"
     ],
-    "pick_rate": 2.4,
-    "win_rate": 51.59,
-    "ban_rate": 8.15,
+    "pick_rate": 1.57,
+    "win_rate": 44.3,
+    "ban_rate": 1.17,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -980,9 +980,9 @@
       "Crowd Control",
       "Initiator"
     ],
-    "pick_rate": 0.55,
-    "win_rate": 47.23,
-    "ban_rate": 2.97,
+    "pick_rate": 0.52,
+    "win_rate": 47.27,
+    "ban_rate": 1.84,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1000,9 +1000,9 @@
       "Burst",
       "Magic Damage"
     ],
-    "pick_rate": 1.65,
-    "win_rate": 51.93,
-    "ban_rate": 44.12,
+    "pick_rate": 1.59,
+    "win_rate": 52.42,
+    "ban_rate": 40.07,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1021,9 +1021,9 @@
       "Burst",
       "Magic Damage"
     ],
-    "pick_rate": 1.03,
-    "win_rate": 48.44,
-    "ban_rate": 8.12,
+    "pick_rate": 1.26,
+    "win_rate": 49.57,
+    "ban_rate": 6.39,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1041,9 +1041,9 @@
       "Finisher",
       "Damage"
     ],
-    "pick_rate": 0.89,
-    "win_rate": 44.93,
-    "ban_rate": 1.63,
+    "pick_rate": 1.89,
+    "win_rate": 51.57,
+    "ban_rate": 6.01,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1061,9 +1061,9 @@
       "Poke",
       "Burst"
     ],
-    "pick_rate": 0.37,
-    "win_rate": 44.44,
-    "ban_rate": 2.55,
+    "pick_rate": 0.49,
+    "win_rate": 50.75,
+    "ban_rate": 6.52,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1082,9 +1082,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 1.34,
-    "win_rate": 54.71,
-    "ban_rate": 21.18,
+    "pick_rate": 0.69,
+    "win_rate": 49.02,
+    "ban_rate": 3.5,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1104,9 +1104,9 @@
       "Burst",
       "Poke"
     ],
-    "pick_rate": 0.85,
-    "win_rate": 45.36,
-    "ban_rate": 32.84,
+    "pick_rate": 0.98,
+    "win_rate": 46.53,
+    "ban_rate": 36.78,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1124,9 +1124,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 0.45,
-    "win_rate": 47.4,
-    "ban_rate": 0.42,
+    "pick_rate": 0.69,
+    "win_rate": 48.09,
+    "ban_rate": 1.15,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1145,9 +1145,9 @@
       "Push",
       "Burst"
     ],
-    "pick_rate": 0.38,
-    "win_rate": 51.68,
-    "ban_rate": 16.26,
+    "pick_rate": 0.58,
+    "win_rate": 49.92,
+    "ban_rate": 22.74,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1167,9 +1167,9 @@
       "Damage",
       "Regen"
     ],
-    "pick_rate": 0.41,
-    "win_rate": 46.64,
-    "ban_rate": 7.14,
+    "pick_rate": 0.56,
+    "win_rate": 48.7,
+    "ban_rate": 9.18,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1187,9 +1187,9 @@
       "Chase",
       "Finisher"
     ],
-    "pick_rate": 0.61,
-    "win_rate": 41.41,
-    "ban_rate": 24.22,
+    "pick_rate": 0.76,
+    "win_rate": 47.44,
+    "ban_rate": 35.26,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1207,9 +1207,9 @@
       "Guard",
       "Initiator"
     ],
-    "pick_rate": 0.39,
-    "win_rate": 46.58,
-    "ban_rate": 0.2,
+    "pick_rate": 0.35,
+    "win_rate": 46.55,
+    "ban_rate": 0.27,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1227,9 +1227,9 @@
       "Finisher",
       "Burst"
     ],
-    "pick_rate": 1.19,
-    "win_rate": 50.13,
-    "ban_rate": 0.93,
+    "pick_rate": 1.08,
+    "win_rate": 54.44,
+    "ban_rate": 1.07,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1247,9 +1247,9 @@
       "Finisher",
       "Damage"
     ],
-    "pick_rate": 0.91,
-    "win_rate": 50.91,
-    "ban_rate": 3.44,
+    "pick_rate": 0.78,
+    "win_rate": 49.48,
+    "ban_rate": 0.88,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1268,9 +1268,9 @@
       "Charge",
       "Burst"
     ],
-    "pick_rate": 0.13,
-    "win_rate": 45.96,
-    "ban_rate": 0.04,
+    "pick_rate": 0.25,
+    "win_rate": 48.36,
+    "ban_rate": 0.15,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1289,9 +1289,9 @@
       "Support",
       "Crowd Control"
     ],
-    "pick_rate": 0.34,
-    "win_rate": 49.9,
-    "ban_rate": 1.24,
+    "pick_rate": 0.46,
+    "win_rate": 45.96,
+    "ban_rate": 1.02,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1309,9 +1309,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 0.41,
-    "win_rate": 49.75,
-    "ban_rate": 0.37,
+    "pick_rate": 0.27,
+    "win_rate": 50.88,
+    "ban_rate": 0.34,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1331,9 +1331,9 @@
       "Chase",
       "Magic Damage"
     ],
-    "pick_rate": 0.5,
-    "win_rate": 44.71,
-    "ban_rate": 0.17,
+    "pick_rate": 0.68,
+    "win_rate": 49.27,
+    "ban_rate": 0.74,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1352,9 +1352,9 @@
       "Burst",
       "Charge"
     ],
-    "pick_rate": 1.36,
-    "win_rate": 53.25,
-    "ban_rate": 15.09,
+    "pick_rate": 1.16,
+    "win_rate": 52.48,
+    "ban_rate": 8.39,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1372,9 +1372,9 @@
       "Poke",
       "Finisher"
     ],
-    "pick_rate": 1.24,
-    "win_rate": 51.53,
-    "ban_rate": 0.91,
+    "pick_rate": 0.86,
+    "win_rate": 50.99,
+    "ban_rate": 0.71,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1393,9 +1393,9 @@
       "Control",
       "Charge"
     ],
-    "pick_rate": 0.61,
-    "win_rate": 55.07,
-    "ban_rate": 23.19,
+    "pick_rate": 0.34,
+    "win_rate": 55.54,
+    "ban_rate": 6.57,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1415,8 +1415,8 @@
       "Regen"
     ],
     "pick_rate": 0.19,
-    "win_rate": 44.14,
-    "ban_rate": 0.64,
+    "win_rate": 42.36,
+    "ban_rate": 0.61,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1434,9 +1434,9 @@
       "Finisher",
       "Magic Damage"
     ],
-    "pick_rate": 0.23,
-    "win_rate": 42.88,
-    "ban_rate": 0.26,
+    "pick_rate": 0.35,
+    "win_rate": 45.03,
+    "ban_rate": 0.47,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1454,9 +1454,9 @@
       "Finisher",
       "Damage"
     ],
-    "pick_rate": 1.08,
-    "win_rate": 46.02,
-    "ban_rate": 7.59,
+    "pick_rate": 1.15,
+    "win_rate": 50.15,
+    "ban_rate": 6.37,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1475,9 +1475,9 @@
       "Damage",
       "Regen"
     ],
-    "pick_rate": 0.57,
-    "win_rate": 51.57,
-    "ban_rate": 0.82,
+    "pick_rate": 0.38,
+    "win_rate": 50.85,
+    "ban_rate": 0.55,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1495,9 +1495,9 @@
       "Initiator",
       "Crowd Control"
     ],
-    "pick_rate": 0.8,
-    "win_rate": 54.85,
-    "ban_rate": 5.49,
+    "pick_rate": 0.51,
+    "win_rate": 54.66,
+    "ban_rate": 2.14,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1517,9 +1517,9 @@
       "Damage",
       "Magic Damage"
     ],
-    "pick_rate": 1.31,
-    "win_rate": 48.74,
-    "ban_rate": 1.28,
+    "pick_rate": 1.1,
+    "win_rate": 48.19,
+    "ban_rate": 0.83,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1537,9 +1537,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 0.37,
-    "win_rate": 44.25,
-    "ban_rate": 0.11,
+    "pick_rate": 0.61,
+    "win_rate": 42.81,
+    "ban_rate": 0.27,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1557,9 +1557,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 1.02,
-    "win_rate": 49.7,
-    "ban_rate": 0.18,
+    "pick_rate": 0.8,
+    "win_rate": 49.01,
+    "ban_rate": 0.32,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1577,9 +1577,9 @@
       "Finisher",
       "Damage"
     ],
-    "pick_rate": 0.19,
-    "win_rate": 42.05,
-    "ban_rate": 0.14,
+    "pick_rate": 0.45,
+    "win_rate": 46.69,
+    "ban_rate": 0.47,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1597,9 +1597,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 1.23,
-    "win_rate": 48.48,
-    "ban_rate": 11.61,
+    "pick_rate": 0.76,
+    "win_rate": 50.51,
+    "ban_rate": 4.01,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1618,9 +1618,9 @@
       "Finisher",
       "Burst"
     ],
-    "pick_rate": 1.12,
-    "win_rate": 47.09,
-    "ban_rate": 4.78,
+    "pick_rate": 1.67,
+    "win_rate": 48.52,
+    "ban_rate": 7.72,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1638,9 +1638,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 0.96,
-    "win_rate": 53.31,
-    "ban_rate": 2.35,
+    "pick_rate": 1.17,
+    "win_rate": 52.08,
+    "ban_rate": 4.94,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1660,8 +1660,8 @@
       "Crowd Control"
     ],
     "pick_rate": 0.1,
-    "win_rate": 53.77,
-    "ban_rate": 0.42,
+    "win_rate": 54.81,
+    "ban_rate": 0.31,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1680,9 +1680,9 @@
       "Regen",
       "Damage"
     ],
-    "pick_rate": 1.04,
-    "win_rate": 54.51,
-    "ban_rate": 4.99,
+    "pick_rate": 0.56,
+    "win_rate": 53.19,
+    "ban_rate": 1.53,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1700,9 +1700,9 @@
       "Burst",
       "Damage"
     ],
-    "pick_rate": 0.66,
-    "win_rate": 48.89,
-    "ban_rate": 0.17,
+    "pick_rate": 0.45,
+    "win_rate": 49.03,
+    "ban_rate": 0.2,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1720,9 +1720,9 @@
       "Support",
       "Crowd Control"
     ],
-    "pick_rate": 0.14,
-    "win_rate": 47.87,
-    "ban_rate": 0.03,
+    "pick_rate": 0.17,
+    "win_rate": 46.72,
+    "ban_rate": 0.05,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1740,9 +1740,9 @@
       "Push",
       "Damage"
     ],
-    "pick_rate": 0.62,
-    "win_rate": 47.01,
-    "ban_rate": 0.14,
+    "pick_rate": 0.67,
+    "win_rate": 47.21,
+    "ban_rate": 0.32,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1760,9 +1760,9 @@
       "Crowd Control",
       "Support"
     ],
-    "pick_rate": 0.49,
-    "win_rate": 61.32,
-    "ban_rate": 82.2,
+    "pick_rate": 0.4,
+    "win_rate": 58.16,
+    "ban_rate": 54.09,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1781,9 +1781,9 @@
       "Finisher",
       "Charge"
     ],
-    "pick_rate": 0.32,
-    "win_rate": 44.76,
-    "ban_rate": 0.11,
+    "pick_rate": 0.39,
+    "win_rate": 47.15,
+    "ban_rate": 0.2,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1802,9 +1802,9 @@
       "Push",
       "Damage"
     ],
-    "pick_rate": 0.44,
-    "win_rate": 57.23,
-    "ban_rate": 4.25,
+    "pick_rate": 0.18,
+    "win_rate": 58.42,
+    "ban_rate": 0.66,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1823,9 +1823,9 @@
       "Initiator",
       "Guard"
     ],
-    "pick_rate": 0.84,
-    "win_rate": 51.03,
-    "ban_rate": 5.46,
+    "pick_rate": 0.45,
+    "win_rate": 47.74,
+    "ban_rate": 3.03,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1843,9 +1843,9 @@
       "Finisher",
       "Damage"
     ],
-    "pick_rate": 0.41,
-    "win_rate": 49.69,
-    "ban_rate": 0.33,
+    "pick_rate": 0.5,
+    "win_rate": 52.05,
+    "ban_rate": 0.48,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1863,9 +1863,9 @@
     "speciality": [
       "Crowd Control"
     ],
-    "pick_rate": 1.05,
-    "win_rate": 53.25,
-    "ban_rate": 8.12,
+    "pick_rate": 0.75,
+    "win_rate": 54.87,
+    "ban_rate": 4.11,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1884,9 +1884,9 @@
       "Initiator",
       "Crowd Control"
     ],
-    "pick_rate": 0.5,
-    "win_rate": 45.61,
-    "ban_rate": 7.45,
+    "pick_rate": 0.68,
+    "win_rate": 50.34,
+    "ban_rate": 19.31,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1904,9 +1904,9 @@
       "Finisher",
       "Damage"
     ],
-    "pick_rate": 1.12,
-    "win_rate": 49.2,
-    "ban_rate": 2.49,
+    "pick_rate": 1.72,
+    "win_rate": 52.52,
+    "ban_rate": 6.52,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1924,9 +1924,9 @@
       "Finisher",
       "Chase"
     ],
-    "pick_rate": 1.28,
-    "win_rate": 52.33,
-    "ban_rate": 0.35,
+    "pick_rate": 1.12,
+    "win_rate": 51.96,
+    "ban_rate": 0.22,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1944,9 +1944,9 @@
       "Poke",
       "Burst"
     ],
-    "pick_rate": 0.31,
-    "win_rate": 38.06,
-    "ban_rate": 0.18,
+    "pick_rate": 0.8,
+    "win_rate": 44.28,
+    "ban_rate": 0.97,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1965,9 +1965,9 @@
       "Chase",
       "Finisher"
     ],
-    "pick_rate": 0.13,
-    "win_rate": 55.81,
-    "ban_rate": 0.32,
+    "pick_rate": 0.19,
+    "win_rate": 52.05,
+    "ban_rate": 1.05,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -1985,9 +1985,9 @@
       "Burst",
       "Magic Damage"
     ],
-    "pick_rate": 0.58,
-    "win_rate": 48.37,
-    "ban_rate": 0.24,
+    "pick_rate": 0.49,
+    "win_rate": 49.85,
+    "ban_rate": 0.21,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2005,9 +2005,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 0.31,
-    "win_rate": 51.33,
-    "ban_rate": 0.08,
+    "pick_rate": 0.22,
+    "win_rate": 49.36,
+    "ban_rate": 0.1,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2025,9 +2025,9 @@
       "Burst",
       "Poke"
     ],
-    "pick_rate": 0.51,
-    "win_rate": 46.38,
-    "ban_rate": 0.43,
+    "pick_rate": 0.7,
+    "win_rate": 47.73,
+    "ban_rate": 0.75,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2046,8 +2046,8 @@
       "Damage"
     ],
     "pick_rate": 0.8,
-    "win_rate": 48.88,
-    "ban_rate": 0.5,
+    "win_rate": 50.72,
+    "ban_rate": 0.91,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2065,9 +2065,9 @@
       "Burst",
       "Poke"
     ],
-    "pick_rate": 0.8,
-    "win_rate": 56.1,
-    "ban_rate": 3.98,
+    "pick_rate": 0.54,
+    "win_rate": 50.99,
+    "ban_rate": 0.3,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2086,9 +2086,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 1.9,
-    "win_rate": 52.24,
-    "ban_rate": 74.13,
+    "pick_rate": 1.46,
+    "win_rate": 52.76,
+    "ban_rate": 79.04,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2106,9 +2106,9 @@
       "Burst",
       "Poke"
     ],
-    "pick_rate": 0.43,
-    "win_rate": 48.25,
-    "ban_rate": 0.05,
+    "pick_rate": 0.45,
+    "win_rate": 47.29,
+    "ban_rate": 0.09,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2126,9 +2126,9 @@
       "Regen",
       "Damage"
     ],
-    "pick_rate": 1.2,
-    "win_rate": 52.55,
-    "ban_rate": 13.84,
+    "pick_rate": 0.7,
+    "win_rate": 49.42,
+    "ban_rate": 3.49,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2147,9 +2147,9 @@
       "Push",
       "Burst"
     ],
-    "pick_rate": 0.16,
-    "win_rate": 52.27,
-    "ban_rate": 0.04,
+    "pick_rate": 0.19,
+    "win_rate": 51.04,
+    "ban_rate": 0.1,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2167,9 +2167,9 @@
       "Regen",
       "Guard"
     ],
-    "pick_rate": 0.32,
-    "win_rate": 54.1,
-    "ban_rate": 0.57,
+    "pick_rate": 0.47,
+    "win_rate": 55.76,
+    "ban_rate": 1.94,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2188,9 +2188,9 @@
       "Finisher",
       "Burst"
     ],
-    "pick_rate": 0.14,
-    "win_rate": 43.47,
-    "ban_rate": 0.02,
+    "pick_rate": 0.52,
+    "win_rate": 46.31,
+    "ban_rate": 0.18,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2208,9 +2208,9 @@
       "Crowd Control",
       "Regen"
     ],
-    "pick_rate": 1.86,
-    "win_rate": 50.09,
-    "ban_rate": 10.86,
+    "pick_rate": 1.13,
+    "win_rate": 49.97,
+    "ban_rate": 4.94,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2229,9 +2229,9 @@
       "Charge",
       "Finisher"
     ],
-    "pick_rate": 0.36,
-    "win_rate": 48.13,
-    "ban_rate": 3.4,
+    "pick_rate": 0.57,
+    "win_rate": 51.31,
+    "ban_rate": 15.1,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2251,9 +2251,9 @@
       "Initiator",
       "Finisher"
     ],
-    "pick_rate": 0.98,
-    "win_rate": 52.08,
-    "ban_rate": 3.49,
+    "pick_rate": 1.08,
+    "win_rate": 48.98,
+    "ban_rate": 2.98,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2271,9 +2271,9 @@
       "Initiator",
       "Magic Damage"
     ],
-    "pick_rate": 0.26,
-    "win_rate": 43.85,
-    "ban_rate": 0.13,
+    "pick_rate": 0.65,
+    "win_rate": 50.03,
+    "ban_rate": 1.05,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2292,9 +2292,9 @@
       "Charge",
       "Burst"
     ],
-    "pick_rate": 1.51,
-    "win_rate": 47.81,
-    "ban_rate": 12.86,
+    "pick_rate": 1.3,
+    "win_rate": 50.09,
+    "ban_rate": 24.08,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2313,9 +2313,9 @@
       "Push",
       "Damage"
     ],
-    "pick_rate": 0.75,
-    "win_rate": 44.7,
-    "ban_rate": 22.4,
+    "pick_rate": 1.32,
+    "win_rate": 51.36,
+    "ban_rate": 51.06,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2334,9 +2334,9 @@
       "Chase",
       "Burst"
     ],
-    "pick_rate": 2.17,
-    "win_rate": 47.65,
-    "ban_rate": 27.49,
+    "pick_rate": 1.71,
+    "win_rate": 49.26,
+    "ban_rate": 18.35,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2355,9 +2355,9 @@
       "Burst",
       "Crowd Control"
     ],
-    "pick_rate": 0.43,
-    "win_rate": 48.55,
-    "ban_rate": 0.07,
+    "pick_rate": 0.54,
+    "win_rate": 50.83,
+    "ban_rate": 0.24,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2375,9 +2375,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 0.43,
-    "win_rate": 46.69,
-    "ban_rate": 0.33,
+    "pick_rate": 0.58,
+    "win_rate": 48.78,
+    "ban_rate": 0.8,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2394,9 +2394,9 @@
     "speciality": [
       "Crowd Control"
     ],
-    "pick_rate": 0.81,
-    "win_rate": 40.73,
-    "ban_rate": 1.16,
+    "pick_rate": 1.52,
+    "win_rate": 43.02,
+    "ban_rate": 4.57,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2413,9 +2413,9 @@
     "speciality": [
       "Regen"
     ],
-    "pick_rate": 0.39,
-    "win_rate": 49.81,
-    "ban_rate": 0.16,
+    "pick_rate": 0.41,
+    "win_rate": 49.72,
+    "ban_rate": 0.5,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2433,9 +2433,9 @@
       "Burst",
       "Crowd Control"
     ],
-    "pick_rate": 0.15,
-    "win_rate": 42.58,
-    "ban_rate": 0.02,
+    "pick_rate": 0.3,
+    "win_rate": 48.48,
+    "ban_rate": 0.07,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2453,9 +2453,9 @@
       "Burst",
       "Finisher"
     ],
-    "pick_rate": 0.52,
-    "win_rate": 51.59,
-    "ban_rate": 0.35,
+    "pick_rate": 0.28,
+    "win_rate": 45.48,
+    "ban_rate": 0.2,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2473,9 +2473,9 @@
       "Damage",
       "Guard"
     ],
-    "pick_rate": 0.68,
-    "win_rate": 46.69,
-    "ban_rate": 1.34,
+    "pick_rate": 0.93,
+    "win_rate": 51.45,
+    "ban_rate": 2.58,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2493,9 +2493,9 @@
       "Poke",
       "Control"
     ],
-    "pick_rate": 0.71,
-    "win_rate": 44.83,
-    "ban_rate": 0.14,
+    "pick_rate": 1.26,
+    "win_rate": 48.69,
+    "ban_rate": 0.55,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2513,9 +2513,9 @@
       "Finisher",
       "Burst"
     ],
-    "pick_rate": 0.12,
-    "win_rate": 46.41,
-    "ban_rate": 0.04,
+    "pick_rate": 0.17,
+    "win_rate": 48.41,
+    "ban_rate": 0.1,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2533,9 +2533,9 @@
       "Regen",
       "Burst"
     ],
-    "pick_rate": 0.34,
-    "win_rate": 43.46,
-    "ban_rate": 0.43,
+    "pick_rate": 0.58,
+    "win_rate": 49.26,
+    "ban_rate": 1.62,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2553,9 +2553,9 @@
       "Damage",
       "Burst"
     ],
-    "pick_rate": 0.49,
-    "win_rate": 44.86,
-    "ban_rate": 0.03,
+    "pick_rate": 0.6,
+    "win_rate": 49.09,
+    "ban_rate": 0.08,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2574,9 +2574,9 @@
       "Finisher",
       "Chase"
     ],
-    "pick_rate": 2.79,
-    "win_rate": 53.11,
-    "ban_rate": 16.08,
+    "pick_rate": 2.27,
+    "win_rate": 51.07,
+    "ban_rate": 13.35,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2597,8 +2597,8 @@
       "Control"
     ],
     "pick_rate": 0.27,
-    "win_rate": 47.83,
-    "ban_rate": 0.73,
+    "win_rate": 47.94,
+    "ban_rate": 0.96,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2616,9 +2616,9 @@
       "Regen",
       "Damage"
     ],
-    "pick_rate": 1.17,
-    "win_rate": 49.74,
-    "ban_rate": 0.73,
+    "pick_rate": 1.04,
+    "win_rate": 49.91,
+    "ban_rate": 0.9,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2636,9 +2636,9 @@
       "Poke",
       "Burst"
     ],
-    "pick_rate": 0.65,
-    "win_rate": 52.73,
-    "ban_rate": 0.25,
+    "pick_rate": 0.24,
+    "win_rate": 52.44,
+    "ban_rate": 0.09,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2656,9 +2656,9 @@
       "Damage",
       "Crowd Control"
     ],
-    "pick_rate": 2.41,
-    "win_rate": 46.78,
-    "ban_rate": 7.56,
+    "pick_rate": 2.53,
+    "win_rate": 49.9,
+    "ban_rate": 17.72,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2676,9 +2676,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 0.27,
-    "win_rate": 47.72,
-    "ban_rate": 0.07,
+    "pick_rate": 0.34,
+    "win_rate": 50.03,
+    "ban_rate": 0.2,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2696,9 +2696,9 @@
       "Damage",
       "Crowd Control"
     ],
-    "pick_rate": 1.54,
-    "win_rate": 53.19,
-    "ban_rate": 56.47,
+    "pick_rate": 0.83,
+    "win_rate": 50.38,
+    "ban_rate": 21.32,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   },
@@ -2717,9 +2717,9 @@
       "Chase",
       "Damage"
     ],
-    "pick_rate": 0.09,
-    "win_rate": 43,
-    "ban_rate": 0.11,
+    "pick_rate": 0.3,
+    "win_rate": 44.62,
+    "ban_rate": 0.3,
     "rank_name": "Mythic",
     "timeframe_name": "Past 1 day"
   }

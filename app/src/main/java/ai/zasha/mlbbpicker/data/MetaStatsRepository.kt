@@ -21,10 +21,22 @@ class MetaStatsRepository(private val context: Context) {
     private val cacheFileName = "meta_stats_cache.json"
     private val cacheMaxAgeMs = 6 * 60 * 60 * 1000L // 6 hours
 
-    /** Offline fallback from bundled asset */
-    val offlineStats: List<HeroMetaStats> by lazy {
-        try {
-            val jsonText = context.assets.open("meta_stats.json").bufferedReader().use { it.readText() }
+    private var _offlineStats: List<HeroMetaStats>? = null
+    val offlineStats: List<HeroMetaStats>
+        get() {
+            if (_offlineStats == null) {
+                _offlineStats = loadOfflineStats()
+            }
+            return _offlineStats!!
+        }
+
+    fun reload() {
+        _offlineStats = null
+    }
+
+    private fun loadOfflineStats(): List<HeroMetaStats> {
+        return try {
+            val jsonText = DataPatchManager.getLocalFileText(context, "meta_stats.json")
             json.decodeFromString<List<HeroMetaStats>>(jsonText)
         } catch (e: Exception) {
             Log.e(tag, "Failed to load meta_stats.json asset", e)
