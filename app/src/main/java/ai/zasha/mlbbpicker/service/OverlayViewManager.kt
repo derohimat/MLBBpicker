@@ -1166,24 +1166,12 @@ private fun BuildCard(build: HeroBuild) {
         ) {
             build.items.forEachIndexed { idx, item ->
                 if (idx < 6) {
-                    Box(
+                    ai.zasha.mlbbpicker.ui.components.ItemIcon(
+                        itemName = item,
                         modifier = Modifier
                             .weight(1f)
-                            .background(Color(0xFF0F172A), RoundedCornerShape(4.dp))
-                            .border(0.5.dp, Color(0xFF475569), RoundedCornerShape(4.dp))
-                            .padding(horizontal = 2.dp, vertical = 4.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = item,
-                            color = Color.White,
-                            fontSize = 7.sp,
-                            textAlign = TextAlign.Center,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                            lineHeight = 9.sp
-                        )
-                    }
+                            .height(34.dp)
+                    )
                 }
             }
         }

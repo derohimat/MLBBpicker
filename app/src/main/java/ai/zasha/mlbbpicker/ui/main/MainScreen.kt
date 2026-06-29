@@ -39,11 +39,24 @@ import ai.zasha.mlbbpicker.data.HeroRepository
 import ai.zasha.mlbbpicker.data.BuildRepository
 import ai.zasha.mlbbpicker.data.HeroBuild
 import ai.zasha.mlbbpicker.data.HeroMetaStats
+import ai.zasha.mlbbpicker.data.DraftManager
+import ai.zasha.mlbbpicker.data.SoloQueueManager
+import ai.zasha.mlbbpicker.data.SoloHeroRank
+import ai.zasha.mlbbpicker.data.PremiumManager
+import ai.zasha.mlbbpicker.data.PremiumFeature
+import ai.zasha.mlbbpicker.data.MetaStatsRepository
+import ai.zasha.mlbbpicker.service.OverlayPanelContent
 import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 
 @Composable
 fun MainScreen(
@@ -59,7 +72,12 @@ fun MainScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var searchQuery by remember { mutableStateOf("") }
     var selectedHeroDetails by remember { mutableStateOf<Hero?>(null) }
-    var activeTab by remember { mutableStateOf(0) } // 0 = Dashboard, 1 = Hero Wiki, 2 = Meta
+    var activeTab by remember { mutableStateOf(0) } // 0=Settings, 1=Draft, 2=Solo, 3=Heroes, 4=Meta
+    val context = LocalContext.current
+    val heroRepository = remember { HeroRepository(context) }
+    val buildRepository = remember { BuildRepository(context) }
+    val metaStatsRepository = remember { MetaStatsRepository(context) }
+    val isPremium by PremiumManager.isPremium.collectAsState()
 
     val filteredHeroes = remember(searchQuery, state.heroes) {
         if (searchQuery.isBlank()) {
@@ -78,8 +96,8 @@ fun MainScreen(
                 NavigationBarItem(
                     selected = activeTab == 0,
                     onClick = { activeTab = 0 },
-                    icon = { Icon(Icons.Default.Settings, contentDescription = "Dashboard") },
-                    label = { Text("Settings") },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+                    label = { Text("Settings", fontSize = 10.sp) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color(0xFFD4AF37),
                         selectedTextColor = Color(0xFFD4AF37),
@@ -91,8 +109,13 @@ fun MainScreen(
                 NavigationBarItem(
                     selected = activeTab == 1,
                     onClick = { activeTab = 1 },
-                    icon = { Icon(Icons.Default.Info, contentDescription = "Hero Wiki") },
-                    label = { Text("Heroes") },
+                    icon = {
+                        Icon(
+                            Icons.Default.CheckCircle,
+                            contentDescription = "Draft"
+                        )
+                    },
+                    label = { Text("Draft", fontSize = 10.sp) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color(0xFFD4AF37),
                         selectedTextColor = Color(0xFFD4AF37),
@@ -104,8 +127,44 @@ fun MainScreen(
                 NavigationBarItem(
                     selected = activeTab == 2,
                     onClick = { activeTab = 2 },
-                    icon = { Icon(Icons.Default.CheckCircle, contentDescription = "Meta Stats") },
-                    label = { Text("Meta") },
+                    icon = {
+                        Icon(
+                            Icons.Default.Star,
+                            contentDescription = "Solo Queue"
+                        )
+                    },
+                    label = { Text("Solo", fontSize = 10.sp) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color(0xFFD4AF37),
+                        selectedTextColor = Color(0xFFD4AF37),
+                        unselectedIconColor = Color(0xFF94A3B8),
+                        unselectedTextColor = Color(0xFF94A3B8),
+                        indicatorColor = Color(0xFF334155)
+                    )
+                )
+                NavigationBarItem(
+                    selected = activeTab == 3,
+                    onClick = { activeTab = 3 },
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Hero Wiki") },
+                    label = { Text("Heroes", fontSize = 10.sp) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color(0xFFD4AF37),
+                        selectedTextColor = Color(0xFFD4AF37),
+                        unselectedIconColor = Color(0xFF94A3B8),
+                        unselectedTextColor = Color(0xFF94A3B8),
+                        indicatorColor = Color(0xFF334155)
+                    )
+                )
+                NavigationBarItem(
+                    selected = activeTab == 4,
+                    onClick = { activeTab = 4 },
+                    icon = {
+                        Icon(
+                            Icons.Default.Search,
+                            contentDescription = "Meta Stats"
+                        )
+                    },
+                    label = { Text("Meta", fontSize = 10.sp) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = Color(0xFFD4AF37),
                         selectedTextColor = Color(0xFFD4AF37),
@@ -379,7 +438,98 @@ fun MainScreen(
                     }
                 }
                 1 -> {
+                    // Full-Screen Draft Assistant
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        OverlayPanelContent(
+                            heroes = state.heroes,
+                            selectedEnemies = DraftManager.selectedEnemies,
+                            selectedAllies = DraftManager.selectedAllies,
+                            counterSuggestions = DraftManager.counterSuggestions,
+                            synergySuggestions = DraftManager.synergySuggestions,
+                            metaStats = state.metaStats,
+                            banRecommendations = DraftManager.banRecommendations,
+                            buildRepository = buildRepository,
+                            isFullScreen = true,
+                            onCollapse = { /* no-op in full screen */ },
+                            onClearAll = {
+                                DraftManager.clear()
+                            },
+                            onUpdateRecommendations = {
+                                DraftManager.updateRecommendations(
+                                    kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main),
+                                    heroRepository,
+                                    state.metaStats
+                                )
+                            },
+                            onSwapSlots = { fromType, fromIdx, toType, toIdx ->
+                                DraftManager.swapSlots(fromType, fromIdx, toType, toIdx)
+                                DraftManager.updateRecommendations(
+                                    kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main),
+                                    heroRepository,
+                                    state.metaStats
+                                )
+                            },
+                            onSelectHero = { type, index, hero ->
+                                val list = if (type == "enemy") DraftManager.selectedEnemies else DraftManager.selectedAllies
+                                list[index] = hero
+                                DraftManager.updateRecommendations(
+                                    kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main),
+                                    heroRepository,
+                                    state.metaStats
+                                )
+                            },
+                            onDismiss = { /* no-op in full screen */ }
+                        )
+
+                        // Premium lock overlay
+                        if (!isPremium) {
+                            PremiumLockOverlay(
+                                featureName = "Full-Screen Draft Assistant",
+                                onUpgradeClick = { activeTab = 0 }
+                            )
+                        }
+                    }
+                }
+                2 -> {
+                    // Solo Queue Tab
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        SoloQueueScreen(
+                            heroes = state.heroes,
+                            metaStats = state.metaStats,
+                            buildRepository = buildRepository
+                        )
+
+                        // Premium lock overlay
+                        if (!isPremium) {
+                            PremiumLockOverlay(
+                                featureName = "Solo Queue Recommendations",
+                                onUpgradeClick = { activeTab = 0 }
+                            )
+                        }
+                    }
+                }
+                3 -> {
                     // Hero Database / Wiki Tab
+                    var heroRoleFilter by remember { mutableStateOf<String?>(null) }
+                    var heroSortBy by remember { mutableStateOf("Name") }
+                    var sortExpanded by remember { mutableStateOf(false) }
+
+                    val sortedFilteredHeroes = remember(filteredHeroes, heroRoleFilter, heroSortBy, state.metaStats) {
+                        var list = if (heroRoleFilter != null) {
+                            filteredHeroes.filter { it.roleList.any { r -> r.equals(heroRoleFilter, true) } }
+                        } else {
+                            filteredHeroes
+                        }
+                        val statsMap = state.metaStats.associateBy { it.heroId }
+                        when (heroSortBy) {
+                            "Name" -> list.sortedBy { it.hero_name }
+                            "Win Rate" -> list.sortedByDescending { statsMap[it.id]?.winRate ?: 0.0 }
+                            "Pick Rate" -> list.sortedByDescending { statsMap[it.id]?.pickRate ?: 0.0 }
+                            "Ban Rate" -> list.sortedByDescending { statsMap[it.id]?.banRate ?: 0.0 }
+                            else -> list
+                        }
+                    }
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -405,7 +555,102 @@ fun MainScreen(
                             shape = RoundedCornerShape(10.dp)
                         )
 
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // Role Filter Chips
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            val roles = listOf(null to "All", "Fighter" to "Fighter", "Tank" to "Tank", "Mage" to "Mage", "Marksman" to "MM", "Assassin" to "Assassin", "Support" to "Support")
+                            roles.forEach { (role, label) ->
+                                val isSelected = heroRoleFilter == role
+                                Box(
+                                    modifier = Modifier
+                                        .background(
+                                            if (isSelected) Color(0xFFD4AF37) else Color(0xFF1E293B),
+                                            RoundedCornerShape(16.dp)
+                                        )
+                                        .border(
+                                            1.dp,
+                                            if (isSelected) Color(0xFFD4AF37) else Color(0xFF334155),
+                                            RoundedCornerShape(16.dp)
+                                        )
+                                        .clickable { heroRoleFilter = role }
+                                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                                ) {
+                                    Text(
+                                        text = label,
+                                        color = if (isSelected) Color.Black else Color(0xFF94A3B8),
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        // Sort Row
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "${sortedFilteredHeroes.size} heroes",
+                                color = Color(0xFF64748B),
+                                fontSize = 11.sp
+                            )
+                            Box {
+                                Row(
+                                    modifier = Modifier
+                                        .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+                                        .border(1.dp, Color(0xFF334155), RoundedCornerShape(8.dp))
+                                        .clickable { sortExpanded = true }
+                                        .padding(horizontal = 10.dp, vertical = 6.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "Sort: $heroSortBy",
+                                        color = Color(0xFFCBD5E1),
+                                        fontSize = 11.sp
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Icon(
+                                        Icons.Default.KeyboardArrowDown,
+                                        contentDescription = null,
+                                        tint = Color(0xFF94A3B8),
+                                        modifier = Modifier.size(14.dp)
+                                    )
+                                }
+                                DropdownMenu(
+                                    expanded = sortExpanded,
+                                    onDismissRequest = { sortExpanded = false },
+                                    containerColor = Color(0xFF1E293B)
+                                ) {
+                                    listOf("Name", "Win Rate", "Pick Rate", "Ban Rate").forEach { option ->
+                                        DropdownMenuItem(
+                                            text = {
+                                                Text(
+                                                    option,
+                                                    color = if (heroSortBy == option) Color(0xFFD4AF37) else Color.White,
+                                                    fontSize = 13.sp
+                                                )
+                                            },
+                                            onClick = {
+                                                heroSortBy = option
+                                                sortExpanded = false
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         LazyVerticalGrid(
                             columns = GridCells.Fixed(4),
@@ -413,7 +658,7 @@ fun MainScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            items(filteredHeroes) { hero ->
+                            items(sortedFilteredHeroes) { hero ->
                                 Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -462,12 +707,28 @@ fun MainScreen(
                                         overflow = TextOverflow.Ellipsis,
                                         textAlign = TextAlign.Center
                                     )
+                                    // Show sort metric below name
+                                    if (heroSortBy != "Name" && winStats != null) {
+                                        val metricText = when (heroSortBy) {
+                                            "Win Rate" -> "${String.format("%.1f", winStats.winRate)}%"
+                                            "Pick Rate" -> "${String.format("%.1f", winStats.pickRate)}%"
+                                            "Ban Rate" -> "${String.format("%.1f", winStats.banRate)}%"
+                                            else -> ""
+                                        }
+                                        if (metricText.isNotEmpty()) {
+                                            Text(
+                                                text = metricText,
+                                                color = Color(0xFF94A3B8),
+                                                fontSize = 8.sp
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                2 -> {
+                4 -> {
                     MetaStatsTabContent(
                         metaStats = state.metaStats,
                         onHeroClick = { selectedHeroDetails = it },
@@ -648,24 +909,12 @@ fun MainScreen(
                                     ) {
                                         build.items.forEachIndexed { idx, item ->
                                             if (idx < 6) {
-                                                Box(
+                                                ai.zasha.mlbbpicker.ui.components.ItemIcon(
+                                                    itemName = item,
                                                     modifier = Modifier
                                                         .weight(1f)
-                                                        .background(Color(0xFF0F172A), RoundedCornerShape(4.dp))
-                                                        .border(0.5.dp, Color(0xFF475569), RoundedCornerShape(4.dp))
-                                                        .padding(horizontal = 2.dp, vertical = 4.dp),
-                                                    contentAlignment = Alignment.Center
-                                                ) {
-                                                    Text(
-                                                        text = item,
-                                                        color = Color.White,
-                                                        fontSize = 7.sp,
-                                                        textAlign = TextAlign.Center,
-                                                        maxLines = 2,
-                                                        overflow = TextOverflow.Ellipsis,
-                                                        lineHeight = 8.sp
-                                                    )
-                                                }
+                                                        .height(38.dp)
+                                                )
                                             }
                                         }
                                     }
@@ -981,3 +1230,312 @@ private fun StatBox(label: String, value: String, color: Color) {
         Text(text = value, color = color, fontSize = 11.sp, fontWeight = FontWeight.Bold)
     }
 }
+
+// ─── Premium Gating UI ────────────────────────────────────────────────────────
+
+@Composable
+fun PremiumLockOverlay(
+    featureName: String,
+    onUpgradeClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xE60F172A)), // Semi-transparent dark background
+        contentAlignment = Alignment.Center
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.85f)
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+            border = BorderStroke(1.dp, Color(0xFFD4AF37)),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(64.dp)
+                        .background(Color(0xFFD4AF37).copy(alpha = 0.1f), CircleShape)
+                        .border(1.5.dp, Color(0xFFD4AF37), CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Locked Feature",
+                        tint = Color(0xFFD4AF37),
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+
+                Text(
+                    text = "Unlock Pro Feature",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = "$featureName is gated under MLBB Picker Pro.",
+                    color = Color(0xFF94A3B8),
+                    fontSize = 12.sp,
+                    textAlign = TextAlign.Center
+                )
+
+                Button(
+                    onClick = onUpgradeClick,
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD4AF37)),
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Upgrade to Pro",
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+    }
+}
+
+// ─── Solo Queue Recommendations Screen ────────────────────────────────────────
+
+@Composable
+fun SoloQueueScreen(
+    heroes: List<Hero>,
+    metaStats: List<HeroMetaStats>,
+    buildRepository: BuildRepository
+) {
+    var selectedRole by remember { mutableStateOf<String?>(null) }
+    val rankedHeroes = remember(heroes, metaStats, selectedRole) {
+        val ranked = SoloQueueManager.computeSoloRankings(heroes, metaStats, buildRepository)
+        if (selectedRole != null) {
+            ranked.filter { it.role.any { r -> r.equals(selectedRole, true) } }
+        } else {
+            ranked
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(12.dp)
+    ) {
+        // Mode Header
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+            border = BorderStroke(1.dp, Color(0xFF334155)),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Solo Queue Rankings",
+                    color = Color(0xFFD4AF37),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Ranked by carry index based on Win Rate, Pick Rate, and solo carry role weightings.",
+                    color = Color(0xFF94A3B8),
+                    fontSize = 11.sp
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Role Filters
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            val roles = listOf(null to "All", "Fighter" to "Fighter", "Tank" to "Tank", "Mage" to "Mage", "Marksman" to "MM", "Assassin" to "Assassin", "Support" to "Support")
+            roles.forEach { (role, label) ->
+                val isSelected = selectedRole == role
+                Box(
+                    modifier = Modifier
+                        .background(
+                            if (isSelected) Color(0xFFD4AF37) else Color(0xFF1E293B),
+                            RoundedCornerShape(16.dp)
+                        )
+                        .border(
+                            1.dp,
+                            if (isSelected) Color(0xFFD4AF37) else Color(0xFF334155),
+                            RoundedCornerShape(16.dp)
+                        )
+                        .clickable { selectedRole = role }
+                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                ) {
+                    Text(
+                        text = label,
+                        color = if (isSelected) Color.Black else Color(0xFF94A3B8),
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // List
+        if (rankedHeroes.isEmpty()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("No data available", color = Color(0xFF64748B))
+            }
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(rankedHeroes) { rank ->
+                    SoloHeroCard(rank = rank)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SoloHeroCard(rank: SoloHeroRank) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded },
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+        border = BorderStroke(
+            1.dp,
+            when (rank.tier) {
+                "S" -> Color(0xFFEF4444)
+                "A" -> Color(0xFFF59E0B)
+                "B" -> Color(0xFF3B82F6)
+                else -> Color(0xFF334155)
+            }
+        ),
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Column(modifier = Modifier.padding(10.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Tier Badge
+                Box(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .background(
+                            when (rank.tier) {
+                                "S" -> Color(0xFFEF4444)
+                                "A" -> Color(0xFFF59E0B)
+                                "B" -> Color(0xFF3B82F6)
+                                else -> Color(0xFF64748B)
+                            },
+                            RoundedCornerShape(6.dp)
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = rank.tier,
+                        color = Color.White,
+                        fontWeight = FontWeight.Black,
+                        fontSize = 18.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                // Hero Avatar
+                AsyncImage(
+                    model = rank.imgSrc,
+                    contentDescription = rank.heroName,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .border(1.dp, Color(0xFF334155), CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                // Info
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = rank.heroName,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                    Text(
+                        text = rank.role.joinToString(" / "),
+                        color = Color(0xFFD4AF37),
+                        fontSize = 10.sp
+                    )
+                }
+
+                // Stats
+                Column(horizontalAlignment = Alignment.End) {
+                    Text(
+                        text = "WR: ${String.format("%.1f", rank.winRate)}%",
+                        color = if (rank.winRate >= 50) Color(0xFF10B981) else Color(0xFFEF4444),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 11.sp
+                    )
+                    Text(
+                        text = "Score: ${String.format("%.1f", rank.soloScore)}",
+                        color = Color(0xFFCBD5E1),
+                        fontSize = 10.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(6.dp))
+
+                Icon(
+                    imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    tint = Color(0xFF94A3B8)
+                )
+            }
+
+            // Expanded Best Build Info
+            if (expanded && rank.topBuild != null) {
+                Spacer(modifier = Modifier.height(10.dp))
+                HorizontalDivider(color = Color(0xFF334155))
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Best Solo Build: ${rank.topBuild.title}",
+                    color = Color(0xFFD4AF37),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 11.sp
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                // Items Row
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    rank.topBuild.items.take(6).forEach { item ->
+                        ai.zasha.mlbbpicker.ui.components.ItemIcon(
+                            itemName = item,
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(36.dp)
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
