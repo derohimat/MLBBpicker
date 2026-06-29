@@ -42,7 +42,7 @@ class FloatingOverlayService : Service() {
         startForeground(notificationId, createNotification())
 
         // Show overlay immediately on manual start
-        overlayViewManager.showOverlay()
+        overlayViewManager.showOverlay(byUserTrigger = true)
 
         // Start checking for MLBB in foreground
         startForegroundAppTracking()

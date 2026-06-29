@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -118,6 +119,8 @@ class OverlayViewManager(private val context: Context) {
     private var bubbleX = 100
     private var bubbleY = 300
 
+    var isManuallyDismissed = false
+
     // Delegate draft state to central DraftManager
     private val selectedEnemies get() = DraftManager.selectedEnemies
     private val selectedAllies get() = DraftManager.selectedAllies
@@ -142,7 +145,11 @@ class OverlayViewManager(private val context: Context) {
         }
     }
 
-    fun showOverlay() {
+    fun showOverlay(byUserTrigger: Boolean = false) {
+        if (byUserTrigger) {
+            isManuallyDismissed = false
+        }
+        if (isManuallyDismissed) return
         if (isShowing) return
         isShowing = true
         
@@ -169,7 +176,10 @@ class OverlayViewManager(private val context: Context) {
         }
     }
 
-    fun hideOverlay() {
+    fun hideOverlay(manually: Boolean = false) {
+        if (manually) {
+            isManuallyDismissed = true
+        }
         if (!isShowing) return
         isShowing = false
         removeBubble()
@@ -250,7 +260,7 @@ class OverlayViewManager(private val context: Context) {
             private val longPressRunnable = Runnable {
                 isLongPressed = true
                 android.widget.Toast.makeText(context, "Draft Assistant dismissed", android.widget.Toast.LENGTH_SHORT).show()
-                hideOverlay()
+                hideOverlay(manually = true)
             }
 
             override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -348,7 +358,7 @@ class OverlayViewManager(private val context: Context) {
                             updateRecommendations()
                         },
                         onDismiss = {
-                            hideOverlay()
+                            hideOverlay(manually = true)
                         }
                     )
                 }
@@ -521,6 +531,44 @@ fun OverlayPanelContent(
                     fontSize = 14.sp
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Solo Mode Chip
+                    val isSolo = DraftManager.isSoloMode
+                    Box(
+                        modifier = Modifier
+                            .background(
+                                if (isSolo) Color(0xFFD4AF37) else Color.Transparent,
+                                RoundedCornerShape(8.dp)
+                            )
+                            .border(
+                                1.dp,
+                                if (isSolo) Color(0xFFD4AF37) else Color(0xFF475569),
+                                RoundedCornerShape(8.dp)
+                            )
+                            .clickable {
+                                DraftManager.isSoloMode = !DraftManager.isSoloMode
+                                onUpdateRecommendations()
+                            }
+                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                tint = if (isSolo) Color.Black else Color(0xFF94A3B8),
+                                modifier = Modifier.size(12.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "Solo",
+                                color = if (isSolo) Color.Black else Color(0xFFCBD5E1),
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     IconButton(onClick = onClearAll, modifier = Modifier.size(32.dp)) {
                         Icon(
                             Icons.Default.Delete,

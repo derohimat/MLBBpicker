@@ -1,6 +1,9 @@
 package ai.zasha.mlbbpicker.data
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,6 +17,8 @@ object DraftManager {
     val counterSuggestions = mutableStateListOf<CounterSuggestion>()
     val synergySuggestions = mutableStateListOf<SynergySuggestion>()
     val banRecommendations = mutableStateListOf<BanRecommendation>()
+
+    var isSoloMode by mutableStateOf(false)
 
     private var recommendationJob: Job? = null
 
@@ -54,16 +59,23 @@ object DraftManager {
         banRecommendations.addAll(bans)
 
         recommendationJob = coroutineScope.launch(Dispatchers.Default) {
-            val localCounters = if (enemies.isNotEmpty()) {
+            var localCounters = if (enemies.isNotEmpty()) {
                 heroRepository.getCounterSuggestions(enemies)
             } else {
                 emptyList()
             }
 
-            val localSynergies = if (allies.isNotEmpty()) {
+            var localSynergies = if (allies.isNotEmpty()) {
                 heroRepository.getSynergySuggestions(allies)
             } else {
                 emptyList()
+            }
+
+            // Apply Solo carry role weights if Solo Mode is active
+            if (isSoloMode) {
+                val heroes = heroRepository.heroes
+                localCounters = SoloQueueManager.reRankWithSoloWeight(localCounters, heroes)
+                localSynergies = SoloQueueManager.reRankSynergiesWithSoloWeight(localSynergies, heroes)
             }
 
             withContext(Dispatchers.Main) {
