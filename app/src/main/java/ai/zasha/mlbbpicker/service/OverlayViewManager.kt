@@ -15,6 +15,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.lazy.LazyColumn
@@ -668,6 +669,7 @@ fun OverlayPanelContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(10.dp)
             ) {
                 // Enemies Row
@@ -1335,14 +1337,13 @@ private fun ColumnScope.CounterPanel(
     if (suggestions.isEmpty()) {
         EmptyListHint("Select enemies to see counters")
     } else {
-        LazyColumn(
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
+                .fillMaxWidth()
                 .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
                 .padding(4.dp)
         ) {
-            items(suggestions) { item ->
+            suggestions.forEach { item ->
                 val stats = metaStatsMap[item.id]
                 RecommendationRow(
                     name = item.heroName,
@@ -1369,14 +1370,13 @@ private fun ColumnScope.SynergyPanel(
     if (suggestions.isEmpty()) {
         EmptyListHint("Select allies to see synergies")
     } else {
-        LazyColumn(
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
+                .fillMaxWidth()
                 .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
                 .padding(4.dp)
         ) {
-            items(suggestions) { item ->
+            suggestions.forEach { item ->
                 val synergyScore = item.score ?: item.synergyHeroes.firstOrNull()?.realScore ?: 0.0
                 val stats = metaStatsMap[item.id]
                 RecommendationRow(
@@ -1400,14 +1400,13 @@ private fun ColumnScope.BanPanel(bans: List<BanRecommendation>) {
     if (bans.isEmpty()) {
         EmptyListHint("Loading ban suggestions...")
     } else {
-        LazyColumn(
+        Column(
             modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
+                .fillMaxWidth()
                 .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
                 .padding(4.dp)
         ) {
-            items(bans) { ban ->
+            bans.forEach { ban ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

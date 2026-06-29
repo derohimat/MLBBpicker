@@ -8,18 +8,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.SubcomposeAsyncImage
 
 @Composable
 fun ItemIcon(
     itemName: String,
     modifier: Modifier = Modifier
 ) {
+    val cleanName = itemName.replace("'", "").trim()
+    val imageUrl = "https://mlbb.io/images/items/$cleanName.png"
+
     // Generate clean initials from the item name. E.g. "Warrior Boots" -> "WB", "Blade of Despair" -> "BOD"
     val initials = itemName
         .split(" ")
@@ -73,8 +79,36 @@ fun ItemIcon(
 
     Box(
         modifier = modifier
-            .background(gradient, RoundedCornerShape(8.dp))
-            .border(1.dp, borderStrokeColor.copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(8.dp))
+            .background(Color(0xFF1E293B))
+            .border(1.dp, borderStrokeColor.copy(alpha = 0.5f), RoundedCornerShape(8.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        SubcomposeAsyncImage(
+            model = imageUrl,
+            contentDescription = itemName,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
+            loading = {
+                FallbackItemIcon(initials = initials, itemName = itemName, gradient = gradient)
+            },
+            error = {
+                FallbackItemIcon(initials = initials, itemName = itemName, gradient = gradient)
+            }
+        )
+    }
+}
+
+@Composable
+private fun FallbackItemIcon(
+    initials: String,
+    itemName: String,
+    gradient: Brush
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(gradient)
             .padding(4.dp),
         contentAlignment = Alignment.Center
     ) {

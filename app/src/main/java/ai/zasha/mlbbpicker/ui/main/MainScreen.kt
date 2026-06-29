@@ -1055,6 +1055,71 @@ fun MainScreen(
                         }
                     }
 
+                    val winStats = remember(hero, state.metaStats) {
+                        state.metaStats.find { it.heroId == hero.id }
+                    }
+
+                    if (winStats != null) {
+                        HorizontalDivider(color = Color(0xFF334155))
+                        Text("Meta Statistics", color = Color(0xFFD4AF37), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+                                    .border(0.5.dp, Color(0xFF334155), RoundedCornerShape(8.dp))
+                                    .padding(8.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text("Win Rate", color = Color(0xFF94A3B8), fontSize = 9.sp)
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = "${String.format("%.1f", winStats.winRate)}%",
+                                    color = if (winStats.winRate >= 50) Color(0xFF10B981) else Color(0xFFEF4444),
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+                                    .border(0.5.dp, Color(0xFF334155), RoundedCornerShape(8.dp))
+                                    .padding(8.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text("Pick Rate", color = Color(0xFF94A3B8), fontSize = 9.sp)
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = "${String.format("%.1f", winStats.pickRate)}%",
+                                    color = Color.White,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+                                    .border(0.5.dp, Color(0xFF334155), RoundedCornerShape(8.dp))
+                                    .padding(8.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text("Ban Rate", color = Color(0xFF94A3B8), fontSize = 9.sp)
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                    text = "${String.format("%.1f", winStats.banRate)}%",
+                                    color = Color.White,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
+
                     HorizontalDivider(color = Color(0xFF334155))
 
                     Text("Top Counters", color = Color(0xFFEF4444), fontSize = 12.sp, fontWeight = FontWeight.Bold)
@@ -1144,7 +1209,7 @@ fun MainScreen(
                                         }
                                     }
                                     Spacer(modifier = Modifier.height(4.dp))
-                                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
                                         if (build.spell.isNotEmpty()) {
                                             Text(
                                                 text = "⚡ ${build.spell}",
@@ -1153,19 +1218,71 @@ fun MainScreen(
                                                 fontWeight = FontWeight.Bold,
                                                 modifier = Modifier
                                                     .background(Color(0xFF8B5CF6).copy(alpha = 0.15f), RoundedCornerShape(4.dp))
-                                                    .padding(horizontal = 4.dp, vertical = 1.dp)
+                                                    .padding(horizontal = 4.dp, vertical = 2.dp)
                                             )
                                         }
                                         if (build.emblem.isNotEmpty()) {
-                                            Text(
-                                                text = "🏅 ${build.emblem}",
-                                                color = Color(0xFFF59E0B),
-                                                fontSize = 8.sp,
-                                                fontWeight = FontWeight.Bold,
+                                            val emblemImgUrl = "https://mlbb.io/images/emblem/main/${build.emblem.lowercase()}.png"
+                                            Row(
+                                                verticalAlignment = Alignment.CenterVertically,
                                                 modifier = Modifier
                                                     .background(Color(0xFFF59E0B).copy(alpha = 0.15f), RoundedCornerShape(4.dp))
-                                                    .padding(horizontal = 4.dp, vertical = 1.dp)
+                                                    .padding(horizontal = 4.dp, vertical = 2.dp)
+                                            ) {
+                                                AsyncImage(
+                                                    model = emblemImgUrl,
+                                                    contentDescription = build.emblem,
+                                                    modifier = Modifier.size(12.dp).clip(CircleShape)
+                                                )
+                                                Spacer(modifier = Modifier.width(4.dp))
+                                                Text(
+                                                    text = build.emblem,
+                                                    color = Color(0xFFF59E0B),
+                                                    fontSize = 8.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            }
+                                        }
+                                    }
+                                    if (build.emblemTalents.isNotEmpty()) {
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Row(
+                                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                text = "Talents:",
+                                                color = Color(0xFF94A3B8),
+                                                fontSize = 8.sp,
+                                                fontWeight = FontWeight.Bold
                                             )
+                                            Row(
+                                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                                modifier = Modifier.horizontalScroll(rememberScrollState())
+                                            ) {
+                                                build.emblemTalents.forEach { talent ->
+                                                    val talentImgUrl = "https://mlbb.io/images/emblem/ability/${talent.lowercase().replace(" ", "_")}.png"
+                                                    Row(
+                                                        verticalAlignment = Alignment.CenterVertically,
+                                                        modifier = Modifier
+                                                            .background(Color(0xFF38BDF8).copy(alpha = 0.1f), RoundedCornerShape(4.dp))
+                                                            .padding(horizontal = 4.dp, vertical = 2.dp)
+                                                    ) {
+                                                        AsyncImage(
+                                                            model = talentImgUrl,
+                                                            contentDescription = talent,
+                                                            modifier = Modifier.size(12.dp).clip(CircleShape)
+                                                        )
+                                                        Spacer(modifier = Modifier.width(4.dp))
+                                                        Text(
+                                                            text = talent,
+                                                            color = Color(0xFF38BDF8),
+                                                            fontSize = 8.sp,
+                                                            fontWeight = FontWeight.Bold
+                                                        )
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                     Spacer(modifier = Modifier.height(6.dp))
