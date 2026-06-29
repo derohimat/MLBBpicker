@@ -20,6 +20,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ai.zasha.mlbbpicker.data.HeroRepository
 import ai.zasha.mlbbpicker.data.MetaStatsRepository
+import ai.zasha.mlbbpicker.data.PremiumManager
+import ai.zasha.mlbbpicker.data.BillingManager
 import ai.zasha.mlbbpicker.service.FloatingOverlayService
 import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
 import ai.zasha.mlbbpicker.ui.main.MainScreen
@@ -29,6 +31,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var repository: HeroRepository
     private lateinit var metaStatsRepository: MetaStatsRepository
+    private lateinit var billingManager: BillingManager
     private val viewModel: MainScreenViewModel by viewModels {
         object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
@@ -40,8 +43,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        PremiumManager.initialize(applicationContext)
         repository = HeroRepository(applicationContext)
         metaStatsRepository = MetaStatsRepository(applicationContext)
+
+        billingManager = BillingManager(this)
+        billingManager.startConnection()
 
         enableEdgeToEdge()
         setContent {
@@ -57,11 +64,18 @@ class MainActivity : ComponentActivity() {
                         onRequestUsagePermission = { requestUsagePermission() },
                         onToggleService = { toggleService() },
                         onToggleAutoDetect = { enabled -> toggleAutoDetect(enabled) },
-                        onToggleAutoHide = { enabled -> toggleAutoHide(enabled) }
+                        onToggleAutoHide = { enabled -> toggleAutoHide(enabled) },
+                        billingManager = billingManager,
+                        activity = this
                     )
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        billingManager.endConnection()
+        super.onDestroy()
     }
 
     override fun onResume() {

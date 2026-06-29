@@ -67,7 +67,9 @@ fun MainScreen(
     onRequestUsagePermission: () -> Unit,
     onToggleService: () -> Unit,
     onToggleAutoDetect: (Boolean) -> Unit,
-    onToggleAutoHide: (Boolean) -> Unit
+    onToggleAutoHide: (Boolean) -> Unit,
+    billingManager: ai.zasha.mlbbpicker.data.BillingManager,
+    activity: android.app.Activity
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var searchQuery by remember { mutableStateOf("") }
@@ -216,6 +218,146 @@ fun MainScreen(
                             .padding(horizontal = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
+                        // ─── Pro Upgrade Card ─────────────────────────────────
+                        val planType by PremiumManager.planType.collectAsState()
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                            border = BorderStroke(
+                                1.5.dp,
+                                if (isPremium) Color(0xFFD4AF37) else Color(0xFF334155)
+                            ),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(
+                                        if (isPremium) {
+                                            Brush.verticalGradient(
+                                                colors = listOf(Color(0xFF1E293B), Color(0xFF1E293B), Color(0xFF3C3010))
+                                            )
+                                        } else {
+                                            Brush.verticalGradient(
+                                                colors = listOf(Color(0xFF1E293B), Color(0xFF1E293B))
+                                            )
+                                        }
+                                    )
+                                    .padding(16.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column {
+                                        Text(
+                                            text = if (isPremium) "MLBB PICKER PRO ACTIVE" else "UPGRADE TO PRO",
+                                            color = Color(0xFFD4AF37),
+                                            fontWeight = FontWeight.Black,
+                                            fontSize = 15.sp,
+                                            letterSpacing = 1.sp
+                                        )
+                                        Text(
+                                            text = if (isPremium) "Enjoy your premium draft features!" else "Unlock advanced solo and full-screen tools",
+                                            color = Color(0xFF94A3B8),
+                                            fontSize = 11.sp
+                                        )
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .background(
+                                                Color(0xFFD4AF37).copy(alpha = if (isPremium) 0.2f else 0.1f),
+                                                CircleShape
+                                            )
+                                            .padding(8.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Star,
+                                            contentDescription = "Pro Icon",
+                                            tint = Color(0xFFD4AF37),
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                    }
+                                }
+
+                                Spacer(modifier = Modifier.height(12.dp))
+                                HorizontalDivider(color = Color(0xFF334155))
+                                Spacer(modifier = Modifier.height(12.dp))
+
+                                // Feature comparison
+                                Text("Premium Advantages:", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 11.sp)
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    listOf(
+                                        "⚡ Solo Queue carry rankings & best builds",
+                                        "📱 Full-screen in-app Draft assistant",
+                                        "🚀 Priority OTA data patches & updates",
+                                        "💎 Full access to counters and ban algorithms"
+                                    ).forEach { benefit ->
+                                        Text(benefit, color = Color(0xFFCBD5E1), fontSize = 11.sp)
+                                    }
+                                }
+
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                                if (isPremium) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(Color(0xFFD4AF37).copy(alpha = 0.1f), RoundedCornerShape(8.dp))
+                                            .border(1.dp, Color(0xFFD4AF37).copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+                                            .padding(12.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "Active Plan: " + planType.replaceFirstChar { it.uppercase() },
+                                            color = Color(0xFFD4AF37),
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 13.sp
+                                        )
+                                    }
+                                } else {
+                                    val lifetimePrice = billingManager.getFormattedPrice(ai.zasha.mlbbpicker.data.BillingManager.PRODUCT_LIFETIME) ?: "$4.99"
+                                    val monthlyPrice = billingManager.getFormattedPrice(ai.zasha.mlbbpicker.data.BillingManager.PRODUCT_MONTHLY) ?: "$0.99"
+
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                                    ) {
+                                        Button(
+                                            onClick = {
+                                                billingManager.launchPurchaseFlow(activity, ai.zasha.mlbbpicker.data.BillingManager.PRODUCT_LIFETIME)
+                                            },
+                                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD4AF37)),
+                                            modifier = Modifier.weight(1f),
+                                            shape = RoundedCornerShape(10.dp)
+                                        ) {
+                                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                                Text("Lifetime Pro", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                                Text(lifetimePrice, color = Color.Black.copy(alpha = 0.7f), fontSize = 10.sp)
+                                            }
+                                        }
+
+                                        Button(
+                                            onClick = {
+                                                billingManager.launchPurchaseFlow(activity, ai.zasha.mlbbpicker.data.BillingManager.PRODUCT_MONTHLY)
+                                            },
+                                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF334155)),
+                                            modifier = Modifier.weight(1f),
+                                            border = BorderStroke(1.dp, Color(0xFF475569)),
+                                            shape = RoundedCornerShape(10.dp)
+                                        ) {
+                                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                                Text("Monthly Pro", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                                Text("$monthlyPrice/mo", color = Color(0xFF94A3B8), fontSize = 10.sp)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         // Service Control Card
                         Card(
                             modifier = Modifier.fillMaxWidth(),

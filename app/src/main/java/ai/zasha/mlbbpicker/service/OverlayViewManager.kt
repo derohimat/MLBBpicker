@@ -590,6 +590,7 @@ fun OverlayPanelContent(
                     banRecommendations = banRecommendations.map { it.heroId }.toSet(),
                     selectedRoleFilter = selectedRoleFilter,
                     onRoleSelected = { selectedRoleFilter = it },
+                    isFullScreen = isFullScreen,
                     initialFilter = when (activePanel) {
                         0 -> "Counter"
                         1 -> "Synergy"
@@ -827,6 +828,7 @@ private fun HeroSelectionView(
     banRecommendations: Set<Int>,
     selectedRoleFilter: String?,
     onRoleSelected: (String?) -> Unit,
+    isFullScreen: Boolean = false,
     initialFilter: String,
     onSelectHero: (Hero) -> Unit,
     onRemove: () -> Unit,
@@ -941,10 +943,10 @@ private fun HeroSelectionView(
         Spacer(modifier = Modifier.height(8.dp))
 
         LazyVerticalGrid(
-            columns = GridCells.Fixed(4),
+            columns = GridCells.Fixed(if (isFullScreen) 5 else 3),
             modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(displayedHeroes) { hero ->
                 val stats = metaStatsMap[hero.id]
@@ -952,14 +954,16 @@ private fun HeroSelectionView(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .background(Color(0xFF1E293B).copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+                        .border(0.5.dp, Color(0xFF334155), RoundedCornerShape(8.dp))
                         .then(
                             if (isAlreadySelected) {
-                                Modifier.alpha(0.35f)
+                                Modifier.alpha(0.3f)
                             } else {
                                 Modifier.clickable { onSelectHero(hero) }
                             }
                         )
-                        .padding(4.dp),
+                        .padding(vertical = 6.dp, horizontal = 4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box {
@@ -967,7 +971,7 @@ private fun HeroSelectionView(
                             model = hero.img_src,
                             contentDescription = hero.hero_name,
                             modifier = Modifier
-                                .size(44.dp)
+                                .size(if (isFullScreen) 52.dp else 48.dp)
                                 .clip(CircleShape)
                                 .background(Color(0xFF334155)),
                             contentScale = ContentScale.Crop
@@ -976,26 +980,27 @@ private fun HeroSelectionView(
                         if (stats != null) {
                             val wrColor = when {
                                 stats.winRate >= 53 -> Color(0xFF10B981)
-                                stats.winRate >= 50 -> Color(0xFF94A3B8)
+                                stats.winRate >= 50 -> Color(0xFF3B82F6)
                                 else -> Color(0xFFEF4444)
                             }
                             Text(
                                 text = "${String.format("%.0f", stats.winRate)}%",
                                 color = wrColor,
-                                fontSize = 7.sp,
+                                fontSize = 8.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier
                                     .align(Alignment.BottomEnd)
-                                    .background(Color(0xCC0F172A), RoundedCornerShape(2.dp))
-                                    .padding(horizontal = 2.dp)
+                                    .background(Color(0xCC0F172A), RoundedCornerShape(3.dp))
+                                    .padding(horizontal = 3.dp, vertical = 0.5.dp)
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(2.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = hero.hero_name,
                         color = Color.White,
-                        fontSize = 9.sp,
+                        fontSize = if (isFullScreen) 10.sp else 9.sp,
+                        fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         textAlign = TextAlign.Center
