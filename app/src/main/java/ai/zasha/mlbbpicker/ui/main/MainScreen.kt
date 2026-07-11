@@ -132,93 +132,133 @@ fun MainScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        viewModel.checkPatchUpdate(context)
+    }
+
+    if (state.showPatchNoticeDialog) {
+        AlertDialog(
+            onDismissRequest = { viewModel.dismissPatchNoticeDialog() },
+            title = {
+                Text("Data Update Required", color = Color.White)
+            },
+            text = {
+                Text("Offline data patch is not available. Please update the data to get the latest hero stats, counters, and builds.", color = Color(0xFF94A3B8))
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.dismissPatchNoticeDialog()
+                        activeTab = 0 // Navigate to Settings tab where the update button is
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD4AF37))
+                ) {
+                    Text("Go to Update", color = Color.Black)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { viewModel.dismissPatchNoticeDialog() }) {
+                    Text("Later", color = Color(0xFF94A3B8))
+                }
+            },
+            containerColor = Color(0xFF1E293B)
+        )
+    }
+
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
-                title = {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 16.dp, top = 4.dp, bottom = 4.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                // Gold theme crown/star accent
-                                Icon(
-                                    imageVector = Icons.Default.Star,
-                                    contentDescription = null,
-                                    tint = Color(0xFFD4AF37),
-                                    modifier = Modifier.size(20.dp)
+            Column {
+                TopAppBar(
+                    title = {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            // Gold theme crown/star accent
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = null,
+                                tint = Color(0xFFD4AF37),
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            
+                            // Gradient Text
+                            val textGradient = Brush.linearGradient(
+                                colors = listOf(Color(0xFFD4AF37), Color(0xFFFDE047))
+                            )
+                            Text(
+                                text = "MLBB PICKER",
+                                fontWeight = FontWeight.Black,
+                                fontSize = 18.sp,
+                                letterSpacing = 1.5.sp,
+                                style = androidx.compose.ui.text.TextStyle(
+                                    brush = textGradient
                                 )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = "MLBB PICKER",
-                                    color = Color(0xFFD4AF37),
-                                    fontWeight = FontWeight.Black,
-                                    fontSize = 21.sp,
-                                    letterSpacing = 2.sp
-                                )
-                            }
-                            // Premium Tier Badge
-                            Box(
-                                modifier = Modifier
-                                    .background(
-                                        if (isPremium) {
-                                            Brush.horizontalGradient(
-                                                listOf(
-                                                    Color(0xFFD4AF37),
-                                                    Color(0xFFB45309)
-                                                )
-                                            )
-                                        } else {
-                                            Brush.horizontalGradient(
-                                                listOf(
-                                                    Color(0xFF475569),
-                                                    Color(0xFF334155)
-                                                )
-                                            )
-                                        },
-                                        RoundedCornerShape(6.dp)
-                                    )
-                                    .border(
-                                        0.5.dp,
-                                        if (isPremium) Color(0xFFD4AF37) else Color(0xFF64748B),
-                                        RoundedCornerShape(6.dp)
-                                    )
-                                    .padding(horizontal = 10.dp, vertical = 4.dp)
-                            ) {
-                                Text(
-                                    text = if (isPremium) "PRO ACTIVE" else "FREE VERSION",
-                                    color = if (isPremium) Color.Black else Color(0xFFE2E8F0),
-                                    fontSize = 9.sp,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    letterSpacing = 1.sp
-                                )
-                            }
+                            )
                         }
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "Real-Time Counter & Synergy Assistant",
-                            color = Color(0xFF64748B),
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier.padding(start = 28.dp)
+                    },
+                    actions = {
+                        // Premium Tier Badge moved to actions for compactness
+                        Box(
+                            modifier = Modifier
+                                .padding(end = 12.dp)
+                                .background(
+                                    if (isPremium) {
+                                        Brush.horizontalGradient(
+                                            listOf(
+                                                Color(0xFFD4AF37),
+                                                Color(0xFFB45309)
+                                            )
+                                        )
+                                    } else {
+                                        Brush.horizontalGradient(
+                                            listOf(
+                                                Color(0xFF475569),
+                                                Color(0xFF334155)
+                                            )
+                                        )
+                                    },
+                                    RoundedCornerShape(6.dp)
+                                )
+                                .border(
+                                    1.dp,
+                                    if (isPremium) Color(0xFFFDE047).copy(alpha = 0.5f) else Color(0xFF64748B),
+                                    RoundedCornerShape(6.dp)
+                                )
+                                .padding(horizontal = 10.dp, vertical = 4.dp)
+                        ) {
+                            Text(
+                                text = if (isPremium) "PRO" else "FREE",
+                                color = if (isPremium) Color.Black else Color(0xFFE2E8F0),
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                letterSpacing = 1.sp
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color(0xFF0F172A).copy(alpha = 0.95f),
+                        scrolledContainerColor = Color(0xFF0F172A).copy(alpha = 0.8f)
+                    ),
+                    scrollBehavior = scrollBehavior
+                )
+                // Sleek thin golden bottom divider line
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(
+                            Brush.horizontalGradient(
+                                colors = listOf(
+                                    Color(0xFFD4AF37).copy(alpha = 0.0f),
+                                    Color(0xFFD4AF37).copy(alpha = 0.25f),
+                                    Color(0xFFD4AF37).copy(alpha = 0.0f)
+                                )
+                            )
                         )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF0F172A),
-                    scrolledContainerColor = Color(0xFF0F172A)
-                ),
-                scrollBehavior = scrollBehavior
-            )
+                )
+            }
         },
         bottomBar = {
             NavigationBar(
@@ -1820,7 +1860,7 @@ fun SoloQueueScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(12.dp)
+            .padding(start = 12.dp, end = 12.dp, top = 12.dp)
     ) {
         // Mode Header
         Card(
@@ -1893,6 +1933,7 @@ fun SoloQueueScreen(
                 LazyColumn(
                     state = listState,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(bottom = 80.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(rankedHeroes) { rank ->

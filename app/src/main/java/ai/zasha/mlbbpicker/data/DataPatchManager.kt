@@ -34,6 +34,10 @@ object DataPatchManager {
         }
     }
 
+    fun hasOfflinePatch(context: Context): Boolean {
+        return FILES.all { File(context.filesDir, it).exists() }
+    }
+
     suspend fun updatePatches(
         context: Context,
         onProgress: (progress: Float, currentFile: String) -> Unit

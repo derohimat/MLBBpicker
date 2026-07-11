@@ -98,6 +98,9 @@ dependencies {
 
   // ML Kit Text Recognition for Auto-Detect Draft
   implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
+
+  // Splash Screen
+  implementation("androidx.core:core-splashscreen:1.0.1")
 }
 
 

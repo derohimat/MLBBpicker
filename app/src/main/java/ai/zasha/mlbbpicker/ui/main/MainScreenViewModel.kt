@@ -25,7 +25,9 @@ data class MainScreenState(
     val isUpdatingPatch: Boolean = false,
     val patchUpdateProgress: Float = 0f,
     val patchUpdateStatus: String = "",
-    val lastUpdateTime: String = "Bundled Assets"
+    val lastUpdateTime: String = "Bundled Assets",
+    val needsPatchUpdate: Boolean = false,
+    val showPatchNoticeDialog: Boolean = false
 )
 
 class MainScreenViewModel(
@@ -39,6 +41,20 @@ class MainScreenViewModel(
     init {
         _uiState.update { it.copy(heroes = repository.heroes) }
         loadMetaStats()
+    }
+
+    fun checkPatchUpdate(context: Context) {
+        val hasPatch = DataPatchManager.hasOfflinePatch(context)
+        _uiState.update { 
+            it.copy(
+                needsPatchUpdate = !hasPatch,
+                showPatchNoticeDialog = !hasPatch
+            ) 
+        }
+    }
+
+    fun dismissPatchNoticeDialog() {
+        _uiState.update { it.copy(showPatchNoticeDialog = false) }
     }
 
     private fun loadMetaStats() {
