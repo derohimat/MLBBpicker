@@ -8,6 +8,7 @@ import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
+import android.app.PendingIntent
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -26,6 +27,7 @@ class FloatingOverlayService : Service() {
 
     companion object {
         var isRunning = false
+        const val ACTION_SHOW_OVERLAY = "ai.zasha.mlbbpicker.SHOW_OVERLAY"
     }
 
     override fun onCreate() {
@@ -38,14 +40,17 @@ class FloatingOverlayService : Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(tag, "Service onStartCommand")
+        Log.d(tag, "Service onStartCommand, action: ${intent?.action}")
         startForeground(notificationId, createNotification())
 
-        // Show overlay immediately on manual start
-        overlayViewManager.showOverlay(byUserTrigger = true)
-
-        // Start checking for MLBB in foreground
-        startForegroundAppTracking()
+        if (intent?.action == ACTION_SHOW_OVERLAY) {
+            overlayViewManager.showOverlay(byUserTrigger = true)
+        } else {
+            // Show overlay immediately on manual start
+            overlayViewManager.showOverlay(byUserTrigger = true)
+            // Start checking for MLBB in foreground
+            startForegroundAppTracking()
+        }
 
         return START_STICKY
     }
@@ -154,12 +159,23 @@ class FloatingOverlayService : Service() {
     }
 
     private fun createNotification(): Notification {
+        val showOverlayIntent = Intent(this, FloatingOverlayService::class.java).apply {
+            action = ACTION_SHOW_OVERLAY
+        }
+        val pendingIntent = PendingIntent.getService(
+            this, 
+            0, 
+            showOverlayIntent, 
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val builder = NotificationCompat.Builder(this, channelId)
             .setContentTitle("MLBB Picker Overlay Active")
-            .setContentText("The floating draft assistant is ready to help.")
+            .setContentText("The floating draft assistant is ready. Tap to show menu.")
             .setSmallIcon(android.R.drawable.ic_menu_info_details)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
+            .setContentIntent(pendingIntent)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
 
         return builder.build()

@@ -113,6 +113,11 @@ class OverlayViewManager(private val context: Context) {
     private var bubbleLifecycleOwner: OverlayLifecycleOwner? = null
     private var panelLifecycleOwner: OverlayLifecycleOwner? = null
 
+    private var trashView: View? = null
+    private var trashLifecycleOwner: OverlayLifecycleOwner? = null
+    private var trashHoverState = mutableStateOf(false)
+    private var isOverTrash = false
+
     private var isExpanded = false
     private var isShowing = false
 
@@ -249,20 +254,13 @@ class OverlayViewManager(private val context: Context) {
             y = bubbleY
         }
 
-        // Setup touch listener for dragging, clicking, and long-pressing to close
+        // Setup touch listener for dragging to trash and clicking to open
         composeView.setOnTouchListener(object : View.OnTouchListener {
             private var initialX = 0
             private var initialY = 0
             private var initialTouchX = 0f
             private var initialTouchY = 0f
             private var touchTime = 0L
-            private val longPressHandler = android.os.Handler(android.os.Looper.getMainLooper())
-            private var isLongPressed = false
-            private val longPressRunnable = Runnable {
-                isLongPressed = true
-                android.widget.Toast.makeText(context, "Draft Assistant dismissed", android.widget.Toast.LENGTH_SHORT).show()
-                hideOverlay(manually = true)
-            }
 
             override fun onTouch(v: View, event: MotionEvent): Boolean {
                 when (event.action) {
@@ -272,26 +270,39 @@ class OverlayViewManager(private val context: Context) {
                         initialTouchX = event.rawX
                         initialTouchY = event.rawY
                         touchTime = System.currentTimeMillis()
-                        isLongPressed = false
-                        longPressHandler.postDelayed(longPressRunnable, 600) // 600ms long press
+                        
+                        showTrash()
                         return true
                     }
                     MotionEvent.ACTION_MOVE -> {
-                        val diffX = abs(event.rawX - initialTouchX)
-                        val diffY = abs(event.rawY - initialTouchY)
-                        if (diffX > 10 || diffY > 10) {
-                            longPressHandler.removeCallbacks(longPressRunnable)
+                        params.x = initialX + (event.rawX - initialTouchX).toInt()
+                        params.y = initialY + (event.rawY - initialTouchY).toInt()
+                        windowManager.updateViewLayout(composeView, params)
+
+                        // Check intersection with trash
+                        val screenWidth = context.resources.displayMetrics.widthPixels
+                        val screenHeight = context.resources.displayMetrics.heightPixels
+                        val trashCenterX = screenWidth / 2f
+                        val trashCenterY = screenHeight - dpToPx(80) // 50dp margin + 30dp half-height
+                        val distance = Math.hypot((event.rawX - trashCenterX).toDouble(), (event.rawY - trashCenterY).toDouble())
+                        val isHovered = distance < dpToPx(80)
+                        
+                        if (trashHoverState.value != isHovered) {
+                            trashHoverState.value = isHovered
                         }
-                        if (!isLongPressed) {
-                            params.x = initialX + (event.rawX - initialTouchX).toInt()
-                            params.y = initialY + (event.rawY - initialTouchY).toInt()
-                            windowManager.updateViewLayout(composeView, params)
-                        }
+                        isOverTrash = isHovered
+
                         return true
                     }
                     MotionEvent.ACTION_UP -> {
-                        longPressHandler.removeCallbacks(longPressRunnable)
-                        if (isLongPressed) return true
+                        removeTrash()
+                        
+                        if (isOverTrash) {
+                            isOverTrash = false
+                            android.widget.Toast.makeText(context, "Menu dismissed. Tap notification to show again.", android.widget.Toast.LENGTH_SHORT).show()
+                            hideOverlay(manually = true)
+                            return true
+                        }
                         
                         bubbleX = params.x
                         bubbleY = params.y
@@ -427,6 +438,76 @@ class OverlayViewManager(private val context: Context) {
         panelView = null
         panelLifecycleOwner?.destroy()
         panelLifecycleOwner = null
+    }
+
+    private fun showTrash() {
+        if (trashView != null) return
+        val lifecycleOwner = OverlayLifecycleOwner()
+        trashLifecycleOwner = lifecycleOwner
+
+        val composeView = ComposeView(context).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindow)
+            setContent {
+                MLBBPickerTheme {
+                    val isHovered by trashHoverState
+                    Box(
+                        modifier = Modifier
+                            .size(if (isHovered) 80.dp else 60.dp)
+                            .background(
+                                if (isHovered) Color(0xCCEF4444) else Color(0x991E293B),
+                                CircleShape
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Trash",
+                            tint = Color.White,
+                            modifier = Modifier.size(if (isHovered) 40.dp else 30.dp)
+                        )
+                    }
+                }
+            }
+        }
+
+        composeView.setViewTreeLifecycleOwner(lifecycleOwner)
+        composeView.setViewTreeViewModelStoreOwner(lifecycleOwner)
+        composeView.setViewTreeSavedStateRegistryOwner(lifecycleOwner)
+        lifecycleOwner.start()
+
+        val layoutType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        } else {
+            @Suppress("DEPRECATION")
+            WindowManager.LayoutParams.TYPE_PHONE
+        }
+
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            layoutType,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+            y = dpToPx(50)
+        }
+
+        trashView = composeView
+        windowManager.addView(composeView, params)
+    }
+
+    private fun removeTrash() {
+        trashView?.let {
+            try {
+                windowManager.removeView(it)
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+        trashView = null
+        trashLifecycleOwner?.destroy()
+        trashLifecycleOwner = null
     }
 
     private fun dpToPx(dp: Int): Int {
