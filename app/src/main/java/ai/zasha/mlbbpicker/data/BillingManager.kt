@@ -3,14 +3,24 @@ package ai.zasha.mlbbpicker.data
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import com.android.billingclient.api.*
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
+import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
+import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.queryProductDetails
+import com.android.billingclient.api.queryPurchasesAsync
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * Manages Google Play Billing for in-app purchases and subscriptions.
@@ -40,13 +50,10 @@ class BillingManager(private val context: Context) : PurchasesUpdatedListener {
         .build()
 
     private val _isConnected = MutableStateFlow(false)
-    val isConnected: StateFlow<Boolean> = _isConnected.asStateFlow()
 
     private val _productDetails = MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
-    val productDetails: StateFlow<Map<String, ProductDetails>> = _productDetails.asStateFlow()
 
     private val _purchaseState = MutableStateFlow<PurchaseState>(PurchaseState.Idle)
-    val purchaseState: StateFlow<PurchaseState> = _purchaseState.asStateFlow()
 
     fun startConnection() {
         billingClient.startConnection(object : BillingClientStateListener {

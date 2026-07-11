@@ -2,7 +2,10 @@ package ai.zasha.mlbbpicker.data
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.io.OutputStreamWriter
@@ -21,17 +24,21 @@ class MetaStatsRepository(private val context: Context) {
     private val cacheFileName = "meta_stats_cache.json"
     private val cacheMaxAgeMs = 6 * 60 * 60 * 1000L // 6 hours
 
-    private var _offlineStats: List<HeroMetaStats>? = null
-    val offlineStats: List<HeroMetaStats>
-        get() {
-            if (_offlineStats == null) {
-                _offlineStats = loadOfflineStats()
-            }
-            return _offlineStats!!
-        }
+    private val _offlineStatsFlow =
+        kotlinx.coroutines.flow.MutableStateFlow<List<HeroMetaStats>>(emptyList())
+    val offlineStatsFlow = _offlineStatsFlow.asStateFlow()
+    val offlineStats: List<HeroMetaStats> get() = _offlineStatsFlow.value
+
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    init {
+        reload()
+    }
 
     fun reload() {
-        _offlineStats = null
+        scope.launch {
+            _offlineStatsFlow.value = loadOfflineStats()
+        }
     }
 
     private fun loadOfflineStats(): List<HeroMetaStats> {

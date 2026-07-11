@@ -1,7 +1,14 @@
 package ai.zasha.mlbbpicker
 
+import ai.zasha.mlbbpicker.data.BillingManager
+import ai.zasha.mlbbpicker.data.HeroRepository
+import ai.zasha.mlbbpicker.data.MetaStatsRepository
+import ai.zasha.mlbbpicker.data.PremiumManager
+import ai.zasha.mlbbpicker.service.FloatingOverlayService
+import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
+import ai.zasha.mlbbpicker.ui.main.MainScreen
+import ai.zasha.mlbbpicker.ui.main.MainScreenViewModel
 import android.app.AppOpsManager
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -18,14 +25,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import ai.zasha.mlbbpicker.data.HeroRepository
-import ai.zasha.mlbbpicker.data.MetaStatsRepository
-import ai.zasha.mlbbpicker.data.PremiumManager
-import ai.zasha.mlbbpicker.data.BillingManager
-import ai.zasha.mlbbpicker.service.FloatingOverlayService
-import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
-import ai.zasha.mlbbpicker.ui.main.MainScreen
-import ai.zasha.mlbbpicker.ui.main.MainScreenViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -58,7 +57,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MainScreen(
-                        onItemClick = {},
                         viewModel = viewModel,
                         onRequestOverlayPermission = { requestOverlayPermission() },
                         onRequestUsagePermission = { requestUsagePermission() },
@@ -83,7 +81,7 @@ class MainActivity : ComponentActivity() {
         updateViewModelStatus()
         
         // Auto-start service if auto-detect is enabled and draw overlay permission is granted
-        val prefs = getSharedPreferences("mlbb_picker_prefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("mlbb_picker_prefs", MODE_PRIVATE)
         val autoDetect = prefs.getBoolean("pref_auto_detect", true)
         if (autoDetect && !FloatingOverlayService.isRunning && checkOverlayPermission()) {
             val intent = Intent(this, FloatingOverlayService::class.java)
@@ -101,7 +99,7 @@ class MainActivity : ComponentActivity() {
         val usageGranted = checkUsageStatsPermission()
         val serviceRunning = FloatingOverlayService.isRunning
 
-        val prefs = getSharedPreferences("mlbb_picker_prefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("mlbb_picker_prefs", MODE_PRIVATE)
         val autoDetect = prefs.getBoolean("pref_auto_detect", true)
         val autoHide = prefs.getBoolean("pref_auto_hide", true)
 
@@ -119,8 +117,9 @@ class MainActivity : ComponentActivity() {
         return Settings.canDrawOverlays(this)
     }
 
+    @Suppress("DEPRECATION")
     private fun checkUsageStatsPermission(): Boolean {
-        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val appOps = getSystemService(APP_OPS_SERVICE) as AppOpsManager
         val mode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             appOps.unsafeCheckOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), packageName)
         } else {
@@ -170,13 +169,13 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun toggleAutoDetect(enabled: Boolean) {
-        val prefs = getSharedPreferences("mlbb_picker_prefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("mlbb_picker_prefs", MODE_PRIVATE)
         prefs.edit().putBoolean("pref_auto_detect", enabled).apply()
         updateViewModelStatus()
     }
 
     private fun toggleAutoHide(enabled: Boolean) {
-        val prefs = getSharedPreferences("mlbb_picker_prefs", Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences("mlbb_picker_prefs", MODE_PRIVATE)
         prefs.edit().putBoolean("pref_auto_hide", enabled).apply()
         updateViewModelStatus()
     }

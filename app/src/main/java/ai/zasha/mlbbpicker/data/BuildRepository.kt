@@ -2,6 +2,10 @@ package ai.zasha.mlbbpicker.data
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 /**
@@ -13,17 +17,21 @@ class BuildRepository(private val context: Context) {
     private val tag = "BuildRepository"
     private val json = Json { ignoreUnknownKeys = true }
 
-    private var _buildsMap: Map<String, List<HeroBuild>>? = null
-    private val buildsMap: Map<String, List<HeroBuild>>
-        get() {
-            if (_buildsMap == null) {
-                _buildsMap = loadBuilds()
-            }
-            return _buildsMap!!
-        }
+    private val _buildsMapFlow =
+        kotlinx.coroutines.flow.MutableStateFlow<Map<String, List<HeroBuild>>>(emptyMap())
+    val buildsMapFlow = _buildsMapFlow.asStateFlow()
+    private val buildsMap: Map<String, List<HeroBuild>> get() = _buildsMapFlow.value
+
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    init {
+        reload()
+    }
 
     fun reload() {
-        _buildsMap = null
+        scope.launch {
+            _buildsMapFlow.value = loadBuilds()
+        }
     }
 
     private fun loadBuilds(): Map<String, List<HeroBuild>> {

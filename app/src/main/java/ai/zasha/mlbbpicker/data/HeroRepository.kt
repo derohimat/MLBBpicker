@@ -4,7 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -31,37 +34,30 @@ class HeroRepository(private val context: Context) {
     private val tag = "HeroRepository"
     private val json = Json { ignoreUnknownKeys = true }
 
-    private var _heroes: List<Hero>? = null
-    val heroes: List<Hero>
-        get() {
-            if (_heroes == null) {
-                _heroes = loadHeroes()
-            }
-            return _heroes!!
-        }
+    private val _heroesFlow = kotlinx.coroutines.flow.MutableStateFlow<List<Hero>>(emptyList())
+    val heroesFlow = _heroesFlow.asStateFlow()
+    val heroes: List<Hero> get() = _heroesFlow.value
 
-    private var _offlineCounters: Map<String, List<CounterSuggestion>>? = null
-    private val offlineCounters: Map<String, List<CounterSuggestion>>
-        get() {
-            if (_offlineCounters == null) {
-                _offlineCounters = loadOfflineCounters()
-            }
-            return _offlineCounters!!
-        }
+    private val _offlineCountersFlow =
+        kotlinx.coroutines.flow.MutableStateFlow<Map<String, List<CounterSuggestion>>>(emptyMap())
+    private val offlineCounters: Map<String, List<CounterSuggestion>> get() = _offlineCountersFlow.value
 
-    private var _offlineSynergies: Map<String, List<SynergySuggestion>>? = null
-    private val offlineSynergies: Map<String, List<SynergySuggestion>>
-        get() {
-            if (_offlineSynergies == null) {
-                _offlineSynergies = loadOfflineSynergies()
-            }
-            return _offlineSynergies!!
-        }
+    private val _offlineSynergiesFlow =
+        kotlinx.coroutines.flow.MutableStateFlow<Map<String, List<SynergySuggestion>>>(emptyMap())
+    private val offlineSynergies: Map<String, List<SynergySuggestion>> get() = _offlineSynergiesFlow.value
+
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    init {
+        reload()
+    }
 
     fun reload() {
-        _heroes = null
-        _offlineCounters = null
-        _offlineSynergies = null
+        scope.launch {
+            _heroesFlow.value = loadHeroes()
+            _offlineCountersFlow.value = loadOfflineCounters()
+            _offlineSynergiesFlow.value = loadOfflineSynergies()
+        }
     }
 
     private fun loadHeroes(): List<Hero> {
@@ -197,7 +193,6 @@ class HeroRepository(private val context: Context) {
 
         // Create the combined list of suggestions
         return scoreSum.map { (candidateId, totalScore) ->
-            val numCountered = countMap[candidateId] ?: 0
             val averageScore = totalScore / enemyHeroIds.size
             val baseSuggestion = detailsMap[candidateId]!!
 
@@ -255,7 +250,6 @@ class HeroRepository(private val context: Context) {
         if (scoreSum.isEmpty()) return emptyList()
 
         return scoreSum.map { (candidateId, totalScore) ->
-            val numSynergized = countMap[candidateId] ?: 0
             val averageScore = totalScore / allyHeroIds.size
             val baseSuggestion = detailsMap[candidateId]!!
 

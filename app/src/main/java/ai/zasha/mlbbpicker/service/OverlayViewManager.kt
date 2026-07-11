@@ -1,8 +1,22 @@
 package ai.zasha.mlbbpicker.service
 
+import ai.zasha.mlbbpicker.data.BanHelper
+import ai.zasha.mlbbpicker.data.BanRecommendation
+import ai.zasha.mlbbpicker.data.BuildRepository
+import ai.zasha.mlbbpicker.data.CounterSuggestion
+import ai.zasha.mlbbpicker.data.DraftManager
+import ai.zasha.mlbbpicker.data.Hero
+import ai.zasha.mlbbpicker.data.HeroBuild
+import ai.zasha.mlbbpicker.data.HeroMetaStats
+import ai.zasha.mlbbpicker.data.HeroRepository
+import ai.zasha.mlbbpicker.data.MetaStatsRepository
+import ai.zasha.mlbbpicker.data.SynergySuggestion
+import ai.zasha.mlbbpicker.data.TeamAnalysis
+import ai.zasha.mlbbpicker.data.TeamAnalyzer
+import ai.zasha.mlbbpicker.data.WarningSeverity
+import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
 import android.annotation.SuppressLint
 import android.content.Context
-import ai.zasha.mlbbpicker.data.*
 import android.graphics.PixelFormat
 import android.os.Build
 import android.view.Gravity
@@ -14,10 +28,22 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.layout.*
-import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -26,23 +52,40 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -60,14 +103,10 @@ import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import coil.compose.AsyncImage
-import ai.zasha.mlbbpicker.data.*
-import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.abs
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.foundation.gestures.detectTapGestures
 
 // Custom Lifecycle Owner for WindowManager Compose Views
 class OverlayLifecycleOwner : LifecycleOwner, ViewModelStoreOwner, SavedStateRegistryOwner {
@@ -83,11 +122,6 @@ class OverlayLifecycleOwner : LifecycleOwner, ViewModelStoreOwner, SavedStateReg
     fun start() {
         lifecycleRegistry.currentState = Lifecycle.State.STARTED
         lifecycleRegistry.currentState = Lifecycle.State.RESUMED
-    }
-
-    fun stop() {
-        lifecycleRegistry.currentState = Lifecycle.State.STARTED
-        lifecycleRegistry.currentState = Lifecycle.State.CREATED
     }
 
     fun destroy() {
@@ -139,15 +173,16 @@ class OverlayViewManager(private val context: Context) {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     init {
-        // Load meta stats on init
+        // Observe meta stats reactively
         coroutineScope.launch {
-            val stats = metaStatsRepository.getMetaStats()
-            metaStats.clear()
-            metaStats.addAll(stats)
-            // Generate initial ban recommendations
-            val bans = BanHelper.getRecommendedBans(stats)
-            banRecommendations.clear()
-            banRecommendations.addAll(bans)
+            metaStatsRepository.offlineStatsFlow.collect { stats ->
+                metaStats.clear()
+                metaStats.addAll(stats)
+                val bans = BanHelper.getRecommendedBans(stats)
+                banRecommendations.clear()
+                banRecommendations.addAll(bans)
+                updateRecommendations()
+            }
         }
     }
 
@@ -158,23 +193,6 @@ class OverlayViewManager(private val context: Context) {
         if (isManuallyDismissed) return
         if (isShowing) return
         isShowing = true
-        
-        // Reload repositories to pick up any new OTA patches
-        heroRepository.reload()
-        metaStatsRepository.reload()
-        buildRepository.reload()
-
-        // Refresh meta stats and ban recommendations from new patch
-        coroutineScope.launch {
-            val stats = metaStatsRepository.getMetaStats()
-            metaStats.clear()
-            metaStats.addAll(stats)
-            val bans = BanHelper.getRecommendedBans(stats)
-            banRecommendations.clear()
-            banRecommendations.addAll(bans)
-            updateRecommendations()
-        }
-
         if (isExpanded) {
             showPanel()
         } else {
@@ -335,9 +353,10 @@ class OverlayViewManager(private val context: Context) {
         val composeView = ComposeView(context).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindow)
             setContent {
+                val heroes by heroRepository.heroesFlow.collectAsState()
                 MLBBPickerTheme {
                     OverlayPanelContent(
-                        heroes = heroRepository.heroes,
+                        heroes = heroes,
                         selectedEnemies = selectedEnemies,
                         selectedAllies = selectedAllies,
                         counterSuggestions = counterSuggestions,
@@ -418,7 +437,7 @@ class OverlayViewManager(private val context: Context) {
         bubbleView?.let {
             try {
                 windowManager.removeView(it)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 // Ignore
             }
         }
@@ -1109,21 +1128,22 @@ private fun HeroSelectionView(
                         )
                         // Win rate mini badge
                         if (stats != null) {
-                            val wrColor = when {
+                            val wrColor = (when {
                                 stats.winRate >= 53 -> Color(0xFF10B981)
                                 stats.winRate >= 50 -> Color(0xFF3B82F6)
                                 else -> Color(0xFFEF4444)
+                            }).apply {
+                                Text(
+                                    text = "${String.format("%.0f", stats.winRate)}%",
+                                    color = this,
+                                    fontSize = 8.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                        .background(Color(0xCC0F172A), RoundedCornerShape(3.dp))
+                                        .padding(horizontal = 3.dp, vertical = 0.5.dp)
+                                )
                             }
-                            Text(
-                                text = "${String.format("%.0f", stats.winRate)}%",
-                                color = wrColor,
-                                fontSize = 8.sp,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .background(Color(0xCC0F172A), RoundedCornerShape(3.dp))
-                                    .padding(horizontal = 3.dp, vertical = 0.5.dp)
-                            )
                         }
                     }
                     Spacer(modifier = Modifier.height(4.dp))

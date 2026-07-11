@@ -1,69 +1,110 @@
 package ai.zasha.mlbbpicker.ui.main
 
+import ai.zasha.mlbbpicker.data.BuildRepository
+import ai.zasha.mlbbpicker.data.DraftManager
+import ai.zasha.mlbbpicker.data.Hero
+import ai.zasha.mlbbpicker.data.HeroBuild
+import ai.zasha.mlbbpicker.data.HeroMetaStats
+import ai.zasha.mlbbpicker.data.HeroRepository
+import ai.zasha.mlbbpicker.data.PremiumManager
+import ai.zasha.mlbbpicker.data.SoloHeroRank
+import ai.zasha.mlbbpicker.data.SoloQueueManager
+import ai.zasha.mlbbpicker.service.OverlayPanelContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.flow.StateFlow
-import androidx.compose.runtime.collectAsState
-import androidx.compose.animation.*
-import androidx.compose.foundation.lazy.rememberLazyListState
-import kotlinx.coroutines.launch
-
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
-import ai.zasha.mlbbpicker.data.Hero
-import ai.zasha.mlbbpicker.data.HeroRepository
-import ai.zasha.mlbbpicker.data.BuildRepository
-import ai.zasha.mlbbpicker.data.HeroBuild
-import ai.zasha.mlbbpicker.data.HeroMetaStats
-import ai.zasha.mlbbpicker.data.DraftManager
-import ai.zasha.mlbbpicker.data.SoloQueueManager
-import ai.zasha.mlbbpicker.data.SoloHeroRank
-import ai.zasha.mlbbpicker.data.PremiumManager
-import ai.zasha.mlbbpicker.data.PremiumFeature
-import ai.zasha.mlbbpicker.data.MetaStatsRepository
-import ai.zasha.mlbbpicker.service.OverlayPanelContent
-import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    onItemClick: (NavKey) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MainScreenViewModel,
     onRequestOverlayPermission: () -> Unit,
@@ -81,7 +122,6 @@ fun MainScreen(
     val context = LocalContext.current
     val heroRepository = remember { HeroRepository(context) }
     val buildRepository = remember { BuildRepository(context) }
-    val metaStatsRepository = remember { MetaStatsRepository(context) }
     val isPremium by PremiumManager.isPremium.collectAsState()
 
     val filteredHeroes = remember(searchQuery, state.heroes) {
@@ -92,7 +132,94 @@ fun MainScreen(
         }
     }
 
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
     Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                title = {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 16.dp, top = 4.dp, bottom = 4.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                // Gold theme crown/star accent
+                                Icon(
+                                    imageVector = Icons.Default.Star,
+                                    contentDescription = null,
+                                    tint = Color(0xFFD4AF37),
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "MLBB PICKER",
+                                    color = Color(0xFFD4AF37),
+                                    fontWeight = FontWeight.Black,
+                                    fontSize = 21.sp,
+                                    letterSpacing = 2.sp
+                                )
+                            }
+                            // Premium Tier Badge
+                            Box(
+                                modifier = Modifier
+                                    .background(
+                                        if (isPremium) {
+                                            Brush.horizontalGradient(
+                                                listOf(
+                                                    Color(0xFFD4AF37),
+                                                    Color(0xFFB45309)
+                                                )
+                                            )
+                                        } else {
+                                            Brush.horizontalGradient(
+                                                listOf(
+                                                    Color(0xFF475569),
+                                                    Color(0xFF334155)
+                                                )
+                                            )
+                                        },
+                                        RoundedCornerShape(6.dp)
+                                    )
+                                    .border(
+                                        0.5.dp,
+                                        if (isPremium) Color(0xFFD4AF37) else Color(0xFF64748B),
+                                        RoundedCornerShape(6.dp)
+                                    )
+                                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                            ) {
+                                Text(
+                                    text = if (isPremium) "PRO ACTIVE" else "FREE VERSION",
+                                    color = if (isPremium) Color.Black else Color(0xFFE2E8F0),
+                                    fontSize = 9.sp,
+                                    fontWeight = FontWeight.ExtraBold,
+                                    letterSpacing = 1.sp
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "Real-Time Counter & Synergy Assistant",
+                            color = Color(0xFF64748B),
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier.padding(start = 28.dp)
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF0F172A),
+                    scrolledContainerColor = Color(0xFF0F172A)
+                ),
+                scrollBehavior = scrollBehavior
+            )
+        },
         bottomBar = {
             NavigationBar(
                 containerColor = Color(0xFF1E293B),
@@ -187,89 +314,7 @@ fun MainScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            // App Title Banner
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF0F172A)) // Seamless blend with Scaffold background
-                    .padding(top = 16.dp, bottom = 12.dp, start = 16.dp, end = 16.dp)
-            ) {
-                Column {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            // Gold theme crown/star accent
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = null,
-                                tint = Color(0xFFD4AF37),
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = "MLBB PICKER",
-                                color = Color(0xFFD4AF37),
-                                fontWeight = FontWeight.Black,
-                                fontSize = 21.sp,
-                                letterSpacing = 2.sp
-                            )
-                        }
-                        // Premium Tier Badge
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    if (isPremium) {
-                                        Brush.horizontalGradient(listOf(Color(0xFFD4AF37), Color(0xFFB45309)))
-                                    } else {
-                                        Brush.horizontalGradient(listOf(Color(0xFF475569), Color(0xFF334155)))
-                                    },
-                                    RoundedCornerShape(6.dp)
-                                        )
-                                .border(
-                                    0.5.dp,
-                                    if (isPremium) Color(0xFFD4AF37) else Color(0xFF64748B),
-                                    RoundedCornerShape(6.dp)
-                                )
-                                .padding(horizontal = 10.dp, vertical = 4.dp)
-                        ) {
-                            Text(
-                                text = if (isPremium) "PRO ACTIVE" else "FREE VERSION",
-                                color = if (isPremium) Color.Black else Color(0xFFE2E8F0),
-                                fontSize = 9.sp,
-                                fontWeight = FontWeight.ExtraBold,
-                                letterSpacing = 1.sp
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Real-Time Counter & Synergy Assistant",
-                        color = Color(0xFF64748B),
-                        fontSize = 11.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(start = 28.dp)
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                    // Sleek thin golden bottom divider line
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(
-                                Brush.horizontalGradient(
-                                    colors = listOf(
-                                        Color(0xFFD4AF37).copy(alpha = 0.0f),
-                                        Color(0xFFD4AF37).copy(alpha = 0.25f),
-                                        Color(0xFFD4AF37).copy(alpha = 0.0f)
-                                    )
-                                )
-                            )
-                    )
-                }
-            }
+
 
             when (activeTab) {
                 0 -> {
@@ -298,11 +343,18 @@ fun MainScreen(
                                     .background(
                                         if (isPremium) {
                                             Brush.verticalGradient(
-                                                colors = listOf(Color(0xFF1E293B), Color(0xFF1E293B), Color(0xFF3C3010))
+                                                colors = listOf(
+                                                    Color(0xFF1E293B),
+                                                    Color(0xFF1E293B),
+                                                    Color(0xFF3C3010)
+                                                )
                                             )
                                         } else {
                                             Brush.verticalGradient(
-                                                colors = listOf(Color(0xFF1E293B), Color(0xFF1E293B))
+                                                colors = listOf(
+                                                    Color(0xFF1E293B),
+                                                    Color(0xFF1E293B)
+                                                )
                                             )
                                         }
                                     )
@@ -368,8 +420,15 @@ fun MainScreen(
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .background(Color(0xFFD4AF37).copy(alpha = 0.1f), RoundedCornerShape(8.dp))
-                                            .border(1.dp, Color(0xFFD4AF37).copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+                                            .background(
+                                                Color(0xFFD4AF37).copy(alpha = 0.1f),
+                                                RoundedCornerShape(8.dp)
+                                            )
+                                            .border(
+                                                1.dp,
+                                                Color(0xFFD4AF37).copy(alpha = 0.5f),
+                                                RoundedCornerShape(8.dp)
+                                            )
                                             .padding(12.dp),
                                         contentAlignment = Alignment.Center
                                     ) {
@@ -431,7 +490,14 @@ fun MainScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .background(Brush.verticalGradient(listOf(Color(0xFF1E293B), Color(0xFF111827))))
+                                    .background(
+                                        Brush.verticalGradient(
+                                            listOf(
+                                                Color(0xFF1E293B),
+                                                Color(0xFF111827)
+                                            )
+                                        )
+                                    )
                                     .padding(16.dp)
                             ) {
                                 Row(
@@ -452,7 +518,11 @@ fun MainScreen(
                                                 modifier = Modifier
                                                     .size(8.dp)
                                                     .clip(CircleShape)
-                                                    .background(if (state.isServiceRunning) Color(0xFF10B981) else Color(0xFF64748B))
+                                                    .background(
+                                                        if (state.isServiceRunning) Color(
+                                                            0xFF10B981
+                                                        ) else Color(0xFF64748B)
+                                                    )
                                             )
                                             Spacer(modifier = Modifier.width(6.dp))
                                             Text(
@@ -535,7 +605,14 @@ fun MainScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .background(Brush.verticalGradient(listOf(Color(0xFF1E293B), Color(0xFF111827))))
+                                    .background(
+                                        Brush.verticalGradient(
+                                            listOf(
+                                                Color(0xFF1E293B),
+                                                Color(0xFF111827)
+                                            )
+                                        )
+                                    )
                                     .padding(16.dp)
                             ) {
                                 Text(
@@ -584,7 +661,14 @@ fun MainScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .background(Brush.verticalGradient(listOf(Color(0xFF1E293B), Color(0xFF111827))))
+                                    .background(
+                                        Brush.verticalGradient(
+                                            listOf(
+                                                Color(0xFF1E293B),
+                                                Color(0xFF111827)
+                                            )
+                                        )
+                                    )
                                     .padding(16.dp)
                             ) {
                                 Text(
@@ -777,11 +861,11 @@ fun MainScreen(
                 3 -> {
                     // Hero Database / Wiki Tab
                     var heroRoleFilter by remember { mutableStateOf<String?>(null) }
-                    var heroSortBy by remember { mutableStateOf("Name") }
+                    var heroSortBy by remember { mutableStateOf("Win Rate") }
                     var sortExpanded by remember { mutableStateOf(false) }
 
                     val sortedFilteredHeroes = remember(filteredHeroes, heroRoleFilter, heroSortBy, state.metaStats) {
-                        var list = if (heroRoleFilter != null) {
+                        val list = if (heroRoleFilter != null) {
                             filteredHeroes.filter { it.roleList.any { r -> r.equals(heroRoleFilter, true) } }
                         } else {
                             filteredHeroes
@@ -949,7 +1033,9 @@ fun MainScreen(
                                                 modifier = Modifier
                                                     .align(Alignment.BottomCenter)
                                                     .background(
-                                                        if (winStats.winRate >= 52) Color(0xFF10B981) else if (winStats.winRate >= 50) Color(0xFF3B82F6) else Color(0xFFEF4444),
+                                                        if (winStats.winRate >= 52) Color(0xFF10B981) else if (winStats.winRate >= 50) Color(
+                                                            0xFF3B82F6
+                                                        ) else Color(0xFFEF4444),
                                                         RoundedCornerShape(4.dp)
                                                     )
                                                     .padding(horizontal = 3.dp, vertical = 0.5.dp)
@@ -1051,7 +1137,7 @@ fun MainScreen(
                         }
                         Column(modifier = Modifier.weight(1f)) {
                             Text("Speciality", color = Color(0xFF94A3B8), fontSize = 10.sp)
-                            Text(hero.speciality, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(hero.speciality, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 3, overflow = TextOverflow.Ellipsis)
                         }
                     }
 
@@ -1155,7 +1241,11 @@ fun MainScreen(
                                     Box(
                                         modifier = Modifier
                                             .background(Color(0x33EF4444), RoundedCornerShape(4.dp))
-                                            .border(0.5.dp, Color(0xFFEF4444), RoundedCornerShape(4.dp))
+                                            .border(
+                                                0.5.dp,
+                                                Color(0xFFEF4444),
+                                                RoundedCornerShape(4.dp)
+                                            )
                                             .padding(horizontal = 4.dp, vertical = 1.dp)
                                     ) {
                                         Text(
@@ -1217,7 +1307,10 @@ fun MainScreen(
                                                 fontSize = 8.sp,
                                                 fontWeight = FontWeight.Bold,
                                                 modifier = Modifier
-                                                    .background(Color(0xFF8B5CF6).copy(alpha = 0.15f), RoundedCornerShape(4.dp))
+                                                    .background(
+                                                        Color(0xFF8B5CF6).copy(alpha = 0.15f),
+                                                        RoundedCornerShape(4.dp)
+                                                    )
                                                     .padding(horizontal = 4.dp, vertical = 2.dp)
                                             )
                                         }
@@ -1226,13 +1319,18 @@ fun MainScreen(
                                             Row(
                                                 verticalAlignment = Alignment.CenterVertically,
                                                 modifier = Modifier
-                                                    .background(Color(0xFFF59E0B).copy(alpha = 0.15f), RoundedCornerShape(4.dp))
+                                                    .background(
+                                                        Color(0xFFF59E0B).copy(alpha = 0.15f),
+                                                        RoundedCornerShape(4.dp)
+                                                    )
                                                     .padding(horizontal = 4.dp, vertical = 2.dp)
                                             ) {
                                                 AsyncImage(
                                                     model = emblemImgUrl,
                                                     contentDescription = build.emblem,
-                                                    modifier = Modifier.size(12.dp).clip(CircleShape)
+                                                    modifier = Modifier
+                                                        .size(12.dp)
+                                                        .clip(CircleShape)
                                                 )
                                                 Spacer(modifier = Modifier.width(4.dp))
                                                 Text(
@@ -1265,13 +1363,21 @@ fun MainScreen(
                                                     Row(
                                                         verticalAlignment = Alignment.CenterVertically,
                                                         modifier = Modifier
-                                                            .background(Color(0xFF38BDF8).copy(alpha = 0.1f), RoundedCornerShape(4.dp))
-                                                            .padding(horizontal = 4.dp, vertical = 2.dp)
+                                                            .background(
+                                                                Color(0xFF38BDF8).copy(alpha = 0.1f),
+                                                                RoundedCornerShape(4.dp)
+                                                            )
+                                                            .padding(
+                                                                horizontal = 4.dp,
+                                                                vertical = 2.dp
+                                                            )
                                                     ) {
                                                         AsyncImage(
                                                             model = talentImgUrl,
                                                             contentDescription = talent,
-                                                            modifier = Modifier.size(12.dp).clip(CircleShape)
+                                                            modifier = Modifier
+                                                                .size(12.dp)
+                                                                .clip(CircleShape)
                                                         )
                                                         Spacer(modifier = Modifier.width(4.dp))
                                                         Text(

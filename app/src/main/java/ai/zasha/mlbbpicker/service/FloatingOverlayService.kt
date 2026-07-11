@@ -1,19 +1,20 @@
 package ai.zasha.mlbbpicker.service
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.Service
-import android.app.usage.UsageEvents
-import android.app.usage.UsageStatsManager
-import android.content.Context
-import android.content.Intent
 import android.app.PendingIntent
+import android.app.Service
+import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 
 class FloatingOverlayService : Service() {
 
@@ -23,11 +24,12 @@ class FloatingOverlayService : Service() {
 
     private lateinit var overlayViewManager: OverlayViewManager
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-    private var trackingJob: Job? = null
 
     companion object {
         var isRunning = false
         const val ACTION_SHOW_OVERLAY = "ai.zasha.mlbbpicker.SHOW_OVERLAY"
+        const val ACTION_MLBB_FOREGROUND = "ai.zasha.mlbbpicker.MLBB_FOREGROUND"
+        const val ACTION_MLBB_BACKGROUND = "ai.zasha.mlbbpicker.MLBB_BACKGROUND"
     }
 
     override fun onCreate() {
@@ -41,15 +43,42 @@ class FloatingOverlayService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d(tag, "Service onStartCommand, action: ${intent?.action}")
-        startForeground(notificationId, createNotification())
-
-        if (intent?.action == ACTION_SHOW_OVERLAY) {
-            overlayViewManager.showOverlay(byUserTrigger = true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startForeground(notificationId, createNotification(), android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
         } else {
-            // Show overlay immediately on manual start
-            overlayViewManager.showOverlay(byUserTrigger = true)
-            // Start checking for MLBB in foreground
-            startForegroundAppTracking()
+            startForeground(notificationId, createNotification())
+        }
+
+        val prefs = getSharedPreferences("mlbb_picker_prefs", MODE_PRIVATE)
+        val autoDetect = prefs.getBoolean("pref_auto_detect", true)
+        val autoHide = prefs.getBoolean("pref_auto_hide", true)
+
+        when (intent?.action) {
+            ACTION_SHOW_OVERLAY -> {
+                overlayViewManager.showOverlay(byUserTrigger = true)
+            }
+
+            ACTION_MLBB_FOREGROUND -> {
+                if (autoDetect) {
+                    overlayViewManager.showOverlay(byUserTrigger = false)
+                }
+            }
+
+            ACTION_MLBB_BACKGROUND -> {
+                if (autoDetect) {
+                    val isOwnApp = intent.getBooleanExtra("isOwnApp", false)
+                    if (isOwnApp) {
+                        overlayViewManager.hideOverlay(manually = false)
+                    } else if (autoHide) {
+                        overlayViewManager.hideOverlay(manually = false)
+                    }
+                }
+            }
+
+            else -> {
+                // Initial start
+                overlayViewManager.showOverlay(byUserTrigger = true)
+            }
         }
 
         return START_STICKY
@@ -58,9 +87,8 @@ class FloatingOverlayService : Service() {
     override fun onDestroy() {
         Log.d(tag, "Service onDestroy")
         isRunning = false
-        trackingJob?.cancel()
         serviceScope.cancel()
-        overlayViewManager.hideOverlay()
+        overlayViewManager.hideOverlay(manually = false)
         super.onDestroy()
     }
 
@@ -69,80 +97,7 @@ class FloatingOverlayService : Service() {
         return null
     }
 
-    private fun startForegroundAppTracking() {
-        trackingJob?.cancel()
-        trackingJob = serviceScope.launch {
-            while (isActive) {
-                try {
-                    val prefs = getSharedPreferences("mlbb_picker_prefs", MODE_PRIVATE)
-                    val autoDetect = prefs.getBoolean("pref_auto_detect", true)
-                    val autoHide = prefs.getBoolean("pref_auto_hide", true)
 
-                    if (autoDetect) {
-                        val foregroundApp = getForegroundPackageName()
-                        Log.d(tag, "Current foreground app: $foregroundApp")
-                        if (foregroundApp != null) {
-                            val isMlbb = foregroundApp == "com.mobile.legends"
-                            val isOwnApp = foregroundApp == packageName
-                            if (isMlbb) {
-                                overlayViewManager.showOverlay()
-                            } else if (isOwnApp) {
-                                overlayViewManager.hideOverlay()
-                            } else {
-                                if (autoHide) {
-                                    overlayViewManager.hideOverlay()
-                                }
-                            }
-                        }
-                    }
-                } catch (e: Exception) {
-                    Log.e(tag, "Error in tracking loop", e)
-                }
-                delay(2500)
-            }
-        }
-    }
-
-    private fun getForegroundPackageName(): String? {
-        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-        val time = System.currentTimeMillis()
-        
-        // Method 1: Query events (more precise for real-time changes)
-        var lastForegroundApp: String? = null
-        try {
-            val events = usageStatsManager.queryEvents(time - 1000 * 60 * 2, time) // last 2 minutes
-            val event = UsageEvents.Event()
-            while (events.hasNextEvent()) {
-                events.getNextEvent(event)
-                if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
-                    lastForegroundApp = event.packageName
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "Failed to query events", e)
-        }
-        
-        if (lastForegroundApp != null) {
-            return lastForegroundApp
-        }
-        
-        // Method 2: Fallback to queryUsageStats (more robust for static/long-running states)
-        try {
-            val stats = usageStatsManager.queryUsageStats(
-                UsageStatsManager.INTERVAL_DAILY,
-                time - 1000 * 60 * 10, // last 10 minutes
-                time
-            )
-            if (!stats.isNullOrEmpty()) {
-                val sorted = stats.sortedByDescending { it.lastTimeUsed }
-                return sorted.firstOrNull()?.packageName
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "Failed to query usage stats", e)
-        }
-        
-        return null
-    }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -153,11 +108,12 @@ class FloatingOverlayService : Service() {
             ).apply {
                 description = "Keeps the MLBB Draft Overlay helper active."
             }
-            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             manager.createNotificationChannel(channel)
         }
     }
 
+    @SuppressLint("LaunchActivityFromNotification")
     private fun createNotification(): Notification {
         val showOverlayIntent = Intent(this, FloatingOverlayService::class.java).apply {
             action = ACTION_SHOW_OVERLAY

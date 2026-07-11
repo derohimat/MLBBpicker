@@ -34,12 +34,6 @@ object DataPatchManager {
         }
     }
 
-    suspend fun checkPatchExists(context: Context, fileName: String): Boolean {
-        return withContext(Dispatchers.IO) {
-            File(context.filesDir, fileName).exists()
-        }
-    }
-
     suspend fun updatePatches(
         context: Context,
         onProgress: (progress: Float, currentFile: String) -> Unit

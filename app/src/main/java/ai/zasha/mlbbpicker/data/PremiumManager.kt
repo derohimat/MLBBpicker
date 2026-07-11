@@ -59,20 +59,4 @@ object PremiumManager {
         _planType.value = ""
     }
 
-    /**
-     * Check if a specific feature is available.
-     * All premium features require isPremium to be true.
-     */
-    fun isFeatureAvailable(feature: PremiumFeature): Boolean {
-        return _isPremium.value
-    }
-}
-
-enum class PremiumFeature {
-    SOLO_QUEUE,
-    FULL_SCREEN_DRAFT,
-    AD_FREE,
-    PRIORITY_OTA,
-    ADVANCED_ANALYTICS,
-    CUSTOM_THEMES
 }

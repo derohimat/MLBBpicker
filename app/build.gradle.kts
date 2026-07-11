@@ -95,6 +95,9 @@ dependencies {
 
   // Google Play Billing
   implementation(libs.billing)
+
+  // ML Kit Text Recognition for Auto-Detect Draft
+  implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
 }
 
 
