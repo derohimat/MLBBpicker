@@ -860,8 +860,7 @@ fun MainScreen(
                                 )
                             },
                             onSelectHero = { type, index, hero ->
-                                val list = if (type == "enemy") DraftManager.selectedEnemies else DraftManager.selectedAllies
-                                list[index] = hero
+                                DraftManager.setHero(type, index, hero)
                                 DraftManager.updateRecommendations(
                                     kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main),
                                     heroRepository,

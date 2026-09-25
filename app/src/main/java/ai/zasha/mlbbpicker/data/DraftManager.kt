@@ -14,6 +14,9 @@ object DraftManager {
     val selectedEnemies = mutableStateListOf<Hero?>(null, null, null, null, null)
     val selectedAllies = mutableStateListOf<Hero?>(null, null, null, null, null)
 
+    /** Lane the user set by hand for each ally slot; null means auto-assign. */
+    val allyLanes = mutableStateListOf<Lane?>(null, null, null, null, null)
+
     val counterSuggestions = mutableStateListOf<CounterSuggestion>()
     val synergySuggestions = mutableStateListOf<SynergySuggestion>()
     val banRecommendations = mutableStateListOf<BanRecommendation>()
@@ -27,6 +30,7 @@ object DraftManager {
         for (i in 0 until 5) {
             selectedEnemies[i] = null
             selectedAllies[i] = null
+            allyLanes[i] = null
         }
         counterSuggestions.clear()
         synergySuggestions.clear()
@@ -40,6 +44,33 @@ object DraftManager {
         val temp = fromList[fromIdx]
         fromList[fromIdx] = toList[toIdx]
         toList[toIdx] = temp
+
+        // Manual lanes follow the hero within the ally team; reset them when crossing teams
+        if (fromType == "ally" && toType == "ally") {
+            val tempLane = allyLanes[fromIdx]
+            allyLanes[fromIdx] = allyLanes[toIdx]
+            allyLanes[toIdx] = tempLane
+        } else {
+            if (fromType == "ally") allyLanes[fromIdx] = null
+            if (toType == "ally") allyLanes[toIdx] = null
+        }
+    }
+
+    /** Put [hero] in a slot; a new ally hero starts on its auto-assigned lane. */
+    fun setHero(type: String, index: Int, hero: Hero?) {
+        if (type == "enemy") {
+            selectedEnemies[index] = hero
+        } else {
+            if (selectedAllies[index]?.id != hero?.id) allyLanes[index] = null
+            selectedAllies[index] = hero
+        }
+    }
+
+    /** Cycle a slot's lane: auto -> EXP -> JG -> MID -> ROAM -> GOLD -> auto. */
+    fun cycleAllyLane(index: Int) {
+        val current = allyLanes[index]
+        val lanes = Lane.entries
+        allyLanes[index] = if (current == null) lanes.first() else lanes.getOrNull(current.ordinal + 1)
     }
 
     fun updateRecommendations(

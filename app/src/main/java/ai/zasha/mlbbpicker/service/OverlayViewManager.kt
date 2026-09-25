@@ -13,6 +13,10 @@ import ai.zasha.mlbbpicker.data.MetaStatsRepository
 import ai.zasha.mlbbpicker.data.SynergySuggestion
 import ai.zasha.mlbbpicker.data.TeamAnalysis
 import ai.zasha.mlbbpicker.data.TeamAnalyzer
+import ai.zasha.mlbbpicker.data.Lane
+import ai.zasha.mlbbpicker.data.LaneAssigner
+import ai.zasha.mlbbpicker.data.SlotLane
+import ai.zasha.mlbbpicker.data.TeamWarning
 import ai.zasha.mlbbpicker.data.WarningSeverity
 import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
 import android.annotation.SuppressLint
@@ -397,6 +401,7 @@ class OverlayViewManager(private val context: Context) {
                         onClearAll = {
                             selectedEnemies.indices.forEach { selectedEnemies[it] = null }
                             selectedAllies.indices.forEach { selectedAllies[it] = null }
+                            DraftManager.allyLanes.indices.forEach { DraftManager.allyLanes[it] = null }
                             counterSuggestions.clear()
                             synergySuggestions.clear()
                         },
@@ -407,11 +412,7 @@ class OverlayViewManager(private val context: Context) {
                             swapSlots(fromType, fromIdx, toType, toIdx)
                         },
                         onSelectHero = { slotType, index, hero ->
-                            if (slotType == "enemy") {
-                                selectedEnemies[index] = hero
-                            } else {
-                                selectedAllies[index] = hero
-                            }
+                            DraftManager.setHero(slotType, index, hero)
                             updateRecommendations()
                         },
                         onDismiss = {
@@ -617,15 +618,35 @@ fun OverlayPanelContent(
         TeamAnalyzer.analyze(selectedAllies)
     }
 
-    // Filter suggestions by role
-    val filteredCounters = remember(counterSuggestions.toList(), selectedRoleFilter) {
-        if (selectedRoleFilter == null) counterSuggestions
-        else counterSuggestions.filter { cs -> cs.role.any { it.equals(selectedRoleFilter, true) } }
+    // Lane per ally slot (auto-assigned unless set by hand)
+    val allyLanes = DraftManager.allyLanes
+    val laneAssignment = remember(selectedAllies.toList(), allyLanes.toList()) {
+        LaneAssigner.assign(selectedAllies, allyLanes)
+    }
+    val teamWarnings = remember(teamAnalysis, laneAssignment) {
+        laneAssignment.warnings + teamAnalysis.warnings
     }
 
-    val filteredSynergies = remember(synergySuggestions.toList(), selectedRoleFilter) {
-        if (selectedRoleFilter == null) synergySuggestions
-        else synergySuggestions.filter { ss -> ss.role.any { it.equals(selectedRoleFilter, true) } }
+    // Only show suggestions that can fill a lane the team is still missing
+    var needLaneOnly by remember { mutableStateOf(false) }
+    val missingLanes = laneAssignment.missingLanes
+    val laneFilterActive = needLaneOnly && selectedAllies.any { it != null } && missingLanes.isNotEmpty()
+    fun fitsMissingLane(lanes: List<String>): Boolean =
+        !laneFilterActive || lanes.any { Lane.fromLabel(it) in missingLanes }
+
+    // Filter suggestions by role
+    val filteredCounters = remember(counterSuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes) {
+        counterSuggestions.filter { cs ->
+            (selectedRoleFilter == null || cs.role.any { it.equals(selectedRoleFilter, true) }) &&
+                fitsMissingLane(cs.lane)
+        }
+    }
+
+    val filteredSynergies = remember(synergySuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes) {
+        synergySuggestions.filter { ss ->
+            (selectedRoleFilter == null || ss.role.any { it.equals(selectedRoleFilter, true) }) &&
+                fitsMissingLane(ss.lane)
+        }
     }
 
     Box(
@@ -867,30 +888,38 @@ fun OverlayPanelContent(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     for (i in 0 until 5) {
-                        HeroSlot(
-                            hero = selectedAllies[i],
-                            isEnemy = false,
-                            isSwapHighlight = swapMode && !(swapFromType == "ally" && swapFromIndex == i),
-                            onClick = {
-                                if (swapMode) {
-                                    onSwapSlots(swapFromType!!, swapFromIndex, "ally", i)
-                                    swapMode = false
-                                    swapFromType = null
-                                    swapFromIndex = -1
-                                } else {
-                                    activeSlotType = "ally"
-                                    activeSlotIndex = i
-                                    searchQuery = ""
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            HeroSlot(
+                                hero = selectedAllies[i],
+                                isEnemy = false,
+                                isSwapHighlight = swapMode && !(swapFromType == "ally" && swapFromIndex == i),
+                                onClick = {
+                                    if (swapMode) {
+                                        onSwapSlots(swapFromType!!, swapFromIndex, "ally", i)
+                                        swapMode = false
+                                        swapFromType = null
+                                        swapFromIndex = -1
+                                    } else {
+                                        activeSlotType = "ally"
+                                        activeSlotIndex = i
+                                        searchQuery = ""
+                                    }
+                                },
+                                onLongClick = {
+                                    if (selectedAllies[i] != null) {
+                                        swapMode = true
+                                        swapFromType = "ally"
+                                        swapFromIndex = i
+                                    }
                                 }
-                            },
-                            onLongClick = {
-                                if (selectedAllies[i] != null) {
-                                    swapMode = true
-                                    swapFromType = "ally"
-                                    swapFromIndex = i
-                                }
-                            }
-                        )
+                            )
+                            Spacer(modifier = Modifier.height(3.dp))
+                            LaneChip(
+                                slotLane = laneAssignment.slots.getOrNull(i),
+                                enabled = selectedAllies[i] != null,
+                                onClick = { DraftManager.cycleAllyLane(i) }
+                            )
+                        }
                     }
                 }
 
@@ -922,8 +951,8 @@ fun OverlayPanelContent(
                 }
 
                 // Team Analysis Warnings (compact)
-                if (teamAnalysis.warnings.isNotEmpty() && selectedAllies.any { it != null }) {
-                    TeamWarningRow(teamAnalysis)
+                if (teamWarnings.isNotEmpty() && selectedAllies.any { it != null }) {
+                    TeamWarningRow(teamWarnings)
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -946,6 +975,13 @@ fun OverlayPanelContent(
                         selectedRole = selectedRoleFilter,
                         onRoleSelected = { selectedRoleFilter = it }
                     )
+                    if (selectedAllies.any { it != null } && missingLanes.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        PickerFilterChip(
+                            "Fill lane: ${missingLanes.joinToString("/") { it.short }}",
+                            needLaneOnly
+                        ) { needLaneOnly = !needLaneOnly }
+                    }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
 
@@ -1625,7 +1661,7 @@ private fun TeamScoreBadge(analysis: TeamAnalysis) {
 }
 
 @Composable
-private fun TeamWarningRow(analysis: TeamAnalysis) {
+private fun TeamWarningRow(warnings: List<TeamWarning>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -1633,7 +1669,7 @@ private fun TeamWarningRow(analysis: TeamAnalysis) {
             .horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        analysis.warnings.forEach { warning ->
+        warnings.forEach { warning ->
             val (bgColor, textColor) = when (warning.severity) {
                 WarningSeverity.CRITICAL -> Color(0x33EF4444) to Color(0xFFEF4444)
                 WarningSeverity.WARNING -> Color(0x33F59E0B) to Color(0xFFF59E0B)
@@ -1702,6 +1738,29 @@ fun HeroSlot(
             )
         }
     }
+}
+
+/** Small lane tag under an ally slot; tap cycles auto -> EXP -> JG -> MID -> ROAM -> GOLD -> auto. */
+@Composable
+fun LaneChip(slotLane: SlotLane?, enabled: Boolean, onClick: () -> Unit) {
+    val (bgColor, textColor) = when {
+        slotLane == null -> Color(0xFF1E293B) to Color(0xFF64748B)
+        slotLane.isOffLane -> Color(0x33F59E0B) to Color(0xFFF59E0B)
+        slotLane.isManual -> Color(0xFF3B82F6) to Color.White
+        else -> Color(0x333B82F6) to Color(0xFF93C5FD)
+    }
+    Text(
+        text = slotLane?.lane?.short ?: "-",
+        color = textColor,
+        fontSize = 8.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .width(44.dp)
+            .background(bgColor, RoundedCornerShape(4.dp))
+            .then(if (enabled) Modifier.clickable { onClick() } else Modifier)
+            .padding(vertical = 2.dp)
+    )
 }
 
 @Composable
