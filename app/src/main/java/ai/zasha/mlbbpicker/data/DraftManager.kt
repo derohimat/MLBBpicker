@@ -29,6 +29,7 @@ object DraftManager {
     val counterSuggestions = mutableStateListOf<CounterSuggestion>()
     val synergySuggestions = mutableStateListOf<SynergySuggestion>()
     val banRecommendations = mutableStateListOf<BanRecommendation>()
+    val enemyPredictions = mutableStateListOf<EnemyPrediction>()
 
     var isSoloMode by mutableStateOf(false)
 
@@ -47,6 +48,7 @@ object DraftManager {
         counterSuggestions.clear()
         synergySuggestions.clear()
         banRecommendations.clear()
+        enemyPredictions.clear()
     }
 
     fun swapSlots(fromType: String, fromIdx: Int, toType: String, toIdx: Int) {
@@ -125,6 +127,8 @@ object DraftManager {
         banRecommendations.clear()
         banRecommendations.addAll(bans)
 
+        val enemySlots = selectedEnemies.toList()
+
         recommendationJob = coroutineScope.launch(Dispatchers.Default) {
             var localCounters = if (enemies.isNotEmpty()) {
                 heroRepository.getCounterSuggestions(enemies)
@@ -149,7 +153,21 @@ object DraftManager {
             localCounters = localCounters.filter { it.id !in banned }
             localSynergies = localSynergies.filter { it.id !in banned }
 
+            // Enemy prediction: heroes that counter us and heroes that fit the enemy's picks
+            val counterThreats = if (allies.isNotEmpty()) heroRepository.getCounterSuggestions(allies) else emptyList()
+            val enemySynergies = if (enemies.isNotEmpty()) heroRepository.getSynergySuggestions(enemies) else emptyList()
+            val predictions = EnemyPredictor.predict(
+                heroes = heroRepository.heroes,
+                metaStats = metaStats,
+                enemies = enemySlots,
+                excludeIds = allPickedIds,
+                counterThreats = counterThreats,
+                enemySynergies = enemySynergies
+            )
+
             withContext(Dispatchers.Main) {
+                enemyPredictions.clear()
+                enemyPredictions.addAll(predictions)
                 counterSuggestions.clear()
                 counterSuggestions.addAll(localCounters.take(15))
                 synergySuggestions.clear()

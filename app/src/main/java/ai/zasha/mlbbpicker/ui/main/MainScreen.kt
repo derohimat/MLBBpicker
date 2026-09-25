@@ -844,6 +844,10 @@ fun MainScreen(
                 1 -> {
                     // Full-Screen Draft Assistant
                     Box(modifier = Modifier.fillMaxSize()) {
+                        // Refresh bans/predictions once meta stats are loaded or the rank changes
+                        LaunchedEffect(state.metaStats) {
+                            DraftManager.updateRecommendations(this, heroRepository, state.metaStats)
+                        }
                         OverlayPanelContent(
                             heroes = state.heroes,
                             selectedEnemies = DraftManager.selectedEnemies,

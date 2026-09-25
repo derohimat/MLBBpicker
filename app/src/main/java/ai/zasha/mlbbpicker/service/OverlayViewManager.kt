@@ -18,6 +18,7 @@ import ai.zasha.mlbbpicker.data.DraftBoard
 import ai.zasha.mlbbpicker.data.DraftFormat
 import ai.zasha.mlbbpicker.data.DraftOrder
 import ai.zasha.mlbbpicker.data.DraftPhase
+import ai.zasha.mlbbpicker.data.EnemyPrediction
 import ai.zasha.mlbbpicker.data.DraftSide
 import ai.zasha.mlbbpicker.data.HeroPool
 import ai.zasha.mlbbpicker.data.Lane
@@ -597,7 +598,7 @@ fun OverlayPanelContent(
     var searchQuery by remember { mutableStateOf("") }
     var selectedRoleFilter by remember { mutableStateOf<String?>(null) }
 
-    // Panel tabs: 0=Draft, 1=Bans, 2=Build
+    // Panel tabs: 0=Counter, 1=Synergy, 2=Bans, 3=Predict
     var activePanel by remember { mutableIntStateOf(initialPanel) }
 
     // Quick-swap state
@@ -1062,6 +1063,7 @@ fun OverlayPanelContent(
                     PanelTab("Counter", activePanel == 0, Color(0xFFEF4444)) { activePanel = 0 }
                     PanelTab("Synergy", activePanel == 1, Color(0xFF3B82F6)) { activePanel = 1 }
                     PanelTab("Bans", activePanel == 2, Color(0xFFF59E0B)) { activePanel = 2 }
+                    PanelTab("Predict", activePanel == 3, Color(0xFFA855F7)) { activePanel = 3 }
                 }
 
                 // ─── Role Filter Chips ────────────────────────────────────
@@ -1093,6 +1095,20 @@ fun OverlayPanelContent(
                     0 -> CounterPanel(filteredCounters, metaStatsMap, poolIds) { heroId -> buildDetailHeroId = heroId }
                     1 -> SynergyPanel(filteredSynergies, metaStatsMap, poolIds) { heroId -> buildDetailHeroId = heroId }
                     2 -> BanPanel(banRecommendations)
+                    3 -> {
+                        val nextStep = currentTurn.firstOrNull()
+                        val hint = when {
+                            nextStep == null -> "Draft complete"
+                            nextStep.action == DraftAction.BAN -> "Enemy threats — consider banning:"
+                            nextStep.team == "enemy" -> "Enemy picks next — likely:"
+                            else -> "Enemy may pick after you — take or deny:"
+                        }
+                        PredictPanel(
+                            hint = hint,
+                            predictions = DraftManager.enemyPredictions,
+                            poolIds = poolIds
+                        ) { heroId -> buildDetailHeroId = heroId }
+                    }
                 }
             }
         }
@@ -1691,6 +1707,86 @@ private fun ColumnScope.SynergyPanel(
                     isMetaPick = stats != null && stats.winRate >= 52.0,
                     isInPool = item.id in poolIds,
                     onClick = { onHeroClick(item.id) }
+                )
+            }
+        }
+    }
+}
+
+// ─── Predict Panel ───────────────────────────────────────────────────────────
+
+@Composable
+private fun ColumnScope.PredictPanel(
+    hint: String,
+    predictions: List<EnemyPrediction>,
+    poolIds: Set<Int>,
+    onHeroClick: (Int) -> Unit
+) {
+    if (predictions.isEmpty()) {
+        EmptyListHint("Meta data not loaded yet")
+        return
+    }
+    Text(
+        text = hint,
+        color = Color(0xFFA855F7),
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(bottom = 4.dp)
+    )
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+            .padding(4.dp)
+    ) {
+        predictions.forEach { p ->
+            val inPool = p.heroId in poolIds
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 3.dp, horizontal = 2.dp)
+                    .background(Color(0xFF0F172A), RoundedCornerShape(6.dp))
+                    .clickable { onHeroClick(p.heroId) }
+                    .padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AsyncImage(
+                    model = p.imgSrc,
+                    contentDescription = p.heroName,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        // Star = a hero from your pool the enemy might take away
+                        text = if (inPool) "★ ${p.heroName}" else p.heroName,
+                        color = if (inPool) Color(0xFFFACC15) else Color.White,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    if (p.reasons.isNotEmpty()) {
+                        Text(
+                            text = p.reasons.joinToString(" · "),
+                            color = Color(0xFF94A3B8),
+                            fontSize = 8.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+                Text(
+                    text = "${p.score.toInt()}",
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .background(Color(0xFFA855F7), RoundedCornerShape(4.dp))
+                        .padding(horizontal = 5.dp, vertical = 1.dp)
                 )
             }
         }
