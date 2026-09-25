@@ -19,6 +19,7 @@ import ai.zasha.mlbbpicker.data.DraftFormat
 import ai.zasha.mlbbpicker.data.DraftOrder
 import ai.zasha.mlbbpicker.data.DraftPhase
 import ai.zasha.mlbbpicker.data.DraftSide
+import ai.zasha.mlbbpicker.data.HeroPool
 import ai.zasha.mlbbpicker.data.Lane
 import ai.zasha.mlbbpicker.data.LaneAssigner
 import ai.zasha.mlbbpicker.data.SlotLane
@@ -89,6 +90,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -651,23 +653,30 @@ fun OverlayPanelContent(
 
     // Only show suggestions that can fill a lane the team is still missing
     var needLaneOnly by remember { mutableStateOf(false) }
+
+    // Hero pool: the player's own heroes, marked with a star and filterable
+    val context = LocalContext.current
+    LaunchedEffect(Unit) { HeroPool.load(context) }
+    val poolIds = HeroPool.ids
+    var poolOnly by remember { mutableStateOf(false) }
+    val poolFilterActive = poolOnly && poolIds.isNotEmpty()
     val missingLanes = laneAssignment.missingLanes
     val laneFilterActive = needLaneOnly && selectedAllies.any { it != null } && missingLanes.isNotEmpty()
     fun fitsMissingLane(lanes: List<String>): Boolean =
         !laneFilterActive || lanes.any { Lane.fromLabel(it) in missingLanes }
 
     // Filter suggestions by role
-    val filteredCounters = remember(counterSuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes) {
+    val filteredCounters = remember(counterSuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes, poolFilterActive, poolIds) {
         counterSuggestions.filter { cs ->
             (selectedRoleFilter == null || cs.role.any { it.equals(selectedRoleFilter, true) }) &&
-                fitsMissingLane(cs.lane)
+                fitsMissingLane(cs.lane) && (!poolFilterActive || cs.id in poolIds)
         }
     }
 
-    val filteredSynergies = remember(synergySuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes) {
+    val filteredSynergies = remember(synergySuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes, poolFilterActive, poolIds) {
         synergySuggestions.filter { ss ->
             (selectedRoleFilter == null || ss.role.any { it.equals(selectedRoleFilter, true) }) &&
-                fitsMissingLane(ss.lane)
+                fitsMissingLane(ss.lane) && (!poolFilterActive || ss.id in poolIds)
         }
     }
 
@@ -1057,20 +1066,28 @@ fun OverlayPanelContent(
                         selectedRole = selectedRoleFilter,
                         onRoleSelected = { selectedRoleFilter = it }
                     )
-                    if (selectedAllies.any { it != null } && missingLanes.isNotEmpty()) {
+                    val showLaneChip = selectedAllies.any { it != null } && missingLanes.isNotEmpty()
+                    if (showLaneChip || poolIds.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(4.dp))
-                        PickerFilterChip(
-                            "Fill lane: ${missingLanes.joinToString("/") { it.short }}",
-                            needLaneOnly
-                        ) { needLaneOnly = !needLaneOnly }
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            if (poolIds.isNotEmpty()) {
+                                PickerFilterChip("★ My pool", poolOnly) { poolOnly = !poolOnly }
+                            }
+                            if (showLaneChip) {
+                                PickerFilterChip(
+                                    "Fill lane: ${missingLanes.joinToString("/") { it.short }}",
+                                    needLaneOnly
+                                ) { needLaneOnly = !needLaneOnly }
+                            }
+                        }
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
 
                 // ─── Panel Content ────────────────────────────────────────
                 when (activePanel) {
-                    0 -> CounterPanel(filteredCounters, metaStatsMap) { heroId -> buildDetailHeroId = heroId }
-                    1 -> SynergyPanel(filteredSynergies, metaStatsMap) { heroId -> buildDetailHeroId = heroId }
+                    0 -> CounterPanel(filteredCounters, metaStatsMap, poolIds) { heroId -> buildDetailHeroId = heroId }
+                    1 -> SynergyPanel(filteredSynergies, metaStatsMap, poolIds) { heroId -> buildDetailHeroId = heroId }
                     2 -> BanPanel(banRecommendations)
                 }
             }
@@ -1143,7 +1160,10 @@ private fun HeroSelectionView(
 
     val isSearching = searchQuery.isNotBlank()
 
-    val displayedHeroes = remember(heroes, isSearching, pickerFilter, counterSuggestions, synergySuggestions, banRecommendations, selectedRoleFilter) {
+    val context = LocalContext.current
+    val poolIds = HeroPool.ids
+
+    val displayedHeroes = remember(heroes, isSearching, pickerFilter, counterSuggestions, synergySuggestions, banRecommendations, selectedRoleFilter, poolIds) {
         // Searching always looks through every hero, ignoring category and role filters
         if (isSearching) return@remember heroes
         var list = when (pickerFilter) {
@@ -1158,6 +1178,7 @@ private fun HeroSelectionView(
             "Ban" -> {
                 heroes.filter { banRecommendations.contains(it.id) }
             }
+            "Pool" -> if (poolIds.isEmpty()) heroes else heroes.filter { it.id in poolIds }
             else -> heroes
         }
         if (selectedRoleFilter != null) {
@@ -1201,7 +1222,9 @@ private fun HeroSelectionView(
 
         // Picker Filter Chips
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             PickerFilterChip("All", isSearching || pickerFilter == "All") { pickerFilter = "All" }
@@ -1213,6 +1236,9 @@ private fun HeroSelectionView(
             }
             if (banRecommendations.isNotEmpty()) {
                 PickerFilterChip("Bans", !isSearching && pickerFilter == "Ban") { onSearchChange(""); pickerFilter = "Ban" }
+            }
+            if (poolIds.isNotEmpty()) {
+                PickerFilterChip("★ Pool", !isSearching && pickerFilter == "Pool") { onSearchChange(""); pickerFilter = "Pool" }
             }
         }
 
@@ -1281,6 +1307,19 @@ private fun HeroSelectionView(
                                 .clip(CircleShape)
                                 .background(Color(0xFF334155)),
                             contentScale = ContentScale.Crop
+                        )
+                        // Hero pool star: tap to add/remove from your pool
+                        val inPool = hero.id in poolIds
+                        Text(
+                            text = if (inPool) "★" else "☆",
+                            color = if (inPool) Color(0xFFFACC15) else Color(0xFF94A3B8),
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .size(18.dp)
+                                .background(Color(0xCC0F172A), CircleShape)
+                                .clickable { HeroPool.toggle(context, hero.id) }
                         )
                         // Win rate mini badge
                         if (stats != null) {
@@ -1589,6 +1628,7 @@ private fun RoleFilterChips(selectedRole: String?, onRoleSelected: (String?) -> 
 private fun ColumnScope.CounterPanel(
     suggestions: List<CounterSuggestion>,
     metaStatsMap: Map<Int, HeroMetaStats>,
+    poolIds: Set<Int>,
     onHeroClick: (Int) -> Unit
 ) {
     if (suggestions.isEmpty()) {
@@ -1609,6 +1649,7 @@ private fun ColumnScope.CounterPanel(
                     tier = item.tier,
                     winRate = stats?.winRate,
                     isMetaPick = stats != null && stats.winRate >= 52.0,
+                    isInPool = item.id in poolIds,
                     onClick = { onHeroClick(item.id) }
                 )
             }
@@ -1622,6 +1663,7 @@ private fun ColumnScope.CounterPanel(
 private fun ColumnScope.SynergyPanel(
     suggestions: List<SynergySuggestion>,
     metaStatsMap: Map<Int, HeroMetaStats>,
+    poolIds: Set<Int>,
     onHeroClick: (Int) -> Unit
 ) {
     if (suggestions.isEmpty()) {
@@ -1643,6 +1685,7 @@ private fun ColumnScope.SynergyPanel(
                     tier = "",
                     winRate = stats?.winRate,
                     isMetaPick = stats != null && stats.winRate >= 52.0,
+                    isInPool = item.id in poolIds,
                     onClick = { onHeroClick(item.id) }
                 )
             }
@@ -1961,6 +2004,7 @@ fun RecommendationRow(
     tier: String,
     winRate: Double? = null,
     isMetaPick: Boolean = false,
+    isInPool: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     Row(
@@ -1992,8 +2036,8 @@ fun RecommendationRow(
         Spacer(modifier = Modifier.width(6.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = name,
-                color = Color.White,
+                text = if (isInPool) "★ $name" else name,
+                color = if (isInPool) Color(0xFFFACC15) else Color.White,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
