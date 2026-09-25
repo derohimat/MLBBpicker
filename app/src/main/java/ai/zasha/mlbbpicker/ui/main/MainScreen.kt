@@ -843,6 +843,11 @@ fun MainScreen(
                             onCollapse = { /* no-op in full screen */ },
                             onClearAll = {
                                 DraftManager.clear()
+                                DraftManager.updateRecommendations(
+                                    kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main),
+                                    heroRepository,
+                                    state.metaStats
+                                )
                             },
                             onUpdateRecommendations = {
                                 DraftManager.updateRecommendations(

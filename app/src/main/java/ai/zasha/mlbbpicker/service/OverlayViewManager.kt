@@ -13,6 +13,12 @@ import ai.zasha.mlbbpicker.data.MetaStatsRepository
 import ai.zasha.mlbbpicker.data.SynergySuggestion
 import ai.zasha.mlbbpicker.data.TeamAnalysis
 import ai.zasha.mlbbpicker.data.TeamAnalyzer
+import ai.zasha.mlbbpicker.data.DraftAction
+import ai.zasha.mlbbpicker.data.DraftBoard
+import ai.zasha.mlbbpicker.data.DraftFormat
+import ai.zasha.mlbbpicker.data.DraftOrder
+import ai.zasha.mlbbpicker.data.DraftPhase
+import ai.zasha.mlbbpicker.data.DraftSide
 import ai.zasha.mlbbpicker.data.Lane
 import ai.zasha.mlbbpicker.data.LaneAssigner
 import ai.zasha.mlbbpicker.data.SlotLane
@@ -72,6 +78,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -95,6 +102,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -399,11 +407,8 @@ class OverlayViewManager(private val context: Context) {
                             showBubble()
                         },
                         onClearAll = {
-                            selectedEnemies.indices.forEach { selectedEnemies[it] = null }
-                            selectedAllies.indices.forEach { selectedAllies[it] = null }
-                            DraftManager.allyLanes.indices.forEach { DraftManager.allyLanes[it] = null }
-                            counterSuggestions.clear()
-                            synergySuggestions.clear()
+                            DraftManager.clear()
+                            updateRecommendations()
                         },
                         onUpdateRecommendations = {
                             updateRecommendations()
@@ -627,6 +632,23 @@ fun OverlayPanelContent(
         laneAssignment.warnings + teamAnalysis.warnings
     }
 
+    // Draft order: whose turn it is, following the ranked ban/pick sequence
+    val draftBoard = DraftManager.board()
+    val draftPhase = DraftOrder.phase(draftBoard)
+    val currentTurn = DraftOrder.currentTurn(draftBoard)
+    fun isTurn(type: String, index: Int) = currentTurn.any { it.slotType == type && it.slotIndex == index }
+
+    // Show ban recommendations during the ban phase, counters once picking starts.
+    // On first open only jump to Bans, so a tab chosen on open (e.g. Ban tile) is kept.
+    var lastDraftPhase by remember { mutableStateOf<DraftPhase?>(null) }
+    LaunchedEffect(draftPhase) {
+        when {
+            draftPhase == DraftPhase.BAN -> activePanel = 2
+            lastDraftPhase == DraftPhase.BAN && draftPhase == DraftPhase.PICK && activePanel == 2 -> activePanel = 0
+        }
+        lastDraftPhase = draftPhase
+    }
+
     // Only show suggestions that can fill a lane the team is still missing
     var needLaneOnly by remember { mutableStateOf(false) }
     val missingLanes = laneAssignment.missingLanes
@@ -763,12 +785,8 @@ fun OverlayPanelContent(
 
             // Hero Selection View
             if (activeSlotType != null) {
-                val currentHeroId = if (activeSlotType == "enemy") {
-                    selectedEnemies.getOrNull(activeSlotIndex)?.id
-                } else {
-                    selectedAllies.getOrNull(activeSlotIndex)?.id
-                }
-                val selectedHeroIds = (selectedEnemies + selectedAllies)
+                val currentHeroId = DraftManager.heroAt(activeSlotType!!, activeSlotIndex)?.id
+                val selectedHeroIds = (selectedEnemies + selectedAllies + DraftManager.allyBans + DraftManager.enemyBans)
                     .filterNotNull()
                     .map { it.id }
                     .filter { it != currentHeroId }
@@ -789,16 +807,33 @@ fun OverlayPanelContent(
                     onRoleSelected = { selectedRoleFilter = it },
                     isFullScreen = isFullScreen,
                     // Enemy slots record what the enemy picked, so start from the full list
-                    initialFilter = if (activeSlotType == "enemy") "All" else when (activePanel) {
-                        0 -> "Counter"
-                        1 -> "Synergy"
-                        2 -> "Ban"
-                        else -> "All"
+                    initialFilter = when (activeSlotType) {
+                        "enemy", "enemyBan" -> "All"
+                        "allyBan" -> "Ban"
+                        else -> when (activePanel) {
+                            0 -> "Counter"
+                            1 -> "Synergy"
+                            2 -> "Ban"
+                            else -> "All"
+                        }
                     },
                     onSelectHero = { hero ->
-                        onSelectHero(activeSlotType!!, activeSlotIndex, hero)
+                        val type = activeSlotType!!
+                        val wasTurn = isTurn(type, activeSlotIndex)
+                        onSelectHero(type, activeSlotIndex, hero)
                         activeSlotType = null
                         activeSlotIndex = -1
+
+                        // Auto-advance along the draft order. Stop on our own pick so the
+                        // recommendations are visible before choosing.
+                        val next = if (wasTurn) DraftOrder.nextStep(DraftManager.board()) else null
+                        if (next != null && (next.action == DraftAction.BAN || next.team == "enemy")) {
+                            activeSlotType = next.slotType
+                            activeSlotIndex = next.slotIndex
+                            searchQuery = ""
+                        } else if (next != null) {
+                            activePanel = 0
+                        }
                     },
                     onRemove = {
                         onSelectHero(activeSlotType!!, activeSlotIndex, null)
@@ -821,6 +856,39 @@ fun OverlayPanelContent(
                     .verticalScroll(rememberScrollState())
                     .padding(10.dp)
             ) {
+                DraftBar(
+                    board = draftBoard,
+                    onToggleSide = {
+                        DraftManager.draftSide = if (DraftManager.draftSide == DraftSide.BLUE) DraftSide.RED else DraftSide.BLUE
+                    },
+                    onToggleFormat = {
+                        val next = if (DraftManager.draftFormat == DraftFormat.RANKED_6) DraftFormat.RANKED_10 else DraftFormat.RANKED_6
+                        DraftManager.draftFormat = next
+                        // Drop bans beyond the new ban count
+                        for (i in next.bansPerTeam until 5) {
+                            DraftManager.allyBans[i] = null
+                            DraftManager.enemyBans[i] = null
+                        }
+                        onUpdateRecommendations()
+                    },
+                    onSkipBans = { DraftManager.bansSkipped = true },
+                    onResumeBans = { DraftManager.bansSkipped = false }
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                BanSlotRow(
+                    label = "Enemy Bans",
+                    bans = DraftManager.enemyBans.take(draftBoard.format.bansPerTeam),
+                    isTurn = { i -> isTurn("enemyBan", i) },
+                    onClick = { i ->
+                        swapMode = false
+                        activeSlotType = "enemyBan"
+                        activeSlotIndex = i
+                        searchQuery = ""
+                    }
+                )
+
                 // Enemies Row
                 Text(
                     text = "Enemy Heroes",
@@ -837,6 +905,7 @@ fun OverlayPanelContent(
                         HeroSlot(
                             hero = selectedEnemies[i],
                             isEnemy = true,
+                            isTurn = isTurn("enemy", i),
                             isSwapHighlight = swapMode && !(swapFromType == "enemy" && swapFromIndex == i),
                             onClick = {
                                 if (swapMode) {
@@ -863,6 +932,18 @@ fun OverlayPanelContent(
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
+
+                BanSlotRow(
+                    label = "Our Bans",
+                    bans = DraftManager.allyBans.take(draftBoard.format.bansPerTeam),
+                    isTurn = { i -> isTurn("allyBan", i) },
+                    onClick = { i ->
+                        swapMode = false
+                        activeSlotType = "allyBan"
+                        activeSlotIndex = i
+                        searchQuery = ""
+                    }
+                )
 
                 // Allies Row + Team Analysis
                 Row(
@@ -892,6 +973,7 @@ fun OverlayPanelContent(
                             HeroSlot(
                                 hero = selectedAllies[i],
                                 isEnemy = false,
+                                isTurn = isTurn("ally", i),
                                 isSwapHighlight = swapMode && !(swapFromType == "ally" && swapFromIndex == i),
                                 onClick = {
                                     if (swapMode) {
@@ -1094,7 +1176,12 @@ private fun HeroSelectionView(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Select ${if (activeSlotType == "enemy") "Enemy" else "Ally"} #${activeSlotIndex + 1}",
+                text = when (activeSlotType) {
+                    "enemy" -> "Select Enemy #${activeSlotIndex + 1}"
+                    "enemyBan" -> "Enemy Ban #${activeSlotIndex + 1}"
+                    "allyBan" -> "Our Ban #${activeSlotIndex + 1}"
+                    else -> "Select Ally #${activeSlotIndex + 1}"
+                },
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 13.sp,
@@ -1695,22 +1782,25 @@ fun HeroSlot(
     hero: Hero?,
     isEnemy: Boolean,
     isSwapHighlight: Boolean = false,
+    isTurn: Boolean = false,
+    size: Dp = 52.dp,
     onClick: () -> Unit,
     onLongClick: () -> Unit = {}
 ) {
     val borderColor = when {
         isSwapHighlight -> Color(0xFFD4AF37)
+        isTurn -> Color(0xFF22C55E)
         isEnemy -> Color(0xFFEF4444)
         else -> Color(0xFF3B82F6)
     }
 
     Box(
         modifier = Modifier
-            .size(52.dp)
+            .size(size)
             .clip(CircleShape)
             .background(if (isSwapHighlight) Color(0xFF2A2000) else Color(0xFF1E293B))
             .border(
-                width = if (isSwapHighlight) 2.5.dp else 2.dp,
+                width = if (isSwapHighlight || isTurn) 2.5.dp else 2.dp,
                 color = borderColor,
                 shape = CircleShape
             )
@@ -1732,10 +1822,110 @@ fun HeroSlot(
         } else {
             Text(
                 text = "+",
-                color = Color(0xFF64748B),
-                fontSize = 20.sp,
+                color = if (isTurn) Color(0xFF22C55E) else Color(0xFF64748B),
+                fontSize = if (size < 40.dp) 14.sp else 20.sp,
                 fontWeight = FontWeight.Bold
             )
+        }
+    }
+}
+
+/** Side/format selector and whose turn it is in the ranked draft. */
+@Composable
+fun DraftBar(
+    board: DraftBoard,
+    onToggleSide: () -> Unit,
+    onToggleFormat: () -> Unit,
+    onSkipBans: () -> Unit,
+    onResumeBans: () -> Unit
+) {
+    val phase = DraftOrder.phase(board)
+    val isBlue = board.side == DraftSide.BLUE
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+            .padding(horizontal = 6.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = if (isBlue) "BLUE" else "RED",
+            color = Color.White,
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .background(if (isBlue) Color(0xFF2563EB) else Color(0xFFDC2626), RoundedCornerShape(4.dp))
+                .clickable { onToggleSide() }
+                .padding(horizontal = 6.dp, vertical = 2.dp)
+        )
+        Text(
+            text = board.format.label,
+            color = Color(0xFFCBD5E1),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .border(1.dp, Color(0xFF475569), RoundedCornerShape(4.dp))
+                .clickable { onToggleFormat() }
+                .padding(horizontal = 6.dp, vertical = 2.dp)
+        )
+        Text(
+            text = DraftOrder.turnLabel(board),
+            color = if (phase == DraftPhase.DONE) Color(0xFF94A3B8) else Color(0xFF22C55E),
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.weight(1f)
+        )
+        if (phase == DraftPhase.BAN) {
+            Text(
+                text = "Skip bans",
+                color = Color(0xFF94A3B8),
+                fontSize = 9.sp,
+                modifier = Modifier.clickable { onSkipBans() }
+            )
+        } else if (board.bansSkipped) {
+            Text(
+                text = "Edit bans",
+                color = Color(0xFF94A3B8),
+                fontSize = 9.sp,
+                modifier = Modifier.clickable { onResumeBans() }
+            )
+        }
+    }
+}
+
+/** Row of small ban slots for one team. */
+@Composable
+fun BanSlotRow(
+    label: String,
+    bans: List<Hero?>,
+    isTurn: (Int) -> Boolean,
+    onClick: (Int) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = label,
+            color = Color(0xFF94A3B8),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.width(56.dp)
+        )
+        bans.forEachIndexed { i, hero ->
+            Box(modifier = Modifier.alpha(if (hero != null) 0.6f else 1f)) {
+                HeroSlot(
+                    hero = hero,
+                    isEnemy = true,
+                    isTurn = isTurn(i),
+                    size = 30.dp,
+                    onClick = { onClick(i) }
+                )
+            }
         }
     }
 }

@@ -14,6 +14,15 @@ object DraftManager {
     val selectedEnemies = mutableStateListOf<Hero?>(null, null, null, null, null)
     val selectedAllies = mutableStateListOf<Hero?>(null, null, null, null, null)
 
+    val allyBans = mutableStateListOf<Hero?>(null, null, null, null, null)
+    val enemyBans = mutableStateListOf<Hero?>(null, null, null, null, null)
+
+    var draftFormat by mutableStateOf(DraftFormat.RANKED_6)
+    var draftSide by mutableStateOf(DraftSide.BLUE)
+
+    /** Set when the user skips entering bans (e.g. enemy bans unknown). */
+    var bansSkipped by mutableStateOf(false)
+
     /** Lane the user set by hand for each ally slot; null means auto-assign. */
     val allyLanes = mutableStateListOf<Lane?>(null, null, null, null, null)
 
@@ -31,7 +40,10 @@ object DraftManager {
             selectedEnemies[i] = null
             selectedAllies[i] = null
             allyLanes[i] = null
+            allyBans[i] = null
+            enemyBans[i] = null
         }
+        bansSkipped = false
         counterSuggestions.clear()
         synergySuggestions.clear()
         banRecommendations.clear()
@@ -56,15 +68,38 @@ object DraftManager {
         }
     }
 
-    /** Put [hero] in a slot; a new ally hero starts on its auto-assigned lane. */
+    /** Put [hero] in a slot ("ally", "enemy", "allyBan", "enemyBan"); a new ally hero starts on its auto-assigned lane. */
     fun setHero(type: String, index: Int, hero: Hero?) {
-        if (type == "enemy") {
-            selectedEnemies[index] = hero
-        } else {
-            if (selectedAllies[index]?.id != hero?.id) allyLanes[index] = null
-            selectedAllies[index] = hero
+        when (type) {
+            "enemy" -> selectedEnemies[index] = hero
+            "allyBan" -> allyBans[index] = hero
+            "enemyBan" -> enemyBans[index] = hero
+            else -> {
+                if (selectedAllies[index]?.id != hero?.id) allyLanes[index] = null
+                selectedAllies[index] = hero
+            }
         }
     }
+
+    fun heroAt(type: String, index: Int): Hero? = when (type) {
+        "enemy" -> selectedEnemies.getOrNull(index)
+        "allyBan" -> allyBans.getOrNull(index)
+        "enemyBan" -> enemyBans.getOrNull(index)
+        else -> selectedAllies.getOrNull(index)
+    }
+
+    val bannedIds: Set<Int>
+        get() = (allyBans + enemyBans).filterNotNull().map { it.id }.toSet()
+
+    fun board() = DraftBoard(
+        format = draftFormat,
+        side = draftSide,
+        allyBans = allyBans.toList(),
+        enemyBans = enemyBans.toList(),
+        allies = selectedAllies.toList(),
+        enemies = selectedEnemies.toList(),
+        bansSkipped = bansSkipped
+    )
 
     /** Cycle a slot's lane: auto -> EXP -> JG -> MID -> ROAM -> GOLD -> auto. */
     fun cycleAllyLane(index: Int) {
@@ -84,7 +119,8 @@ object DraftManager {
         val allies = selectedAllies.filterNotNull().map { it.id }
 
         // Update ban recommendations excluding already picked heroes
-        val allPickedIds = (enemies + allies).toSet()
+        val banned = bannedIds
+        val allPickedIds = (enemies + allies).toSet() + banned
         val bans = BanHelper.getRecommendedBans(metaStats, excludeHeroIds = allPickedIds)
         banRecommendations.clear()
         banRecommendations.addAll(bans)
@@ -108,6 +144,10 @@ object DraftManager {
                 localCounters = SoloQueueManager.reRankWithSoloWeight(localCounters, heroes)
                 localSynergies = SoloQueueManager.reRankSynergiesWithSoloWeight(localSynergies, heroes)
             }
+
+            // Banned heroes can't be picked by anyone
+            localCounters = localCounters.filter { it.id !in banned }
+            localSynergies = localSynergies.filter { it.id !in banned }
 
             withContext(Dispatchers.Main) {
                 counterSuggestions.clear()
