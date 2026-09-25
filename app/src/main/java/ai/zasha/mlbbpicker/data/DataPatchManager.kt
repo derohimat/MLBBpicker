@@ -69,6 +69,16 @@ object DataPatchManager {
                     throw Exception("Failed to fetch $fileName: HTTP ${conn.responseCode}")
                 }
             }
+            // Optional extras: data version info and per-rank meta stats listed in it.
+            // Missing files are skipped so older data repos still update fine.
+            if (downloadFile(context, DataVersion.FILE_NAME)) {
+                val version = DataVersion.parse(File(context.filesDir, DataVersion.FILE_NAME).readText())
+                version.ranks.map { it.file }.filter { it !in FILES }.distinct().forEach { rankFile ->
+                    onProgress(0.99f, rankFile)
+                    downloadFile(context, rankFile)
+                }
+            }
+            MetaRankStore.load(context, force = true)
             onProgress(1.0f, "Completed")
             Result.success(Unit)
         } catch (e: Exception) {
@@ -77,15 +87,45 @@ object DataPatchManager {
         }
     }
 
+    /** Download one optional file; returns false (without throwing) when unavailable. */
+    private fun downloadFile(context: Context, fileName: String): Boolean {
+        return try {
+            val conn = URL("$BASE_URL/$fileName").openConnection() as HttpURLConnection
+            conn.connectTimeout = 10000
+            conn.readTimeout = 10000
+            conn.setRequestProperty("User-Agent", "MLBBPicker/1.0")
+            if (conn.responseCode != 200) {
+                Log.w(TAG, "Optional file $fileName not available: HTTP ${conn.responseCode}")
+                return false
+            }
+            val text = conn.inputStream.bufferedReader().use { it.readText() }
+            val trimmed = text.trim()
+            if (!trimmed.startsWith("[") && !trimmed.startsWith("{")) return false
+            val tempFile = File(context.filesDir, "$fileName.tmp")
+            tempFile.writeText(text)
+            tempFile.renameTo(File(context.filesDir, fileName))
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to download optional file $fileName", e)
+            false
+        }
+    }
+
     suspend fun clearPatches(context: Context): Boolean = withContext(Dispatchers.IO) {
         var success = true
-        FILES.forEach { fileName ->
+        val versionFile = File(context.filesDir, DataVersion.FILE_NAME)
+        val extraFiles = if (versionFile.exists()) {
+            listOf(DataVersion.FILE_NAME) + DataVersion.parse(versionFile.readText()).ranks.map { it.file }
+        } else {
+            emptyList()
+        }
+        (FILES + extraFiles).distinct().forEach { fileName ->
             val file = File(context.filesDir, fileName)
             if (file.exists()) {
                 val deleted = file.delete()
                 if (!deleted) success = false
             }
         }
+        MetaRankStore.load(context, force = true)
         success
     }
 

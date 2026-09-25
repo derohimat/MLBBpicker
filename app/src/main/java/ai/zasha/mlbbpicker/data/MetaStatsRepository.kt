@@ -21,7 +21,8 @@ class MetaStatsRepository(private val context: Context) {
     private val tag = "MetaStatsRepository"
     private val json = Json { ignoreUnknownKeys = true }
 
-    private val cacheFileName = "meta_stats_cache.json"
+    private fun cacheFileName(rankId: Int) = "meta_stats_cache_$rankId.json"
+    private fun cacheTimestampKey(rankId: Int) = "meta_stats_timestamp_$rankId"
     private val cacheMaxAgeMs = 6 * 60 * 60 * 1000L // 6 hours
 
     private val _offlineStatsFlow =
@@ -32,7 +33,13 @@ class MetaStatsRepository(private val context: Context) {
     private val scope = CoroutineScope(Dispatchers.IO)
 
     init {
-        reload()
+        MetaRankStore.load(context)
+        // Reload whenever the selected rank changes (emits the current rank first)
+        scope.launch {
+            MetaRankStore.selectedRankId.collect {
+                _offlineStatsFlow.value = loadOfflineStats()
+            }
+        }
     }
 
     fun reload() {
@@ -42,19 +49,30 @@ class MetaStatsRepository(private val context: Context) {
     }
 
     private fun loadOfflineStats(): List<HeroMetaStats> {
+        val file = MetaRankStore.selectedRank.file
         return try {
-            val jsonText = DataPatchManager.getLocalFileText(context, "meta_stats.json")
+            val jsonText = DataPatchManager.getLocalFileText(context, file)
             json.decodeFromString<List<HeroMetaStats>>(jsonText)
         } catch (e: Exception) {
-            Log.e(tag, "Failed to load meta_stats.json asset", e)
-            emptyList()
+            Log.e(tag, "Failed to load $file, falling back to meta_stats.json", e)
+            try {
+                json.decodeFromString<List<HeroMetaStats>>(
+                    DataPatchManager.getLocalFileText(context, DataVersion.DEFAULT_RANK.file)
+                )
+            } catch (e2: Exception) {
+                Log.e(tag, "Failed to load meta_stats.json asset", e2)
+                emptyList()
+            }
         }
     }
 
-    /** Load stats: try cache first, then online, then fallback to asset */
-    suspend fun getMetaStats(rankId: Int = 4, timeframeId: Int = 1): List<HeroMetaStats> = withContext(Dispatchers.IO) {
+    /** Load stats for the selected rank: try cache first, then online, then fallback to asset */
+    suspend fun getMetaStats(
+        rankId: Int = MetaRankStore.selectedRank.id,
+        timeframeId: Int = 1
+    ): List<HeroMetaStats> = withContext(Dispatchers.IO) {
         // 1. Check if cache is fresh
-        val cached = loadFromCache()
+        val cached = loadFromCache(rankId)
         if (cached != null) {
             Log.d(tag, "Using cached meta stats (${cached.size} heroes)")
             return@withContext cached
@@ -75,7 +93,7 @@ class MetaStatsRepository(private val context: Context) {
                 val parsed = json.decodeFromString<MetaStatsApiResponse>(responseText)
                 if (parsed.success && parsed.data.heroes.isNotEmpty()) {
                     Log.d(tag, "Fetched ${parsed.data.heroes.size} heroes from API")
-                    saveToCache(responseText)
+                    saveToCache(rankId, responseText)
                     return@withContext parsed.data.heroes
                 }
             }
@@ -85,8 +103,9 @@ class MetaStatsRepository(private val context: Context) {
         }
 
         // 3. Fallback to offline
-        Log.d(tag, "Using offline meta stats (${offlineStats.size} heroes)")
-        return@withContext offlineStats
+        val offline = loadOfflineStats()
+        Log.d(tag, "Using offline meta stats (${offline.size} heroes)")
+        return@withContext offline
     }
 
     /** Get meta stats for a specific hero by ID */
@@ -94,30 +113,30 @@ class MetaStatsRepository(private val context: Context) {
         return stats.find { it.heroId == heroId }
     }
 
-    private fun saveToCache(jsonText: String) {
+    private fun saveToCache(rankId: Int, jsonText: String) {
         try {
-            context.openFileOutput(cacheFileName, Context.MODE_PRIVATE).use { fos ->
+            context.openFileOutput(cacheFileName(rankId), Context.MODE_PRIVATE).use { fos ->
                 OutputStreamWriter(fos).use { it.write(jsonText) }
             }
             // Save timestamp
             context.getSharedPreferences("mlbb_cache", Context.MODE_PRIVATE)
                 .edit()
-                .putLong("meta_stats_timestamp", System.currentTimeMillis())
+                .putLong(cacheTimestampKey(rankId), System.currentTimeMillis())
                 .apply()
         } catch (e: Exception) {
             Log.e(tag, "Failed to save cache", e)
         }
     }
 
-    private fun loadFromCache(): List<HeroMetaStats>? {
+    private fun loadFromCache(rankId: Int): List<HeroMetaStats>? {
         try {
             val prefs = context.getSharedPreferences("mlbb_cache", Context.MODE_PRIVATE)
-            val timestamp = prefs.getLong("meta_stats_timestamp", 0)
+            val timestamp = prefs.getLong(cacheTimestampKey(rankId), 0)
             if (System.currentTimeMillis() - timestamp > cacheMaxAgeMs) {
                 return null // Cache expired
             }
 
-            val file = context.getFileStreamPath(cacheFileName)
+            val file = context.getFileStreamPath(cacheFileName(rankId))
             if (!file.exists()) return null
 
             val jsonText = file.readText()

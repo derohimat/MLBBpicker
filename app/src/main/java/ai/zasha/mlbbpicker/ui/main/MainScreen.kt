@@ -9,6 +9,8 @@ import ai.zasha.mlbbpicker.data.HeroRepository
 import ai.zasha.mlbbpicker.data.PremiumManager
 import ai.zasha.mlbbpicker.data.SoloHeroRank
 import ai.zasha.mlbbpicker.data.SoloQueueManager
+import ai.zasha.mlbbpicker.data.MetaRankStore
+import ai.zasha.mlbbpicker.service.MetaSourceBar
 import ai.zasha.mlbbpicker.service.OverlayPanelContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -723,6 +725,18 @@ fun MainScreen(
                                     color = Color(0xFF94A3B8),
                                     fontSize = 11.sp
                                 )
+                                val dataVersion by MetaRankStore.dataVersion.collectAsState()
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = listOfNotNull(
+                                        "Game ${dataVersion.patchLabel}",
+                                        dataVersion.generatedDate?.let { "crawled $it" },
+                                        "${dataVersion.availableRanks.size} rank(s)"
+                                    ).joinToString(" · "),
+                                    color = Color(0xFFD4AF37),
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
                                 Spacer(modifier = Modifier.height(16.dp))
 
                                 if (state.isUpdatingPatch) {
@@ -830,6 +844,10 @@ fun MainScreen(
                 1 -> {
                     // Full-Screen Draft Assistant
                     Box(modifier = Modifier.fillMaxSize()) {
+                        // Refresh bans/predictions once meta stats are loaded or the rank changes
+                        LaunchedEffect(state.metaStats) {
+                            DraftManager.updateRecommendations(this, heroRepository, state.metaStats)
+                        }
                         OverlayPanelContent(
                             heroes = state.heroes,
                             selectedEnemies = DraftManager.selectedEnemies,
@@ -843,6 +861,11 @@ fun MainScreen(
                             onCollapse = { /* no-op in full screen */ },
                             onClearAll = {
                                 DraftManager.clear()
+                                DraftManager.updateRecommendations(
+                                    kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main),
+                                    heroRepository,
+                                    state.metaStats
+                                )
                             },
                             onUpdateRecommendations = {
                                 DraftManager.updateRecommendations(
@@ -860,8 +883,7 @@ fun MainScreen(
                                 )
                             },
                             onSelectHero = { type, index, hero ->
-                                val list = if (type == "enemy") DraftManager.selectedEnemies else DraftManager.selectedAllies
-                                list[index] = hero
+                                DraftManager.setHero(type, index, hero)
                                 DraftManager.updateRecommendations(
                                     kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main),
                                     heroRepository,
@@ -1550,6 +1572,8 @@ fun MetaStatsTabContent(
             .fillMaxSize()
             .padding(horizontal = 8.dp)
     ) {
+        MetaSourceBar(modifier = Modifier.padding(vertical = 6.dp))
+
         // Search & Filter
         TextField(
             value = searchQuery,

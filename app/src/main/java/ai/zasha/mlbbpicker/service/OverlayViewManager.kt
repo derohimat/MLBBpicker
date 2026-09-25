@@ -13,6 +13,19 @@ import ai.zasha.mlbbpicker.data.MetaStatsRepository
 import ai.zasha.mlbbpicker.data.SynergySuggestion
 import ai.zasha.mlbbpicker.data.TeamAnalysis
 import ai.zasha.mlbbpicker.data.TeamAnalyzer
+import ai.zasha.mlbbpicker.data.DraftAction
+import ai.zasha.mlbbpicker.data.DraftBoard
+import ai.zasha.mlbbpicker.data.DraftFormat
+import ai.zasha.mlbbpicker.data.DraftOrder
+import ai.zasha.mlbbpicker.data.DraftPhase
+import ai.zasha.mlbbpicker.data.EnemyPrediction
+import ai.zasha.mlbbpicker.data.DraftSide
+import ai.zasha.mlbbpicker.data.HeroPool
+import ai.zasha.mlbbpicker.data.Lane
+import ai.zasha.mlbbpicker.data.MetaRankStore
+import ai.zasha.mlbbpicker.data.LaneAssigner
+import ai.zasha.mlbbpicker.data.SlotLane
+import ai.zasha.mlbbpicker.data.TeamWarning
 import ai.zasha.mlbbpicker.data.WarningSeverity
 import ai.zasha.mlbbpicker.theme.MLBBPickerTheme
 import android.annotation.SuppressLint
@@ -68,6 +81,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -78,6 +92,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -91,6 +106,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -198,6 +214,7 @@ class OverlayViewManager(private val context: Context) {
         } else {
             showBubble()
         }
+        notifyVisibilityChanged()
     }
 
     fun hideOverlay(manually: Boolean = false) {
@@ -208,6 +225,30 @@ class OverlayViewManager(private val context: Context) {
         isShowing = false
         removeBubble()
         removePanel()
+        notifyVisibilityChanged()
+    }
+
+    /** Show/hide toggle used by the Quick Settings tile. */
+    fun toggleOverlay() {
+        if (isShowing) {
+            hideOverlay(manually = true)
+        } else {
+            showOverlay(byUserTrigger = true)
+        }
+    }
+
+    /** Open the expanded panel directly on the given tab (0=Counter, 1=Synergy, 2=Bans). */
+    fun showPanelOnTab(tab: Int) {
+        isManuallyDismissed = false
+        isExpanded = true
+        isShowing = true
+        showPanel(initialPanel = tab)
+        notifyVisibilityChanged()
+    }
+
+    private fun notifyVisibilityChanged() {
+        FloatingOverlayService.isOverlayVisible = isShowing
+        OverlayTiles.refresh(context)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -343,7 +384,7 @@ class OverlayViewManager(private val context: Context) {
         windowManager.addView(composeView, params)
     }
 
-    private fun showPanel() {
+    private fun showPanel(initialPanel: Int = 0) {
         removeBubble()
         removePanel()
 
@@ -364,15 +405,14 @@ class OverlayViewManager(private val context: Context) {
                         metaStats = metaStats,
                         banRecommendations = banRecommendations,
                         buildRepository = buildRepository,
+                        initialPanel = initialPanel,
                         onCollapse = {
                             isExpanded = false
                             showBubble()
                         },
                         onClearAll = {
-                            selectedEnemies.indices.forEach { selectedEnemies[it] = null }
-                            selectedAllies.indices.forEach { selectedAllies[it] = null }
-                            counterSuggestions.clear()
-                            synergySuggestions.clear()
+                            DraftManager.clear()
+                            updateRecommendations()
                         },
                         onUpdateRecommendations = {
                             updateRecommendations()
@@ -381,11 +421,7 @@ class OverlayViewManager(private val context: Context) {
                             swapSlots(fromType, fromIdx, toType, toIdx)
                         },
                         onSelectHero = { slotType, index, hero ->
-                            if (slotType == "enemy") {
-                                selectedEnemies[index] = hero
-                            } else {
-                                selectedAllies[index] = hero
-                            }
+                            DraftManager.setHero(slotType, index, hero)
                             updateRecommendations()
                         },
                         onDismiss = {
@@ -549,6 +585,7 @@ fun OverlayPanelContent(
     banRecommendations: List<BanRecommendation> = emptyList(),
     buildRepository: BuildRepository,
     isFullScreen: Boolean = false,
+    initialPanel: Int = 0,
     onCollapse: () -> Unit,
     onClearAll: () -> Unit,
     onUpdateRecommendations: () -> Unit,
@@ -561,8 +598,8 @@ fun OverlayPanelContent(
     var searchQuery by remember { mutableStateOf("") }
     var selectedRoleFilter by remember { mutableStateOf<String?>(null) }
 
-    // Panel tabs: 0=Draft, 1=Bans, 2=Build
-    var activePanel by remember { mutableIntStateOf(0) }
+    // Panel tabs: 0=Counter, 1=Synergy, 2=Bans, 3=Predict
+    var activePanel by remember { mutableIntStateOf(initialPanel) }
 
     // Quick-swap state
     var swapMode by remember { mutableStateOf(false) }
@@ -590,15 +627,59 @@ fun OverlayPanelContent(
         TeamAnalyzer.analyze(selectedAllies)
     }
 
-    // Filter suggestions by role
-    val filteredCounters = remember(counterSuggestions.toList(), selectedRoleFilter) {
-        if (selectedRoleFilter == null) counterSuggestions
-        else counterSuggestions.filter { cs -> cs.role.any { it.equals(selectedRoleFilter, true) } }
+    // Lane per ally slot (auto-assigned unless set by hand)
+    val allyLanes = DraftManager.allyLanes
+    val laneAssignment = remember(selectedAllies.toList(), allyLanes.toList()) {
+        LaneAssigner.assign(selectedAllies, allyLanes)
+    }
+    val teamWarnings = remember(teamAnalysis, laneAssignment) {
+        laneAssignment.warnings + teamAnalysis.warnings
     }
 
-    val filteredSynergies = remember(synergySuggestions.toList(), selectedRoleFilter) {
-        if (selectedRoleFilter == null) synergySuggestions
-        else synergySuggestions.filter { ss -> ss.role.any { it.equals(selectedRoleFilter, true) } }
+    // Draft order: whose turn it is, following the ranked ban/pick sequence
+    val draftBoard = DraftManager.board()
+    val draftPhase = DraftOrder.phase(draftBoard)
+    val currentTurn = DraftOrder.currentTurn(draftBoard)
+    fun isTurn(type: String, index: Int) = currentTurn.any { it.slotType == type && it.slotIndex == index }
+
+    // Show ban recommendations during the ban phase, counters once picking starts.
+    // On first open only jump to Bans, so a tab chosen on open (e.g. Ban tile) is kept.
+    var lastDraftPhase by remember { mutableStateOf<DraftPhase?>(null) }
+    LaunchedEffect(draftPhase) {
+        when {
+            draftPhase == DraftPhase.BAN -> activePanel = 2
+            lastDraftPhase == DraftPhase.BAN && draftPhase == DraftPhase.PICK && activePanel == 2 -> activePanel = 0
+        }
+        lastDraftPhase = draftPhase
+    }
+
+    // Only show suggestions that can fill a lane the team is still missing
+    var needLaneOnly by remember { mutableStateOf(false) }
+
+    // Hero pool: the player's own heroes, marked with a star and filterable
+    val context = LocalContext.current
+    LaunchedEffect(Unit) { HeroPool.load(context) }
+    val poolIds = HeroPool.ids
+    var poolOnly by remember { mutableStateOf(false) }
+    val poolFilterActive = poolOnly && poolIds.isNotEmpty()
+    val missingLanes = laneAssignment.missingLanes
+    val laneFilterActive = needLaneOnly && selectedAllies.any { it != null } && missingLanes.isNotEmpty()
+    fun fitsMissingLane(lanes: List<String>): Boolean =
+        !laneFilterActive || lanes.any { Lane.fromLabel(it) in missingLanes }
+
+    // Filter suggestions by role
+    val filteredCounters = remember(counterSuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes, poolFilterActive, poolIds) {
+        counterSuggestions.filter { cs ->
+            (selectedRoleFilter == null || cs.role.any { it.equals(selectedRoleFilter, true) }) &&
+                fitsMissingLane(cs.lane) && (!poolFilterActive || cs.id in poolIds)
+        }
+    }
+
+    val filteredSynergies = remember(synergySuggestions.toList(), selectedRoleFilter, laneFilterActive, missingLanes, poolFilterActive, poolIds) {
+        synergySuggestions.filter { ss ->
+            (selectedRoleFilter == null || ss.role.any { it.equals(selectedRoleFilter, true) }) &&
+                fitsMissingLane(ss.lane) && (!poolFilterActive || ss.id in poolIds)
+        }
     }
 
     Box(
@@ -715,12 +796,8 @@ fun OverlayPanelContent(
 
             // Hero Selection View
             if (activeSlotType != null) {
-                val currentHeroId = if (activeSlotType == "enemy") {
-                    selectedEnemies.getOrNull(activeSlotIndex)?.id
-                } else {
-                    selectedAllies.getOrNull(activeSlotIndex)?.id
-                }
-                val selectedHeroIds = (selectedEnemies + selectedAllies)
+                val currentHeroId = DraftManager.heroAt(activeSlotType!!, activeSlotIndex)?.id
+                val selectedHeroIds = (selectedEnemies + selectedAllies + DraftManager.allyBans + DraftManager.enemyBans)
                     .filterNotNull()
                     .map { it.id }
                     .filter { it != currentHeroId }
@@ -740,16 +817,34 @@ fun OverlayPanelContent(
                     selectedRoleFilter = selectedRoleFilter,
                     onRoleSelected = { selectedRoleFilter = it },
                     isFullScreen = isFullScreen,
-                    initialFilter = when (activePanel) {
-                        0 -> "Counter"
-                        1 -> "Synergy"
-                        2 -> "Ban"
-                        else -> "All"
+                    // Enemy slots record what the enemy picked, so start from the full list
+                    initialFilter = when (activeSlotType) {
+                        "enemy", "enemyBan" -> "All"
+                        "allyBan" -> "Ban"
+                        else -> when (activePanel) {
+                            0 -> "Counter"
+                            1 -> "Synergy"
+                            2 -> "Ban"
+                            else -> "All"
+                        }
                     },
                     onSelectHero = { hero ->
-                        onSelectHero(activeSlotType!!, activeSlotIndex, hero)
+                        val type = activeSlotType!!
+                        val wasTurn = isTurn(type, activeSlotIndex)
+                        onSelectHero(type, activeSlotIndex, hero)
                         activeSlotType = null
                         activeSlotIndex = -1
+
+                        // Auto-advance along the draft order. Stop on our own pick so the
+                        // recommendations are visible before choosing.
+                        val next = if (wasTurn) DraftOrder.nextStep(DraftManager.board()) else null
+                        if (next != null && (next.action == DraftAction.BAN || next.team == "enemy")) {
+                            activeSlotType = next.slotType
+                            activeSlotIndex = next.slotIndex
+                            searchQuery = ""
+                        } else if (next != null) {
+                            activePanel = 0
+                        }
                     },
                     onRemove = {
                         onSelectHero(activeSlotType!!, activeSlotIndex, null)
@@ -772,6 +867,39 @@ fun OverlayPanelContent(
                     .verticalScroll(rememberScrollState())
                     .padding(10.dp)
             ) {
+                DraftBar(
+                    board = draftBoard,
+                    onToggleSide = {
+                        DraftManager.draftSide = if (DraftManager.draftSide == DraftSide.BLUE) DraftSide.RED else DraftSide.BLUE
+                    },
+                    onToggleFormat = {
+                        val next = if (DraftManager.draftFormat == DraftFormat.RANKED_6) DraftFormat.RANKED_10 else DraftFormat.RANKED_6
+                        DraftManager.draftFormat = next
+                        // Drop bans beyond the new ban count
+                        for (i in next.bansPerTeam until 5) {
+                            DraftManager.allyBans[i] = null
+                            DraftManager.enemyBans[i] = null
+                        }
+                        onUpdateRecommendations()
+                    },
+                    onSkipBans = { DraftManager.bansSkipped = true },
+                    onResumeBans = { DraftManager.bansSkipped = false }
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                BanSlotRow(
+                    label = "Enemy Bans",
+                    bans = DraftManager.enemyBans.take(draftBoard.format.bansPerTeam),
+                    isTurn = { i -> isTurn("enemyBan", i) },
+                    onClick = { i ->
+                        swapMode = false
+                        activeSlotType = "enemyBan"
+                        activeSlotIndex = i
+                        searchQuery = ""
+                    }
+                )
+
                 // Enemies Row
                 Text(
                     text = "Enemy Heroes",
@@ -788,6 +916,7 @@ fun OverlayPanelContent(
                         HeroSlot(
                             hero = selectedEnemies[i],
                             isEnemy = true,
+                            isTurn = isTurn("enemy", i),
                             isSwapHighlight = swapMode && !(swapFromType == "enemy" && swapFromIndex == i),
                             onClick = {
                                 if (swapMode) {
@@ -815,6 +944,18 @@ fun OverlayPanelContent(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
+                BanSlotRow(
+                    label = "Our Bans",
+                    bans = DraftManager.allyBans.take(draftBoard.format.bansPerTeam),
+                    isTurn = { i -> isTurn("allyBan", i) },
+                    onClick = { i ->
+                        swapMode = false
+                        activeSlotType = "allyBan"
+                        activeSlotIndex = i
+                        searchQuery = ""
+                    }
+                )
+
                 // Allies Row + Team Analysis
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -839,30 +980,39 @@ fun OverlayPanelContent(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     for (i in 0 until 5) {
-                        HeroSlot(
-                            hero = selectedAllies[i],
-                            isEnemy = false,
-                            isSwapHighlight = swapMode && !(swapFromType == "ally" && swapFromIndex == i),
-                            onClick = {
-                                if (swapMode) {
-                                    onSwapSlots(swapFromType!!, swapFromIndex, "ally", i)
-                                    swapMode = false
-                                    swapFromType = null
-                                    swapFromIndex = -1
-                                } else {
-                                    activeSlotType = "ally"
-                                    activeSlotIndex = i
-                                    searchQuery = ""
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            HeroSlot(
+                                hero = selectedAllies[i],
+                                isEnemy = false,
+                                isTurn = isTurn("ally", i),
+                                isSwapHighlight = swapMode && !(swapFromType == "ally" && swapFromIndex == i),
+                                onClick = {
+                                    if (swapMode) {
+                                        onSwapSlots(swapFromType!!, swapFromIndex, "ally", i)
+                                        swapMode = false
+                                        swapFromType = null
+                                        swapFromIndex = -1
+                                    } else {
+                                        activeSlotType = "ally"
+                                        activeSlotIndex = i
+                                        searchQuery = ""
+                                    }
+                                },
+                                onLongClick = {
+                                    if (selectedAllies[i] != null) {
+                                        swapMode = true
+                                        swapFromType = "ally"
+                                        swapFromIndex = i
+                                    }
                                 }
-                            },
-                            onLongClick = {
-                                if (selectedAllies[i] != null) {
-                                    swapMode = true
-                                    swapFromType = "ally"
-                                    swapFromIndex = i
-                                }
-                            }
-                        )
+                            )
+                            Spacer(modifier = Modifier.height(3.dp))
+                            LaneChip(
+                                slotLane = laneAssignment.slots.getOrNull(i),
+                                enabled = selectedAllies[i] != null,
+                                onClick = { DraftManager.cycleAllyLane(i) }
+                            )
+                        }
                     }
                 }
 
@@ -894,11 +1044,14 @@ fun OverlayPanelContent(
                 }
 
                 // Team Analysis Warnings (compact)
-                if (teamAnalysis.warnings.isNotEmpty() && selectedAllies.any { it != null }) {
-                    TeamWarningRow(teamAnalysis)
+                if (teamWarnings.isNotEmpty() && selectedAllies.any { it != null }) {
+                    TeamWarningRow(teamWarnings)
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
+
+                // ─── Meta source (rank + patch) ───────────────────────────
+                MetaSourceBar(modifier = Modifier.padding(bottom = 6.dp))
 
                 // ─── Panel Tabs ───────────────────────────────────────────
                 Row(
@@ -910,6 +1063,7 @@ fun OverlayPanelContent(
                     PanelTab("Counter", activePanel == 0, Color(0xFFEF4444)) { activePanel = 0 }
                     PanelTab("Synergy", activePanel == 1, Color(0xFF3B82F6)) { activePanel = 1 }
                     PanelTab("Bans", activePanel == 2, Color(0xFFF59E0B)) { activePanel = 2 }
+                    PanelTab("Predict", activePanel == 3, Color(0xFFA855F7)) { activePanel = 3 }
                 }
 
                 // ─── Role Filter Chips ────────────────────────────────────
@@ -918,14 +1072,43 @@ fun OverlayPanelContent(
                         selectedRole = selectedRoleFilter,
                         onRoleSelected = { selectedRoleFilter = it }
                     )
+                    val showLaneChip = selectedAllies.any { it != null } && missingLanes.isNotEmpty()
+                    if (showLaneChip || poolIds.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            if (poolIds.isNotEmpty()) {
+                                PickerFilterChip("★ My pool", poolOnly) { poolOnly = !poolOnly }
+                            }
+                            if (showLaneChip) {
+                                PickerFilterChip(
+                                    "Fill lane: ${missingLanes.joinToString("/") { it.short }}",
+                                    needLaneOnly
+                                ) { needLaneOnly = !needLaneOnly }
+                            }
+                        }
+                    }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
 
                 // ─── Panel Content ────────────────────────────────────────
                 when (activePanel) {
-                    0 -> CounterPanel(filteredCounters, metaStatsMap) { heroId -> buildDetailHeroId = heroId }
-                    1 -> SynergyPanel(filteredSynergies, metaStatsMap) { heroId -> buildDetailHeroId = heroId }
+                    0 -> CounterPanel(filteredCounters, metaStatsMap, poolIds) { heroId -> buildDetailHeroId = heroId }
+                    1 -> SynergyPanel(filteredSynergies, metaStatsMap, poolIds) { heroId -> buildDetailHeroId = heroId }
                     2 -> BanPanel(banRecommendations)
+                    3 -> {
+                        val nextStep = currentTurn.firstOrNull()
+                        val hint = when {
+                            nextStep == null -> "Draft complete"
+                            nextStep.action == DraftAction.BAN -> "Enemy threats — consider banning:"
+                            nextStep.team == "enemy" -> "Enemy picks next — likely:"
+                            else -> "Enemy may pick after you — take or deny:"
+                        }
+                        PredictPanel(
+                            hint = hint,
+                            predictions = DraftManager.enemyPredictions,
+                            poolIds = poolIds
+                        ) { heroId -> buildDetailHeroId = heroId }
+                    }
                 }
             }
         }
@@ -984,7 +1167,8 @@ private fun HeroSelectionView(
     onRemove: () -> Unit,
     onCancel: () -> Unit
 ) {
-    val resolvedInitialFilter = remember(initialFilter, counterSuggestions, synergySuggestions, banRecommendations) {
+    // Resolve the default filter once per opened slot so it doesn't jump while picking
+    val resolvedInitialFilter = remember(activeSlotType, activeSlotIndex, initialFilter) {
         when (initialFilter) {
             "Counter" -> if (counterSuggestions.isNotEmpty()) "Counter" else "All"
             "Synergy" -> if (synergySuggestions.isNotEmpty()) "Synergy" else "All"
@@ -994,7 +1178,14 @@ private fun HeroSelectionView(
     }
     var pickerFilter by remember(resolvedInitialFilter) { mutableStateOf(resolvedInitialFilter) }
 
-    val displayedHeroes = remember(heroes, pickerFilter, counterSuggestions, synergySuggestions, banRecommendations, selectedRoleFilter) {
+    val isSearching = searchQuery.isNotBlank()
+
+    val context = LocalContext.current
+    val poolIds = HeroPool.ids
+
+    val displayedHeroes = remember(heroes, isSearching, pickerFilter, counterSuggestions, synergySuggestions, banRecommendations, selectedRoleFilter, poolIds) {
+        // Searching always looks through every hero, ignoring category and role filters
+        if (isSearching) return@remember heroes
         var list = when (pickerFilter) {
             "Counter" -> {
                 val counterIds = counterSuggestions.map { it.id }.toSet()
@@ -1007,6 +1198,7 @@ private fun HeroSelectionView(
             "Ban" -> {
                 heroes.filter { banRecommendations.contains(it.id) }
             }
+            "Pool" -> if (poolIds.isEmpty()) heroes else heroes.filter { it.id in poolIds }
             else -> heroes
         }
         if (selectedRoleFilter != null) {
@@ -1025,7 +1217,12 @@ private fun HeroSelectionView(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Select ${if (activeSlotType == "enemy") "Enemy" else "Ally"} #${activeSlotIndex + 1}",
+                text = when (activeSlotType) {
+                    "enemy" -> "Select Enemy #${activeSlotIndex + 1}"
+                    "enemyBan" -> "Enemy Ban #${activeSlotIndex + 1}"
+                    "allyBan" -> "Our Ban #${activeSlotIndex + 1}"
+                    else -> "Select Ally #${activeSlotIndex + 1}"
+                },
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 13.sp,
@@ -1045,18 +1242,23 @@ private fun HeroSelectionView(
 
         // Picker Filter Chips
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            PickerFilterChip("All", pickerFilter == "All") { pickerFilter = "All" }
+            PickerFilterChip("All", isSearching || pickerFilter == "All") { pickerFilter = "All" }
             if (counterSuggestions.isNotEmpty()) {
-                PickerFilterChip("Counters", pickerFilter == "Counter") { pickerFilter = "Counter" }
+                PickerFilterChip("Counters", !isSearching && pickerFilter == "Counter") { onSearchChange(""); pickerFilter = "Counter" }
             }
             if (synergySuggestions.isNotEmpty()) {
-                PickerFilterChip("Synergies", pickerFilter == "Synergy") { pickerFilter = "Synergy" }
+                PickerFilterChip("Synergies", !isSearching && pickerFilter == "Synergy") { onSearchChange(""); pickerFilter = "Synergy" }
             }
             if (banRecommendations.isNotEmpty()) {
-                PickerFilterChip("Bans", pickerFilter == "Ban") { pickerFilter = "Ban" }
+                PickerFilterChip("Bans", !isSearching && pickerFilter == "Ban") { onSearchChange(""); pickerFilter = "Ban" }
+            }
+            if (poolIds.isNotEmpty()) {
+                PickerFilterChip("★ Pool", !isSearching && pickerFilter == "Pool") { onSearchChange(""); pickerFilter = "Pool" }
             }
         }
 
@@ -1125,6 +1327,19 @@ private fun HeroSelectionView(
                                 .clip(CircleShape)
                                 .background(Color(0xFF334155)),
                             contentScale = ContentScale.Crop
+                        )
+                        // Hero pool star: tap to add/remove from your pool
+                        val inPool = hero.id in poolIds
+                        Text(
+                            text = if (inPool) "★" else "☆",
+                            color = if (inPool) Color(0xFFFACC15) else Color(0xFF94A3B8),
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .size(18.dp)
+                                .background(Color(0xCC0F172A), CircleShape)
+                                .clickable { HeroPool.toggle(context, hero.id) }
                         )
                         // Win rate mini badge
                         if (stats != null) {
@@ -1433,6 +1648,7 @@ private fun RoleFilterChips(selectedRole: String?, onRoleSelected: (String?) -> 
 private fun ColumnScope.CounterPanel(
     suggestions: List<CounterSuggestion>,
     metaStatsMap: Map<Int, HeroMetaStats>,
+    poolIds: Set<Int>,
     onHeroClick: (Int) -> Unit
 ) {
     if (suggestions.isEmpty()) {
@@ -1453,6 +1669,7 @@ private fun ColumnScope.CounterPanel(
                     tier = item.tier,
                     winRate = stats?.winRate,
                     isMetaPick = stats != null && stats.winRate >= 52.0,
+                    isInPool = item.id in poolIds,
                     onClick = { onHeroClick(item.id) }
                 )
             }
@@ -1466,6 +1683,7 @@ private fun ColumnScope.CounterPanel(
 private fun ColumnScope.SynergyPanel(
     suggestions: List<SynergySuggestion>,
     metaStatsMap: Map<Int, HeroMetaStats>,
+    poolIds: Set<Int>,
     onHeroClick: (Int) -> Unit
 ) {
     if (suggestions.isEmpty()) {
@@ -1487,7 +1705,88 @@ private fun ColumnScope.SynergyPanel(
                     tier = "",
                     winRate = stats?.winRate,
                     isMetaPick = stats != null && stats.winRate >= 52.0,
+                    isInPool = item.id in poolIds,
                     onClick = { onHeroClick(item.id) }
+                )
+            }
+        }
+    }
+}
+
+// ─── Predict Panel ───────────────────────────────────────────────────────────
+
+@Composable
+private fun ColumnScope.PredictPanel(
+    hint: String,
+    predictions: List<EnemyPrediction>,
+    poolIds: Set<Int>,
+    onHeroClick: (Int) -> Unit
+) {
+    if (predictions.isEmpty()) {
+        EmptyListHint("Meta data not loaded yet")
+        return
+    }
+    Text(
+        text = hint,
+        color = Color(0xFFA855F7),
+        fontSize = 10.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(bottom = 4.dp)
+    )
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+            .padding(4.dp)
+    ) {
+        predictions.forEach { p ->
+            val inPool = p.heroId in poolIds
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 3.dp, horizontal = 2.dp)
+                    .background(Color(0xFF0F172A), RoundedCornerShape(6.dp))
+                    .clickable { onHeroClick(p.heroId) }
+                    .padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AsyncImage(
+                    model = p.imgSrc,
+                    contentDescription = p.heroName,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        // Star = a hero from your pool the enemy might take away
+                        text = if (inPool) "★ ${p.heroName}" else p.heroName,
+                        color = if (inPool) Color(0xFFFACC15) else Color.White,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    if (p.reasons.isNotEmpty()) {
+                        Text(
+                            text = p.reasons.joinToString(" · "),
+                            color = Color(0xFF94A3B8),
+                            fontSize = 8.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+                Text(
+                    text = "${p.score.toInt()}",
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .background(Color(0xFFA855F7), RoundedCornerShape(4.dp))
+                        .padding(horizontal = 5.dp, vertical = 1.dp)
                 )
             }
         }
@@ -1592,7 +1891,7 @@ private fun TeamScoreBadge(analysis: TeamAnalysis) {
 }
 
 @Composable
-private fun TeamWarningRow(analysis: TeamAnalysis) {
+private fun TeamWarningRow(warnings: List<TeamWarning>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -1600,7 +1899,7 @@ private fun TeamWarningRow(analysis: TeamAnalysis) {
             .horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        analysis.warnings.forEach { warning ->
+        warnings.forEach { warning ->
             val (bgColor, textColor) = when (warning.severity) {
                 WarningSeverity.CRITICAL -> Color(0x33EF4444) to Color(0xFFEF4444)
                 WarningSeverity.WARNING -> Color(0x33F59E0B) to Color(0xFFF59E0B)
@@ -1626,22 +1925,25 @@ fun HeroSlot(
     hero: Hero?,
     isEnemy: Boolean,
     isSwapHighlight: Boolean = false,
+    isTurn: Boolean = false,
+    size: Dp = 52.dp,
     onClick: () -> Unit,
     onLongClick: () -> Unit = {}
 ) {
     val borderColor = when {
         isSwapHighlight -> Color(0xFFD4AF37)
+        isTurn -> Color(0xFF22C55E)
         isEnemy -> Color(0xFFEF4444)
         else -> Color(0xFF3B82F6)
     }
 
     Box(
         modifier = Modifier
-            .size(52.dp)
+            .size(size)
             .clip(CircleShape)
             .background(if (isSwapHighlight) Color(0xFF2A2000) else Color(0xFF1E293B))
             .border(
-                width = if (isSwapHighlight) 2.5.dp else 2.dp,
+                width = if (isSwapHighlight || isTurn) 2.5.dp else 2.dp,
                 color = borderColor,
                 shape = CircleShape
             )
@@ -1663,12 +1965,180 @@ fun HeroSlot(
         } else {
             Text(
                 text = "+",
-                color = Color(0xFF64748B),
-                fontSize = 20.sp,
+                color = if (isTurn) Color(0xFF22C55E) else Color(0xFF64748B),
+                fontSize = if (size < 40.dp) 14.sp else 20.sp,
                 fontWeight = FontWeight.Bold
             )
         }
     }
+}
+
+/**
+ * Shows which rank the meta stats come from (tap to switch rank) and the game patch/date of the data.
+ */
+@Composable
+fun MetaSourceBar(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    LaunchedEffect(Unit) { MetaRankStore.load(context) }
+    val version by MetaRankStore.dataVersion.collectAsState()
+    val rankId by MetaRankStore.selectedRankId.collectAsState()
+    val rank = version.rankFor(rankId)
+    val canSwitch = version.availableRanks.size > 1
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = "Meta",
+            color = Color(0xFF94A3B8),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = if (canSwitch) "${rank.name} ▾" else rank.name,
+            color = Color(0xFFD4AF37),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .border(1.dp, Color(0xFFD4AF37), RoundedCornerShape(4.dp))
+                .then(if (canSwitch) Modifier.clickable { MetaRankStore.cycleRank(context) } else Modifier)
+                .padding(horizontal = 6.dp, vertical = 2.dp)
+        )
+        Text(
+            text = listOfNotNull(version.patchLabel, version.timeframe, version.generatedDate)
+                .joinToString(" · "),
+            color = Color(0xFF64748B),
+            fontSize = 9.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+/** Side/format selector and whose turn it is in the ranked draft. */
+@Composable
+fun DraftBar(
+    board: DraftBoard,
+    onToggleSide: () -> Unit,
+    onToggleFormat: () -> Unit,
+    onSkipBans: () -> Unit,
+    onResumeBans: () -> Unit
+) {
+    val phase = DraftOrder.phase(board)
+    val isBlue = board.side == DraftSide.BLUE
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFF1E293B), RoundedCornerShape(8.dp))
+            .padding(horizontal = 6.dp, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = if (isBlue) "BLUE" else "RED",
+            color = Color.White,
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .background(if (isBlue) Color(0xFF2563EB) else Color(0xFFDC2626), RoundedCornerShape(4.dp))
+                .clickable { onToggleSide() }
+                .padding(horizontal = 6.dp, vertical = 2.dp)
+        )
+        Text(
+            text = board.format.label,
+            color = Color(0xFFCBD5E1),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .border(1.dp, Color(0xFF475569), RoundedCornerShape(4.dp))
+                .clickable { onToggleFormat() }
+                .padding(horizontal = 6.dp, vertical = 2.dp)
+        )
+        Text(
+            text = DraftOrder.turnLabel(board),
+            color = if (phase == DraftPhase.DONE) Color(0xFF94A3B8) else Color(0xFF22C55E),
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.weight(1f)
+        )
+        if (phase == DraftPhase.BAN) {
+            Text(
+                text = "Skip bans",
+                color = Color(0xFF94A3B8),
+                fontSize = 9.sp,
+                modifier = Modifier.clickable { onSkipBans() }
+            )
+        } else if (board.bansSkipped) {
+            Text(
+                text = "Edit bans",
+                color = Color(0xFF94A3B8),
+                fontSize = 9.sp,
+                modifier = Modifier.clickable { onResumeBans() }
+            )
+        }
+    }
+}
+
+/** Row of small ban slots for one team. */
+@Composable
+fun BanSlotRow(
+    label: String,
+    bans: List<Hero?>,
+    isTurn: (Int) -> Boolean,
+    onClick: (Int) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = label,
+            color = Color(0xFF94A3B8),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.width(56.dp)
+        )
+        bans.forEachIndexed { i, hero ->
+            Box(modifier = Modifier.alpha(if (hero != null) 0.6f else 1f)) {
+                HeroSlot(
+                    hero = hero,
+                    isEnemy = true,
+                    isTurn = isTurn(i),
+                    size = 30.dp,
+                    onClick = { onClick(i) }
+                )
+            }
+        }
+    }
+}
+
+/** Small lane tag under an ally slot; tap cycles auto -> EXP -> JG -> MID -> ROAM -> GOLD -> auto. */
+@Composable
+fun LaneChip(slotLane: SlotLane?, enabled: Boolean, onClick: () -> Unit) {
+    val (bgColor, textColor) = when {
+        slotLane == null -> Color(0xFF1E293B) to Color(0xFF64748B)
+        slotLane.isOffLane -> Color(0x33F59E0B) to Color(0xFFF59E0B)
+        slotLane.isManual -> Color(0xFF3B82F6) to Color.White
+        else -> Color(0x333B82F6) to Color(0xFF93C5FD)
+    }
+    Text(
+        text = slotLane?.lane?.short ?: "-",
+        color = textColor,
+        fontSize = 8.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .width(44.dp)
+            .background(bgColor, RoundedCornerShape(4.dp))
+            .then(if (enabled) Modifier.clickable { onClick() } else Modifier)
+            .padding(vertical = 2.dp)
+    )
 }
 
 @Composable
@@ -1679,6 +2149,7 @@ fun RecommendationRow(
     tier: String,
     winRate: Double? = null,
     isMetaPick: Boolean = false,
+    isInPool: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     Row(
@@ -1710,8 +2181,8 @@ fun RecommendationRow(
         Spacer(modifier = Modifier.width(6.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = name,
-                color = Color.White,
+                text = if (isInPool) "★ $name" else name,
+                color = if (isInPool) Color(0xFFFACC15) else Color.White,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
