@@ -27,9 +27,13 @@ class FloatingOverlayService : Service() {
 
     companion object {
         var isRunning = false
+        var isOverlayVisible = false
         const val ACTION_SHOW_OVERLAY = "ai.zasha.mlbbpicker.SHOW_OVERLAY"
         const val ACTION_MLBB_FOREGROUND = "ai.zasha.mlbbpicker.MLBB_FOREGROUND"
         const val ACTION_MLBB_BACKGROUND = "ai.zasha.mlbbpicker.MLBB_BACKGROUND"
+        const val ACTION_TOGGLE_OVERLAY = "ai.zasha.mlbbpicker.TOGGLE_OVERLAY"
+        const val ACTION_SHOW_BANS = "ai.zasha.mlbbpicker.SHOW_BANS"
+        const val PANEL_TAB_BANS = 2
     }
 
     override fun onCreate() {
@@ -56,6 +60,14 @@ class FloatingOverlayService : Service() {
         when (intent?.action) {
             ACTION_SHOW_OVERLAY -> {
                 overlayViewManager.showOverlay(byUserTrigger = true)
+            }
+
+            ACTION_TOGGLE_OVERLAY -> {
+                overlayViewManager.toggleOverlay()
+            }
+
+            ACTION_SHOW_BANS -> {
+                overlayViewManager.showPanelOnTab(PANEL_TAB_BANS)
             }
 
             ACTION_MLBB_FOREGROUND -> {
@@ -89,6 +101,8 @@ class FloatingOverlayService : Service() {
         isRunning = false
         serviceScope.cancel()
         overlayViewManager.hideOverlay(manually = false)
+        isOverlayVisible = false
+        OverlayTiles.refresh(this)
         super.onDestroy()
     }
 

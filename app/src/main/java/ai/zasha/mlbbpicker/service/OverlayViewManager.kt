@@ -198,6 +198,7 @@ class OverlayViewManager(private val context: Context) {
         } else {
             showBubble()
         }
+        notifyVisibilityChanged()
     }
 
     fun hideOverlay(manually: Boolean = false) {
@@ -208,6 +209,30 @@ class OverlayViewManager(private val context: Context) {
         isShowing = false
         removeBubble()
         removePanel()
+        notifyVisibilityChanged()
+    }
+
+    /** Show/hide toggle used by the Quick Settings tile. */
+    fun toggleOverlay() {
+        if (isShowing) {
+            hideOverlay(manually = true)
+        } else {
+            showOverlay(byUserTrigger = true)
+        }
+    }
+
+    /** Open the expanded panel directly on the given tab (0=Counter, 1=Synergy, 2=Bans). */
+    fun showPanelOnTab(tab: Int) {
+        isManuallyDismissed = false
+        isExpanded = true
+        isShowing = true
+        showPanel(initialPanel = tab)
+        notifyVisibilityChanged()
+    }
+
+    private fun notifyVisibilityChanged() {
+        FloatingOverlayService.isOverlayVisible = isShowing
+        OverlayTiles.refresh(context)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -343,7 +368,7 @@ class OverlayViewManager(private val context: Context) {
         windowManager.addView(composeView, params)
     }
 
-    private fun showPanel() {
+    private fun showPanel(initialPanel: Int = 0) {
         removeBubble()
         removePanel()
 
@@ -364,6 +389,7 @@ class OverlayViewManager(private val context: Context) {
                         metaStats = metaStats,
                         banRecommendations = banRecommendations,
                         buildRepository = buildRepository,
+                        initialPanel = initialPanel,
                         onCollapse = {
                             isExpanded = false
                             showBubble()
@@ -549,6 +575,7 @@ fun OverlayPanelContent(
     banRecommendations: List<BanRecommendation> = emptyList(),
     buildRepository: BuildRepository,
     isFullScreen: Boolean = false,
+    initialPanel: Int = 0,
     onCollapse: () -> Unit,
     onClearAll: () -> Unit,
     onUpdateRecommendations: () -> Unit,
@@ -562,7 +589,7 @@ fun OverlayPanelContent(
     var selectedRoleFilter by remember { mutableStateOf<String?>(null) }
 
     // Panel tabs: 0=Draft, 1=Bans, 2=Build
-    var activePanel by remember { mutableIntStateOf(0) }
+    var activePanel by remember { mutableIntStateOf(initialPanel) }
 
     // Quick-swap state
     var swapMode by remember { mutableStateOf(false) }
@@ -740,7 +767,8 @@ fun OverlayPanelContent(
                     selectedRoleFilter = selectedRoleFilter,
                     onRoleSelected = { selectedRoleFilter = it },
                     isFullScreen = isFullScreen,
-                    initialFilter = when (activePanel) {
+                    // Enemy slots record what the enemy picked, so start from the full list
+                    initialFilter = if (activeSlotType == "enemy") "All" else when (activePanel) {
                         0 -> "Counter"
                         1 -> "Synergy"
                         2 -> "Ban"
@@ -984,7 +1012,8 @@ private fun HeroSelectionView(
     onRemove: () -> Unit,
     onCancel: () -> Unit
 ) {
-    val resolvedInitialFilter = remember(initialFilter, counterSuggestions, synergySuggestions, banRecommendations) {
+    // Resolve the default filter once per opened slot so it doesn't jump while picking
+    val resolvedInitialFilter = remember(activeSlotType, activeSlotIndex, initialFilter) {
         when (initialFilter) {
             "Counter" -> if (counterSuggestions.isNotEmpty()) "Counter" else "All"
             "Synergy" -> if (synergySuggestions.isNotEmpty()) "Synergy" else "All"
@@ -994,7 +1023,11 @@ private fun HeroSelectionView(
     }
     var pickerFilter by remember(resolvedInitialFilter) { mutableStateOf(resolvedInitialFilter) }
 
-    val displayedHeroes = remember(heroes, pickerFilter, counterSuggestions, synergySuggestions, banRecommendations, selectedRoleFilter) {
+    val isSearching = searchQuery.isNotBlank()
+
+    val displayedHeroes = remember(heroes, isSearching, pickerFilter, counterSuggestions, synergySuggestions, banRecommendations, selectedRoleFilter) {
+        // Searching always looks through every hero, ignoring category and role filters
+        if (isSearching) return@remember heroes
         var list = when (pickerFilter) {
             "Counter" -> {
                 val counterIds = counterSuggestions.map { it.id }.toSet()
@@ -1048,15 +1081,15 @@ private fun HeroSelectionView(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            PickerFilterChip("All", pickerFilter == "All") { pickerFilter = "All" }
+            PickerFilterChip("All", isSearching || pickerFilter == "All") { pickerFilter = "All" }
             if (counterSuggestions.isNotEmpty()) {
-                PickerFilterChip("Counters", pickerFilter == "Counter") { pickerFilter = "Counter" }
+                PickerFilterChip("Counters", !isSearching && pickerFilter == "Counter") { onSearchChange(""); pickerFilter = "Counter" }
             }
             if (synergySuggestions.isNotEmpty()) {
-                PickerFilterChip("Synergies", pickerFilter == "Synergy") { pickerFilter = "Synergy" }
+                PickerFilterChip("Synergies", !isSearching && pickerFilter == "Synergy") { onSearchChange(""); pickerFilter = "Synergy" }
             }
             if (banRecommendations.isNotEmpty()) {
-                PickerFilterChip("Bans", pickerFilter == "Ban") { pickerFilter = "Ban" }
+                PickerFilterChip("Bans", !isSearching && pickerFilter == "Ban") { onSearchChange(""); pickerFilter = "Ban" }
             }
         }
 
