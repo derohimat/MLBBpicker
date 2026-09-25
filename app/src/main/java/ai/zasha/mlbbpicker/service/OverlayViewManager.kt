@@ -21,6 +21,7 @@ import ai.zasha.mlbbpicker.data.DraftPhase
 import ai.zasha.mlbbpicker.data.DraftSide
 import ai.zasha.mlbbpicker.data.HeroPool
 import ai.zasha.mlbbpicker.data.Lane
+import ai.zasha.mlbbpicker.data.MetaRankStore
 import ai.zasha.mlbbpicker.data.LaneAssigner
 import ai.zasha.mlbbpicker.data.SlotLane
 import ai.zasha.mlbbpicker.data.TeamWarning
@@ -1048,6 +1049,9 @@ fun OverlayPanelContent(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
+                // ─── Meta source (rank + patch) ───────────────────────────
+                MetaSourceBar(modifier = Modifier.padding(bottom = 6.dp))
+
                 // ─── Panel Tabs ───────────────────────────────────────────
                 Row(
                     modifier = Modifier
@@ -1870,6 +1874,51 @@ fun HeroSlot(
                 fontWeight = FontWeight.Bold
             )
         }
+    }
+}
+
+/**
+ * Shows which rank the meta stats come from (tap to switch rank) and the game patch/date of the data.
+ */
+@Composable
+fun MetaSourceBar(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    LaunchedEffect(Unit) { MetaRankStore.load(context) }
+    val version by MetaRankStore.dataVersion.collectAsState()
+    val rankId by MetaRankStore.selectedRankId.collectAsState()
+    val rank = version.rankFor(rankId)
+    val canSwitch = version.availableRanks.size > 1
+
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = "Meta",
+            color = Color(0xFF94A3B8),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = if (canSwitch) "${rank.name} ▾" else rank.name,
+            color = Color(0xFFD4AF37),
+            fontSize = 9.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .border(1.dp, Color(0xFFD4AF37), RoundedCornerShape(4.dp))
+                .then(if (canSwitch) Modifier.clickable { MetaRankStore.cycleRank(context) } else Modifier)
+                .padding(horizontal = 6.dp, vertical = 2.dp)
+        )
+        Text(
+            text = listOfNotNull(version.patchLabel, version.timeframe, version.generatedDate)
+                .joinToString(" · "),
+            color = Color(0xFF64748B),
+            fontSize = 9.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f)
+        )
     }
 }
 

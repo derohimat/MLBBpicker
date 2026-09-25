@@ -9,6 +9,8 @@ import ai.zasha.mlbbpicker.data.HeroRepository
 import ai.zasha.mlbbpicker.data.PremiumManager
 import ai.zasha.mlbbpicker.data.SoloHeroRank
 import ai.zasha.mlbbpicker.data.SoloQueueManager
+import ai.zasha.mlbbpicker.data.MetaRankStore
+import ai.zasha.mlbbpicker.service.MetaSourceBar
 import ai.zasha.mlbbpicker.service.OverlayPanelContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -722,6 +724,18 @@ fun MainScreen(
                                     text = "Download latest hero recommendations, item builds, and meta statistics from GitHub raw storage.",
                                     color = Color(0xFF94A3B8),
                                     fontSize = 11.sp
+                                )
+                                val dataVersion by MetaRankStore.dataVersion.collectAsState()
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = listOfNotNull(
+                                        "Game ${dataVersion.patchLabel}",
+                                        dataVersion.generatedDate?.let { "crawled $it" },
+                                        "${dataVersion.availableRanks.size} rank(s)"
+                                    ).joinToString(" · "),
+                                    color = Color(0xFFD4AF37),
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -1554,6 +1568,8 @@ fun MetaStatsTabContent(
             .fillMaxSize()
             .padding(horizontal = 8.dp)
     ) {
+        MetaSourceBar(modifier = Modifier.padding(vertical = 6.dp))
+
         // Search & Filter
         TextField(
             value = searchQuery,

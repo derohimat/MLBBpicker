@@ -4,6 +4,7 @@ import ai.zasha.mlbbpicker.data.DataPatchManager
 import ai.zasha.mlbbpicker.data.Hero
 import ai.zasha.mlbbpicker.data.HeroMetaStats
 import ai.zasha.mlbbpicker.data.HeroRepository
+import ai.zasha.mlbbpicker.data.MetaRankStore
 import ai.zasha.mlbbpicker.data.MetaStatsRepository
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -41,6 +43,10 @@ class MainScreenViewModel(
     init {
         _uiState.update { it.copy(heroes = repository.heroes) }
         loadMetaStats()
+        // Reload stats when the user switches the meta rank
+        viewModelScope.launch {
+            MetaRankStore.selectedRankId.drop(1).collect { loadMetaStats() }
+        }
     }
 
     fun checkPatchUpdate(context: Context) {
